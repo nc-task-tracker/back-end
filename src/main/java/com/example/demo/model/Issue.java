@@ -27,6 +27,7 @@ public class Issue {
     private String issueDescription;
     private Date startDate;
     private Date dueDate;
+    private String parentId;
 
     @ManyToOne(cascade = {
             CascadeType.PERSIST,
@@ -56,32 +57,25 @@ public class Issue {
     @JoinColumn(name = "issueStatusId", referencedColumnName = "id")
     private IssueStatus issuestatus;
 
-    @OneToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinColumn(name = "childIssueId", referencedColumnName = "id")
-    private Set<ChildIssue> childissue = new HashSet<>();
-
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
     })
-    @JoinTable(name = "project_profile_projectrole",
-            joinColumns = @JoinColumn(name = "profileid"),
-            inverseJoinColumns = @JoinColumn(name = "issueid")
+    @JoinTable(name = "issuerole_profile_issue",
+            joinColumns = @JoinColumn(name = "issueid"),
+            inverseJoinColumns = @JoinColumn(name = "profileid")
     )
-    private Set<Issue> issues = new HashSet<>();
+    private Set<Profile> profiles = new HashSet<>();
 
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
     })
     @JoinTable(name = "issuerole_profile_issue",
-            joinColumns = @JoinColumn(name = "profileid"),
+            joinColumns = @JoinColumn(name = "issueid"),
             inverseJoinColumns = @JoinColumn(name = "issueroleid")
     )
-    private Set<Issue> issueRoles = new HashSet<>();
+    private Set<IssueRole> issueroles = new HashSet<>();
 
     public Issue(String issueName, String issueDescription, Date startDate, Date dueDate, Project project, IssueType issuetype, IssuePriority issuepriority, IssueStatus issuestatus) {
         this.issueName = issueName;

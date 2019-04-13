@@ -20,6 +20,7 @@ public class ParameterValue {
             strategy = "org.hibernate.id.UUIDGenerator"
     )
     private String id;
+    //    private List<String> value;
     private String value;
 
     @ManyToOne(cascade = {

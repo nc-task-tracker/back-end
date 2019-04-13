@@ -27,7 +27,7 @@ public class Filter {
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
-    })
+    }, fetch = FetchType.EAGER)
     @JoinTable(name = "selectedvalue",
             joinColumns = @JoinColumn(name = "filterNameId"),
             inverseJoinColumns = @JoinColumn(name = "paramValueId")

@@ -1,11 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.IssueDto;
 import com.example.demo.dto.IssueRoleDto;
-import com.example.demo.model.Issue;
 import com.example.demo.model.IssueRole;
 import com.example.demo.service.IssueRoleService;
-import com.example.demo.service.IssueService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping(value = "/api/issue_role")
 public class IssueRoleController {
     private IssueRoleService service;

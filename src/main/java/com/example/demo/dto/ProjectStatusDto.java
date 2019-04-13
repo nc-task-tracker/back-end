@@ -16,6 +16,6 @@ public class ProjectStatusDto {
     @Null
     private String id;
 
-    @NotNull
-    private String projectStatusName;
+    //    @NotNull
+    private String psName;
 }

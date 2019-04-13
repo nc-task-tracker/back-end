@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,21 +26,12 @@ public class ProjectStatus {
     private String id;
     private String psName;
 
-    public ProjectStatus(String psName) {
+    @OneToMany(mappedBy = "projectstatus", fetch = FetchType.EAGER)
+    @JsonBackReference
+    private Set<Project> project = new HashSet<>();
+
+    public ProjectStatus(String psName, Set<Project> project) {
         this.psName = psName;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-        ProjectStatus that = (ProjectStatus) object;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(psName, that.psName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, psName);
+        this.project = project;
     }
 }

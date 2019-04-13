@@ -26,7 +26,7 @@ public class Dashboard {
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
-    })
+    }, fetch = FetchType.EAGER)
     @JoinTable(name = "dashboard_filter",
             joinColumns = @JoinColumn(name = "dashboardid"),
             inverseJoinColumns = @JoinColumn(name = "filterid")

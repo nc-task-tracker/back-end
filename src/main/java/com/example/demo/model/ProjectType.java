@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,7 +26,8 @@ public class ProjectType {
     private String id;
     private String ptName;
 
-    @OneToMany(mappedBy = "projecttype")
+    @OneToMany(mappedBy = "projecttype", fetch = FetchType.EAGER)
+    @JsonBackReference
     private Set<Project> project = new HashSet<>();
 
     public ProjectType(String ptName, Set<Project> project) {

@@ -6,13 +6,11 @@ import com.example.demo.service.ProjectService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping(value = "/api/project")
 public class ProjectController {
     private ProjectService service;
@@ -30,14 +28,18 @@ public class ProjectController {
         return modelMapper.map(service.getProjectById(id), ProjectDto.class);
     }
 
+    //    @GetMapping(value = "/all")
+//    public List<ProjectDto> getAllProjects() {
+//        List<ProjectDto> projectsDto = new ArrayList<>();
+//        List<Project> projects = service.getAllProjects();
+//        for(Project item : projects) {
+//            projectsDto.add(modelMapper.map(item, ProjectDto.class));
+//        }
+//        return projectsDto;
+//    }
     @GetMapping(value = "/all")
-    public List<ProjectDto> getAllProjects() {
-        List<ProjectDto> projectsDto = new ArrayList<>();
-        List<Project> projects = service.getAllProjects();
-        for(Project item : projects) {
-            projectsDto.add(modelMapper.map(item, ProjectDto.class));
-        }
-        return projectsDto;
+    public List<Project> getAllProjects() {
+        return service.getAllProjects();
     }
 
     @PostMapping

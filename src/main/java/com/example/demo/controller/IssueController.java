@@ -6,13 +6,12 @@ import com.example.demo.service.IssueService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping(value = "/api/issue")
 public class IssueController {
     private IssueService service;
@@ -55,5 +54,10 @@ public class IssueController {
     public ResponseEntity deleteIssue(@PathVariable(name = "id") String id) {
         service.deleteIssue(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/search/")
+    public List<Issue> findAllIssuesByPredicates(@RequestBody Issue issue) {
+        return service.searchIssue(issue);
     }
 }

@@ -42,7 +42,7 @@ public class Profile {
     })
     @JoinTable(name = "issuerole_profile_issue",
             joinColumns = @JoinColumn(name = "profileid"),
-            inverseJoinColumns = @JoinColumn(name = "issueid")
+            inverseJoinColumns = @JoinColumn(name = "issueroleid")
     )
     private Set<IssueRole> roles = new HashSet<>();
 

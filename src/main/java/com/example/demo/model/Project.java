@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,21 +30,23 @@ public class Project {
     @ManyToOne(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
-    })
+    }, fetch = FetchType.EAGER)
     @JoinColumn(name = "projectTypeId", referencedColumnName = "id")
+    @JsonManagedReference
     private ProjectType projecttype;
 
     @ManyToOne(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
-    })
+    }, fetch = FetchType.EAGER)
     @JoinColumn(name = "projectStatusId", referencedColumnName = "id")
+    @JsonManagedReference
     private ProjectStatus projectstatus;
 
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
-    })
+    }, fetch = FetchType.EAGER)
     @JoinTable(name = "dashboard_project",
             joinColumns = @JoinColumn(name = "projectid"),
             inverseJoinColumns = @JoinColumn(name = "dashboardid")

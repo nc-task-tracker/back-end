@@ -21,7 +21,6 @@ public class IssueDto {
     @Null
     private String id;
 
-    @NotNull
     private String issueName;
 
     @NotNull
@@ -36,6 +35,9 @@ public class IssueDto {
     private Date dueDate;
 
     @NotNull
+    private String parentId;
+
+    @NotNull
     private Project project;
 
     @NotNull
@@ -48,12 +50,8 @@ public class IssueDto {
     private IssueStatus issuestatus;
 
     @NotNull
-    private Set<ChildIssue> childissue = new HashSet<>();
+    private Set<Profile> profiles = new HashSet<>();
 
     @NotNull
-    private Set<Issue> issues = new HashSet<>();
-
-    @NotNull
-    private Set<Issue> issueRoles = new HashSet<>();
-
+    private Set<IssueRole> issueroles = new HashSet<>();
 }
