@@ -25,8 +25,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Resource(name = "userDetailsService")
     private UserDetailsService userService;
 
+    private final JwtAuthenticationEntryPoint unauthorizedHandler;
+
     @Autowired
-    private JwtAuthenticationEntryPoint unauthorizedHandler;
+    public WebSecurityConfig(JwtAuthenticationEntryPoint unauthorizedHandler) {
+        this.unauthorizedHandler = unauthorizedHandler;
+    }
 
 
     @Override
@@ -57,7 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().
                 authorizeRequests()
-                .antMatchers( "/token/*", "/api/users/**").permitAll()
+                .antMatchers( "/api/login", "/api/users/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
