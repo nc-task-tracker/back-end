@@ -4,8 +4,10 @@ package com.example.demo.controller;
 import com.example.demo.config.Constants;
 //import com.example.demo.config.JwtTokenUtil;
 import com.example.demo.config.JwtTokenUtil;
+import com.example.demo.config.UserTokenModel;
 import com.example.demo.model.AuthToken;
 import com.example.demo.model.LoginUser;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,22 +21,28 @@ import javax.naming.AuthenticationException;
 import java.util.Date;
 
 @RestController
-@RequestMapping("/token")
+@RequestMapping("/api/login")
 public class AuthenticationController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
+
+    private final UserService userService;
+
+    private final UserDetailsService userDetailsService;
+
+    private final JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    @Qualifier("userDetailsService")
-    private UserDetailsService userService;
+    public AuthenticationController(AuthenticationManager authenticationManager, UserService userService, @Qualifier("userDetailsService") UserDetailsService userDetailsService, JwtTokenUtil jwtTokenUtil) {
+        this.authenticationManager = authenticationManager;
+        this.userService = userService;
+        this.userDetailsService = userDetailsService;
+        this.jwtTokenUtil = jwtTokenUtil;
+    }
 
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-
-    @PostMapping(value = "/generate-token")
-    public AuthToken register(@RequestBody LoginUser loginUser) throws AuthenticationException {
-        UserDetails userDetails = userService.loadUserByUsername(loginUser.getLogin());
+    @PostMapping
+    public UserTokenModel register(@RequestBody LoginUser loginUser) throws AuthenticationException {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(loginUser.getLogin());
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 userDetails, loginUser.getPassword(), userDetails.getAuthorities()
@@ -45,7 +53,9 @@ public class AuthenticationController {
         if (authenticationToken.isAuthenticated())
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         final String token = jwtTokenUtil.generateToken(authenticationToken);
-        return new AuthToken(token);
+
+
+        return new UserTokenModel(userService.getUserByUsername(loginUser.getLogin()), new AuthToken(token));
     }
 
     @GetMapping(value = "/expDate")
