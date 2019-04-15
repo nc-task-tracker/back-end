@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
-@RequestMapping(value = "/api/project")
+@RestController
+@RequestMapping(value = "/api/projects")
 public class ProjectController {
     private ProjectService service;
 

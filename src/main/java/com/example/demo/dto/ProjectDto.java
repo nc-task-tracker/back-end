@@ -27,10 +27,10 @@ public class ProjectDto {
     private String projectDescription;
 
     @Null
-    private ProjectType projecttype;
+    private ProjectStatus projectstatus;
 
     @Null
-    private ProjectStatus projectstatus;
+    private ProjectType projectType;
 
     @Null
     private Set<Dashboard> dashboards = new HashSet<>();
