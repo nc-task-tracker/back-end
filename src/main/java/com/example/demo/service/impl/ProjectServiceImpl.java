@@ -1,8 +1,11 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.dto.ProjectDto;
 import com.example.demo.model.Project;
+import com.example.demo.model.ProjectStatus;
 import com.example.demo.repository.ProjectRepository;
 import com.example.demo.service.ProjectService;
+import com.example.demo.service.mappers.ProjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,15 +15,22 @@ import java.util.List;
 public class ProjectServiceImpl implements ProjectService {
 
     private ProjectRepository repository;
+    private final ProjectMapper projectMapper;
 
     @Autowired
-    public ProjectServiceImpl(ProjectRepository repository) {
+    public ProjectServiceImpl(ProjectRepository repository, ProjectMapper projectMapper) {
         this.repository = repository;
+        this.projectMapper = projectMapper;
     }
 
     @Override
-    public Project saveProject(Project project) {
-        return repository.save(project);
+    public Project createProject(Project project) {
+        Project temp = repository.findProjectByProjectName(project.getProjectName());
+        if (temp == null) {
+            project.setProjectstatus(ProjectStatus.OPEN);
+
+            return repository.save(project);
+        } else return null;
     }
 
     @Override
