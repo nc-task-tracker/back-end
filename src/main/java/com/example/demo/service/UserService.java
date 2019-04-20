@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.UserDto;
 import com.example.demo.model.User;
 import org.springframework.data.domain.Page;
 
@@ -8,7 +9,9 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface UserService {
-    User saveUser(User user);
+    Boolean existByLogin(String username);
+    Boolean existByEmail(String email);
+    User addUser(User user);
     User updateUser(User user);
     User getUserById(String id);
     List<User> getAllUsers();
