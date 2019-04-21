@@ -15,25 +15,27 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/api/dashboard")
 public class DashboardController {
-    private DashboardService service;
+
+    private final DashboardService dashboardService;
+
+    private final ModelMapper modelMapper;
 
     @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
-    public DashboardController(DashboardService service) {
-        this.service = service;
+    public DashboardController(DashboardService dashboardService,
+                               ModelMapper modelMapper) {
+        this.dashboardService = dashboardService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping(value = "/{id}")
     public DashboardDto getDashboardById(@PathVariable(name = "id") String id) {
-        return modelMapper.map(service.getDashboardById(id), DashboardDto.class);
+        return modelMapper.map(dashboardService.getDashboardById(id), DashboardDto.class);
     }
 
     @GetMapping(value = "/all")
     public List<DashboardDto> getAllDashboards() {
         List<DashboardDto> dashboardsDto = new ArrayList<>();
-        List<Dashboard> dashboards = service.getAllDashboards();
+        List<Dashboard> dashboards = dashboardService.getAllDashboards();
         for(Dashboard item : dashboards) {
             dashboardsDto.add(modelMapper.map(item, DashboardDto.class));
         }
@@ -42,18 +44,18 @@ public class DashboardController {
 
     @PostMapping
     public Dashboard saveDashboard(@RequestBody Dashboard dashboard) {
-        return service.saveDashboard(dashboard);
+        return dashboardService.saveDashboard(dashboard);
     }
 
     @PutMapping
     public DashboardDto updateDashboard(@RequestBody DashboardDto dashboardForUpdate) {
-        Dashboard dashboard = modelMapper.map(service.getDashboardById(dashboardForUpdate.getId()), Dashboard.class);
-        return modelMapper.map(service.updateDashboard(dashboard), DashboardDto.class);
+        Dashboard dashboard = modelMapper.map(dashboardService.getDashboardById(dashboardForUpdate.getId()), Dashboard.class);
+        return modelMapper.map(dashboardService.updateDashboard(dashboard), DashboardDto.class);
     }
 
     @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity deleteDashboard(@PathVariable(name = "id") String id) {
-        service.deleteDashboard(id);
+        dashboardService.deleteDashboard(id);
         return ResponseEntity.noContent().build();
     }
 }
