@@ -12,17 +12,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping(value = "/api/issue")
 public class IssueController {
     private IssueService service;
-
-    @Autowired
     private ModelMapper modelMapper;
 
     @Autowired
-    public IssueController(IssueService service) {
+    public IssueController(IssueService service,ModelMapper modelMapper) {
         this.service = service;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping(value = "/{id}")
@@ -40,8 +39,19 @@ public class IssueController {
         return issuesDto;
     }
 
+    @GetMapping(value = "/project/{id}")
+    public List<IssueDto> getIssuesByProjectId(@PathVariable(name = "id") String id){
+        List<IssueDto> issuesDto = new ArrayList<>();
+
+        List<Issue> issues = service.getIssuesByProjectId(id);
+        for(Issue item: issues)
+            issuesDto.add(modelMapper.map(item,IssueDto.class));
+
+        return issuesDto;
+    }
+
     @PostMapping
-    public Issue saveIssue(@RequestBody Issue issue) {
+    public Issue saveIssue(@RequestBody IssueDto issue) {
         return service.saveIssue(issue);
     }
 

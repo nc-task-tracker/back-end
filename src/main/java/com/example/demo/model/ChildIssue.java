@@ -26,12 +26,6 @@ public class ChildIssue {
     private String childIssueDescription;
     private Date childIssueStartDate;
     private Date childIssueDueDate;
-
-    @ManyToOne(cascade = {
-            CascadeType.REMOVE,
-            CascadeType.MERGE
-    })
-    @JoinColumn(name = "childIssueStatus", referencedColumnName = "id")
     private IssueStatus issueStatus;
 
     public ChildIssue(String childIssueName, String childIssueDescription, Date childIssueStartDate, Date childIssueDueDate, IssueStatus issueStatus) {

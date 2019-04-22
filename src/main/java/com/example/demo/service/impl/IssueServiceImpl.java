@@ -1,8 +1,13 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.dto.IssueDto;
 import com.example.demo.model.Issue;
+import com.example.demo.model.IssuePriority;
+import com.example.demo.model.IssueStatus;
+import com.example.demo.model.IssueType;
 import com.example.demo.repository.IssueRepository;
 import com.example.demo.service.IssueService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,20 +17,31 @@ import java.util.List;
 public class IssueServiceImpl implements IssueService {
 
     private IssueRepository repository;
+    private ModelMapper modelMapper;
 
     @Autowired
-    public IssueServiceImpl(IssueRepository repository) {
+    public IssueServiceImpl(IssueRepository repository,ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
         this.repository = repository;
     }
 
     @Override
-    public Issue saveIssue(Issue issue) {
+    public Issue saveIssue(IssueDto issueDto) {
+        Issue issue = modelMapper.map(issueDto,Issue.class);
+        //issue.setIssueStatus(IssueStatus.Open);
+        //issue.setIssueType(IssueType.Feature);
+        //issue.setIssuePriority(IssuePriority.Medium);
         return repository.save(issue);
     }
 
     @Override
     public Issue getIssueById(String id) {
         return repository.findIssueById(id);
+    }
+
+    @Override
+    public List<Issue> getIssuesByProjectId(String id) {
+        return repository.findIssuesByProjectId(id);
     }
 
     @Override

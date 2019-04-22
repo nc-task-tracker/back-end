@@ -27,11 +27,11 @@ public class IssueDto {
     @NotNull
     private String issueDescription;
 
-    @NotNull
+    @Null
     @DateTimeFormat
     private Date startDate;
 
-    @NotNull
+    @Null
     @DateTimeFormat
     private Date dueDate;
 
@@ -47,13 +47,10 @@ public class IssueDto {
     @NotNull
     private IssueStatus issueStatus;
 
-    @NotNull
-    private Set<ChildIssue> childissue = new HashSet<>();
+    @Null
+    private Set<ChildIssue> childIssue = new HashSet<>();
 
-    @NotNull
-    private Set<Issue> issues = new HashSet<>();
-
-    @NotNull
+    @Null
     private Set<Issue> issueRoles = new HashSet<>();
 
 }

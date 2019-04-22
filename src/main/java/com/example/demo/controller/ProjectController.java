@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/projects")
+@RequestMapping(value = "/api/project")
 public class ProjectController {
     private ProjectService service;
     private ModelMapper modelMapper;

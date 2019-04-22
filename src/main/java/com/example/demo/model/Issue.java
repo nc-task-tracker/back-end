@@ -49,16 +49,6 @@ public class Issue {
             CascadeType.PERSIST,
             CascadeType.MERGE
     })
-    @JoinTable(name = "project_profile_projectrole",
-            joinColumns = @JoinColumn(name = "profileid"),
-            inverseJoinColumns = @JoinColumn(name = "issueid")
-    )
-    private Set<Issue> issues = new HashSet<>();
-
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
     @JoinTable(name = "issuerole_profile_issue",
             joinColumns = @JoinColumn(name = "profileid"),
             inverseJoinColumns = @JoinColumn(name = "issueroleid")
