@@ -26,8 +26,11 @@ public class ProjectDto {
     @NotNull
     private String projectDescription;
 
+    @NotNull
+    private String projectOwner;
+
     @Null
-    private ProjectStatus projectstatus;
+    private ProjectStatus projectStatus;
 
     @Null
     private ProjectType projectType;

@@ -27,6 +27,9 @@ public class Issue {
     private String issueDescription;
     private Date startDate;
     private Date dueDate;
+    private IssueType issueType;
+    private IssuePriority issuePriority;
+    private IssueStatus issueStatus;
 
     @ManyToOne(cascade = {
             CascadeType.PERSIST,
@@ -34,27 +37,6 @@ public class Issue {
     })
     @JoinColumn(name = "projectId", referencedColumnName = "id")
     private Project project;
-
-    @ManyToOne(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinColumn(name = "issueTypeId", referencedColumnName = "id")
-    private IssueType issuetype;
-
-    @ManyToOne(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinColumn(name ="issuePriorityId", referencedColumnName = "id")
-    private IssuePriority issuepriority;
-
-    @ManyToOne(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinColumn(name = "issueStatusId", referencedColumnName = "id")
-    private IssueStatus issuestatus;
 
     @OneToMany(cascade = {
             CascadeType.PERSIST,
@@ -89,8 +71,8 @@ public class Issue {
         this.startDate = startDate;
         this.dueDate = dueDate;
         this.project = project;
-        this.issuetype = issuetype;
-        this.issuepriority = issuepriority;
-        this.issuestatus = issuestatus;
+        this.issueType = issuetype;
+        this.issuePriority = issuepriority;
+        this.issueStatus = issuestatus;
     }
 }

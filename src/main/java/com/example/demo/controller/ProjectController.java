@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.ProjectDto;
 import com.example.demo.model.Project;
+import com.example.demo.model.ProjectType;
 import com.example.demo.service.ProjectService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,12 @@ import java.util.List;
 @RequestMapping(value = "/api/projects")
 public class ProjectController {
     private ProjectService service;
-
-    @Autowired
     private ModelMapper modelMapper;
 
     @Autowired
-    public ProjectController(ProjectService service) {
+    public ProjectController(ProjectService service,ModelMapper modelMapper) {
         this.service = service;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping(value = "/{id}")
@@ -41,7 +41,8 @@ public class ProjectController {
     }
 
     @PostMapping
-    public Project saveProject(@RequestBody Project project) {
+    public Project saveProject(@RequestBody ProjectDto projectDto) {
+        Project project = modelMapper.map(projectDto,Project.class);
         return service.saveProject(project);
     }
 

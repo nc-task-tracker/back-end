@@ -39,13 +39,13 @@ public class IssueDto {
     private Project project;
 
     @NotNull
-    private IssueType issuetype;
+    private IssueType issueType;
 
     @NotNull
-    private IssuePriority issuepriority;
+    private IssuePriority issuePriority;
 
     @NotNull
-    private IssueStatus issuestatus;
+    private IssueStatus issueStatus;
 
     @NotNull
     private Set<ChildIssue> childissue = new HashSet<>();
