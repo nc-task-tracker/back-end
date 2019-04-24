@@ -9,10 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping(value = "/api/issue")
 public class IssueController {
     private IssueService service;
@@ -41,8 +42,8 @@ public class IssueController {
     }
 
     @PostMapping
-    public Issue saveIssue(@RequestBody Issue issue) {
-        return service.saveIssue(issue);
+    public IssueDto saveIssue(@Valid @RequestBody IssueDto issue) {
+        return modelMapper.map(service.saveIssue(modelMapper.map(issue, Issue.class)), IssueDto.class);
     }
 
     @PutMapping
