@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface DashboardRepository extends CrudRepository<Dashboard, String> {
     Dashboard findDashboardById(String id);
-    List<Dashboard> findAllByUser(String id);
+    List<Dashboard> findAllByUser_Id(String id);
 }

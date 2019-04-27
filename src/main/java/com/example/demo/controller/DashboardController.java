@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.DashboardDto;
+import com.example.demo.dto.UserDto;
 import com.example.demo.model.Dashboard;
 import com.example.demo.service.DashboardService;
 import org.modelmapper.ModelMapper;
@@ -26,6 +27,11 @@ public class DashboardController {
         this.modelMapper = modelMapper;
     }
 
+    @GetMapping(value = "/{id}")
+    public DashboardDto getDashboardById(@PathVariable(name = "id") String id) {
+        return modelMapper.map(dashboardService.getDashboardById(id), DashboardDto.class);
+    }
+
     @GetMapping(value = "/all/{id}")
     public List<DashboardDto> getAllDashboardById(@PathVariable(name = "id") String id) {
         List<DashboardDto> dashboardsDto = new ArrayList<>();
@@ -36,17 +42,7 @@ public class DashboardController {
         return dashboardsDto;
     }
 
-    @GetMapping
-    public List<DashboardDto> getAllDashboards() {
-        List<DashboardDto> dashboardsDto = new ArrayList<>();
-        List<Dashboard> dashboards = dashboardService.getAllDashboards();
-        for(Dashboard item : dashboards) {
-            dashboardsDto.add(modelMapper.map(item, DashboardDto.class));
-        }
-        return dashboardsDto;
-    }
-
-    @PostMapping
+    @PostMapping(value = "/add")
     public Dashboard addDashboard(@RequestBody DashboardDto dashboardDto) {
         return dashboardService.addDashboard(modelMapper.map(dashboardDto, Dashboard.class));
     }

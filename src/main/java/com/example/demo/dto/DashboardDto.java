@@ -1,7 +1,6 @@
 package com.example.demo.dto;
 
-import com.example.demo.model.Filter;
-import com.example.demo.model.User;
+import com.example.demo.model.Widget;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,5 +26,5 @@ public class DashboardDto {
     private UserDto user;
 
     @Null
-    private Set<Filter> filters = new HashSet<>();
+    private Set<Widget> widgets = new HashSet<>();
 }

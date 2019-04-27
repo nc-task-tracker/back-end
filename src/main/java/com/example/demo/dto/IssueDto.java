@@ -48,10 +48,7 @@ public class IssueDto {
     private IssueStatus issuestatus;
 
     @NotNull
-    private Set<ChildIssue> childissue = new HashSet<>();
-
-    @NotNull
-    private Set<Issue> issues = new HashSet<>();
+    private Set<Issue> childIssue = new HashSet<>();
 
     @NotNull
     private Set<Issue> issueRoles = new HashSet<>();

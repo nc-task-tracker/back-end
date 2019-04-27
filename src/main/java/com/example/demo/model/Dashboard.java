@@ -28,7 +28,7 @@ public class Dashboard {
             CascadeType.PERSIST,
             CascadeType.MERGE
     })
-    @JoinColumn(name = "widgetId", referencedColumnName = "id")
+    @JoinColumn(name = "dashboardId", referencedColumnName = "id")
     private Set<Widget> widgets = new HashSet<>();
 
     @ManyToOne(cascade = {
