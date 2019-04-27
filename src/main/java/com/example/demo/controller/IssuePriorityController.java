@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.IssueDto;
 import com.example.demo.dto.IssuePriorityDto;
 import com.example.demo.model.Issue;
 import com.example.demo.model.IssuePriority;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping(value = "/api/issue_priority")
 public class IssuePriorityController {
     private IssuePriorityService service;

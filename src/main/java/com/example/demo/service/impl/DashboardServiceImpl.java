@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.dto.DashboardDto;
 import com.example.demo.model.Dashboard;
 import com.example.demo.repository.DashboardRepository;
 import com.example.demo.service.DashboardService;
@@ -19,7 +20,7 @@ public class DashboardServiceImpl implements DashboardService {
     }
 
     @Override
-    public Dashboard saveDashboard(Dashboard dashboard) {
+    public Dashboard addDashboard(Dashboard dashboard) {
         return repository.save(dashboard);
     }
 
@@ -41,5 +42,10 @@ public class DashboardServiceImpl implements DashboardService {
     @Override
     public void deleteDashboard(String id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<Dashboard> getAllDashboardByUserId(String id) {
+        return (List<Dashboard>) repository.findAllByUser(id);
     }
 }

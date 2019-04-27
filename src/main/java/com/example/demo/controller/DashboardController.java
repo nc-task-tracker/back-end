@@ -6,13 +6,12 @@ import com.example.demo.service.DashboardService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping(value = "/api/dashboard")
 public class DashboardController {
 
@@ -27,12 +26,17 @@ public class DashboardController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping(value = "/{id}")
-    public DashboardDto getDashboardById(@PathVariable(name = "id") String id) {
-        return modelMapper.map(dashboardService.getDashboardById(id), DashboardDto.class);
+    @GetMapping(value = "/all/{id}")
+    public List<DashboardDto> getAllDashboardById(@PathVariable(name = "id") String id) {
+        List<DashboardDto> dashboardsDto = new ArrayList<>();
+        List<Dashboard> dashboards = dashboardService.getAllDashboardByUserId(id);
+        for(Dashboard item : dashboards) {
+            dashboardsDto.add(modelMapper.map(item, DashboardDto.class));
+        }
+        return dashboardsDto;
     }
 
-    @GetMapping(value = "/all")
+    @GetMapping
     public List<DashboardDto> getAllDashboards() {
         List<DashboardDto> dashboardsDto = new ArrayList<>();
         List<Dashboard> dashboards = dashboardService.getAllDashboards();
@@ -43,8 +47,8 @@ public class DashboardController {
     }
 
     @PostMapping
-    public Dashboard saveDashboard(@RequestBody Dashboard dashboard) {
-        return dashboardService.saveDashboard(dashboard);
+    public Dashboard addDashboard(@RequestBody DashboardDto dashboardDto) {
+        return dashboardService.addDashboard(modelMapper.map(dashboardDto, Dashboard.class));
     }
 
     @PutMapping
@@ -58,4 +62,5 @@ public class DashboardController {
         dashboardService.deleteDashboard(id);
         return ResponseEntity.noContent().build();
     }
+
 }

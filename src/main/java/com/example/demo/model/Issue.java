@@ -83,7 +83,15 @@ public class Issue {
     )
     private Set<Issue> issueRoles = new HashSet<>();
 
-    public Issue(String issueName, String issueDescription, Date startDate, Date dueDate, Project project, IssueType issuetype, IssuePriority issuepriority, IssueStatus issuestatus) {
+    public Issue(String issueName,
+                 String issueDescription,
+                 Date startDate,
+                 Date dueDate,
+                 Project project,
+                 IssueType issuetype,
+                 IssuePriority issuepriority,
+                 IssueStatus issuestatus
+                 ) {
         this.issueName = issueName;
         this.issueDescription = issueDescription;
         this.startDate = startDate;
