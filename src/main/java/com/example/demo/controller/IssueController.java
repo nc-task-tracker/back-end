@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.IssueDto;
+import com.example.demo.model.Filter;
 import com.example.demo.model.Issue;
 import com.example.demo.service.IssueService;
 import org.modelmapper.ModelMapper;
@@ -24,9 +25,14 @@ public class IssueController {
         this.service = service;
     }
 
+//    @GetMapping(value = "/{id}")
+//    public IssueDto getIssueById(@PathVariable(name = "id") String id) {
+//        return modelMapper.map(service.getIssueById(id), IssueDto.class);
+//    }
+
     @GetMapping(value = "/{id}")
-    public IssueDto getIssueById(@PathVariable(name = "id") String id) {
-        return modelMapper.map(service.getIssueById(id), IssueDto.class);
+    public Issue getIssueById(@PathVariable(name = "id") String id) {
+        return service.getIssueById(id);
     }
 
     @GetMapping(value = "/all")
@@ -57,7 +63,8 @@ public class IssueController {
     }
 
     @GetMapping(value = "/search/")
-    public List<Issue> findAllIssuesByPredicates(@RequestBody Issue issue) {
-        return service.searchIssue(issue);
+    public List<Issue> findAllIssuesByPredicates(@RequestBody Filter filter) {
+//    public List<Issue> findAllIssuesByPredicates(@RequestBody Issue issue) {
+        return service.searchIssue(filter);
     }
 }

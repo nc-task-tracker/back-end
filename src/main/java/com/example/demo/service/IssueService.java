@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Filter;
 import com.example.demo.model.Issue;
 
 import java.util.Collection;
@@ -12,5 +13,6 @@ public interface IssueService {
     Issue updateIssue(Issue issue);
     List<Issue> getAllIssues();
     void deleteIssue(String id);
-    List<Issue> searchIssue(Issue issue);
+//    List<Issue> searchIssue(Issue issue);
+    List<Issue> searchIssue(Filter filter);
 }

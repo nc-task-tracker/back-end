@@ -1,8 +1,13 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -29,6 +34,18 @@ public class Issue {
     private Date dueDate;
     private String parentId;
 
+    @OneToOne(cascade = {
+            CascadeType.ALL
+    })
+    @JoinColumn(name = "reporterId", referencedColumnName = "id")
+    private Profile reporter;
+
+    @OneToOne(cascade = {
+            CascadeType.ALL
+    })
+    @JoinColumn(name = "assigneeId", referencedColumnName = "id")
+    private Profile assignee;
+
     @ManyToOne(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
@@ -36,52 +53,23 @@ public class Issue {
     @JoinColumn(name = "projectId", referencedColumnName = "id")
     private Project project;
 
-    @ManyToOne(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinColumn(name = "issueTypeId", referencedColumnName = "id")
+    @Enumerated(EnumType.STRING)
     private IssueType issuetype;
 
-    @ManyToOne(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinColumn(name ="issuePriorityId", referencedColumnName = "id")
+    @Enumerated(EnumType.STRING)
     private IssuePriority issuepriority;
 
-    @ManyToOne(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinColumn(name = "issueStatusId", referencedColumnName = "id")
+    @Enumerated(EnumType.STRING)
     private IssueStatus issuestatus;
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinTable(name = "issuerole_profile_issue",
-            joinColumns = @JoinColumn(name = "issueid"),
-            inverseJoinColumns = @JoinColumn(name = "profileid")
-    )
-    private Set<Profile> profiles = new HashSet<>();
-
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinTable(name = "issuerole_profile_issue",
-            joinColumns = @JoinColumn(name = "issueid"),
-            inverseJoinColumns = @JoinColumn(name = "issueroleid")
-    )
-    private Set<IssueRole> issueroles = new HashSet<>();
-
-    public Issue(String issueName, String issueDescription, Date startDate, Date dueDate, Project project, IssueType issuetype, IssuePriority issuepriority, IssueStatus issuestatus) {
+    public Issue(String issueName, String issueDescription, Date startDate, Date dueDate, String parentId, Profile reporter, Profile assignee, Project project, IssueType issuetype, IssuePriority issuepriority, IssueStatus issuestatus) {
         this.issueName = issueName;
         this.issueDescription = issueDescription;
         this.startDate = startDate;
         this.dueDate = dueDate;
+        this.parentId = parentId;
+        this.reporter = reporter;
+        this.assignee = assignee;
         this.project = project;
         this.issuetype = issuetype;
         this.issuepriority = issuepriority;

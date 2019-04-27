@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.ParameterDto;
 import com.example.demo.model.Parameter;
+import com.example.demo.model.ParameterType;
 import com.example.demo.service.ParameterService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,13 @@ public class ParameterController {
         this.service = service;
     }
 
+
+//    public ParameterDto getParameterById(@PathVariable(name = "id") String id) {
+//        return modelMapper.map(service.getParameterById(id), ParameterDto.class);
+//    }
     @GetMapping(value = "/{id}")
-    public ParameterDto getParameterById(@PathVariable(name = "id") String id) {
-        return modelMapper.map(service.getParameterById(id), ParameterDto.class);
+    public Parameter getParameterById(@PathVariable(name = "id") String id) {
+        return service.getParameterById(id);
     }
 
     @GetMapping(value = "/all")
@@ -39,10 +44,11 @@ public class ParameterController {
         return parametersDto;
     }
 
-    @PostMapping
-    public Parameter saveParameter(@RequestBody Parameter parameter) {
-        return service.saveParameter(parameter);
-    }
+//    @PostMapping
+//    public Parameter createParameter(@RequestBody Parameter parameter)
+//    {
+//        return service.saveParameter(parameter);
+//    }
 
     @PutMapping
     public ParameterDto updateParameter(@RequestBody ParameterDto parameterForUpdate) {

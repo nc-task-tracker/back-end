@@ -7,22 +7,12 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "issuestatus", schema = "new_schema")
-@Getter
-@Setter
-@NoArgsConstructor
-public class IssueStatus {
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
-    private String id;
-    private String issueStatusName;
-
-    public IssueStatus(String issueStatusName) {
-        this.issueStatusName = issueStatusName;
-    }
+public enum IssueStatus {
+    OPEN,
+    TO_GO,
+    IN_PROGRESS,
+    COMPLETE,
+    TESTING,
+    REOPENED,
+    DONE
 }

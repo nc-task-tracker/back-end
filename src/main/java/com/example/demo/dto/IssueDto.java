@@ -49,9 +49,7 @@ public class IssueDto {
     @NotNull
     private IssueStatus issuestatus;
 
-    @NotNull
-    private Set<Profile> profiles = new HashSet<>();
+    private Profile assignee;
 
-    @NotNull
-    private Set<IssueRole> issueroles = new HashSet<>();
+    private Profile reporter;
 }
