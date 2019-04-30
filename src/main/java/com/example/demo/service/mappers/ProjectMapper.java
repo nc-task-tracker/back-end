@@ -24,7 +24,7 @@ public class ProjectMapper {
 
     public ProjectDto convertToDto(Project project) {
         ProjectDto projectDto = modelMapper.map(project, ProjectDto.class);
-        projectDto.setOwnerId("kj");
+        projectDto.setOwnerId(project.getOwner().getId());
         return projectDto;
     }
 

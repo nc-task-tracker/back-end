@@ -41,7 +41,7 @@ public class UserController {
 
     @PostMapping
     public User saveUser(@RequestBody User account) {
-        return service.saveUser(account);
+        return service.addUser(account);
     }
 
     @PutMapping

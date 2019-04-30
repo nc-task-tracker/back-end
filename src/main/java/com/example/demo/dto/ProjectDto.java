@@ -30,7 +30,7 @@ public class ProjectDto {
     private String ownerId;
 
     @Null
-    private ProjectStatus projectstatus;
+    private ProjectStatus projectStatus;
 
     @Null
     private Set<Dashboard> dashboards = new HashSet<>();
