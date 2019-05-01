@@ -1,15 +1,15 @@
 package com.example.demo.config;
 
+import com.example.demo.dto.UserDto;
 import com.example.demo.model.AuthToken;
-import com.example.demo.model.User;
 import lombok.Data;
 
 @Data
 public class UserTokenModel {
-    User user;
+    UserDto user;
     AuthToken token;
 
-    public UserTokenModel(User user, AuthToken token) {
+    public UserTokenModel(UserDto user, AuthToken token) {
         this.user = user;
         this.token = token;
     }

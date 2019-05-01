@@ -1,5 +1,4 @@
 package com.example.demo.dto;
-
 import com.example.demo.model.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +10,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.util.HashSet;
 import java.util.Set;
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,16 +17,12 @@ import java.util.Set;
 public class ProjectDto {
     @Null
     private String id;
-
     @NotNull
     private String projectName;
-
     @NotNull
     private String projectDescription;
-
     @Null
     private ProjectType projecttype;
-
     @Null
     private ProjectStatus projectstatus;
 

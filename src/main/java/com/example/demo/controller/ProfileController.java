@@ -5,14 +5,16 @@ import com.example.demo.model.Profile;
 import com.example.demo.service.ProfileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping(value = "/api/profile")
 public class ProfileController {
     private ProfileService service;
@@ -40,15 +42,12 @@ public class ProfileController {
         return profilesDto;
     }
 
-    @PostMapping
-    public Profile saveProfile(@RequestBody Profile profile) {
-        return service.saveProfile(profile);
-    }
-
-    @PutMapping
+    @PutMapping(value = "/change-profile")
     public ProfileDto updateProfile(@RequestBody ProfileDto profileForUpdate) {
-        Profile profile = modelMapper.map(service.getProfileById(profileForUpdate.getId()), Profile.class);
-        return modelMapper.map(service.updateProfile(profile), ProfileDto.class);
+        Profile profile = modelMapper.map(profileForUpdate, Profile.class);
+        Profile update = service.updateProfile(profile);
+        ProfileDto profileDto = modelMapper.map(update, ProfileDto.class);
+        return (ProfileDto) profileDto;
     }
 
     @DeleteMapping(value = "/delete/{id}")
