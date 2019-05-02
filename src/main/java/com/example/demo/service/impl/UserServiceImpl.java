@@ -36,7 +36,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean existByEmail(String email) {
-        return userRepository.existsByEmail(email);
+        //return userRepository.existsByEmail(email);
+        return null;
     }
 
     @Override
@@ -70,12 +71,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByUsername(String username) {
-        return userRepository.findByLogin(username);
+    public void deleteUser(String id) {
+        userRepository.deleteById(id);
     }
 
     @Override
-    public void deleteUser(String id) {
-        userRepository.deleteById(id);
+    public User getUserByUsername(String username) {
+        return userRepository.findByLogin(username);
     }
 }

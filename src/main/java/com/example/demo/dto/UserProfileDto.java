@@ -15,8 +15,5 @@ public class UserProfileDto {
     private String login;
 
     @NotNull
-    private String firstName;
-
-    @NotNull
-    private String secondName;
+    private String FIO;
 }

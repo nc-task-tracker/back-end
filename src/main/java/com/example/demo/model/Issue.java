@@ -6,7 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,8 +23,8 @@ public class Issue {
             strategy = "org.hibernate.id.UUIDGenerator"
     )
     private String id;
-    private String issueName;
-    private String issueDescription;
+    private String name;
+    private String description;
     private Date startDate;
     private Date dueDate;
 
@@ -84,8 +84,8 @@ public class Issue {
     private Set<Issue> issueRoles = new HashSet<>();
 
     public Issue(String issueName, String issueDescription, Date startDate, Date dueDate, Project project, IssueType issuetype, IssuePriority issuepriority, IssueStatus issuestatus) {
-        this.issueName = issueName;
-        this.issueDescription = issueDescription;
+        this.name = issueName;
+        this.description = issueDescription;
         this.startDate = startDate;
         this.dueDate = dueDate;
         this.project = project;
