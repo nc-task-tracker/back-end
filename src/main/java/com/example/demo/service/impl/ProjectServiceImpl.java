@@ -3,7 +3,6 @@ package com.example.demo.service.impl;
 import com.example.demo.dto.ProjectDto;
 import com.example.demo.model.Project;
 import com.example.demo.model.ProjectStatus;
-import com.example.demo.model.ProjectType;
 import com.example.demo.repository.ProjectRepository;
 import com.example.demo.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,6 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project saveProject(Project project) {
-        project.setProjectType(ProjectType.OPEN);
         project.setProjectStatus(ProjectStatus.OPEN);
         return repository.save(project);
     }

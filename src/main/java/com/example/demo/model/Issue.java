@@ -65,4 +65,21 @@ public class Issue {
         this.issuePriority = issuepriority;
         this.issueStatus = issuestatus;
     }
+
+    @Override
+    public String toString() {
+        return "Issue{" +
+                "id='" + id + '\'' +
+                ", issueName='" + issueName + '\'' +
+                ", issueDescription='" + issueDescription + '\'' +
+                ", startDate=" + startDate +
+                ", dueDate=" + dueDate +
+                ", issueType=" + issueType +
+                ", issuePriority=" + issuePriority +
+                ", issueStatus=" + issueStatus +
+                ", project=" + project +
+                ", childissue=" + childissue +
+                ", issueRoles=" + issueRoles +
+                '}';
+    }
 }

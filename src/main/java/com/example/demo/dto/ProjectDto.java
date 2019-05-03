@@ -33,8 +33,5 @@ public class ProjectDto {
     private ProjectStatus projectStatus;
 
     @Null
-    private ProjectType projectType;
-
-    @Null
     private Set<Dashboard> dashboards = new HashSet<>();
 }

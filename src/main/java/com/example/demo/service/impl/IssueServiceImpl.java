@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.dto.IssueDto;
+import com.example.demo.dto.TableSortParametersDTO;
 import com.example.demo.model.Issue;
 import com.example.demo.model.IssuePriority;
 import com.example.demo.model.IssueStatus;
@@ -9,6 +10,9 @@ import com.example.demo.repository.IssueRepository;
 import com.example.demo.service.IssueService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -57,5 +61,15 @@ public class IssueServiceImpl implements IssueService {
     @Override
     public void deleteIssue(String id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<Issue> getSortedIssuesByProjectId(String id, TableSortParametersDTO parametersDTO){
+
+        Sort sort = new Sort(parametersDTO.getDirection().equals("asc")? Sort.Direction.ASC:Sort.Direction.DESC,
+                parametersDTO.getColumnName());
+        Pageable pageable = PageRequest.of(parametersDTO.getPage(),parametersDTO.getMaxElemOnPage(),sort);
+
+        return repository.findIssuesByProjectId(id,pageable);
     }
 }

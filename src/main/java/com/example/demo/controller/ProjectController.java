@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.ProjectDto;
 import com.example.demo.model.Project;
-import com.example.demo.model.ProjectType;
 import com.example.demo.service.ProjectService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.IssueDto;
+import com.example.demo.dto.TableSortParametersDTO;
 import com.example.demo.model.Issue;
 import com.example.demo.service.IssueService;
 import org.modelmapper.ModelMapper;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/issue")
@@ -19,7 +21,7 @@ public class IssueController {
     private ModelMapper modelMapper;
 
     @Autowired
-    public IssueController(IssueService service,ModelMapper modelMapper) {
+    public IssueController(IssueService service, ModelMapper modelMapper) {
         this.service = service;
         this.modelMapper = modelMapper;
     }
@@ -33,19 +35,19 @@ public class IssueController {
     public List<IssueDto> getAllIssues() {
         List<IssueDto> issuesDto = new ArrayList<>();
         List<Issue> issues = service.getAllIssues();
-        for(Issue item : issues) {
+        for (Issue item : issues) {
             issuesDto.add(modelMapper.map(item, IssueDto.class));
         }
         return issuesDto;
     }
 
     @GetMapping(value = "/project/{id}")
-    public List<IssueDto> getIssuesByProjectId(@PathVariable(name = "id") String id){
-        List<IssueDto> issuesDto = new ArrayList<>();
+    public List<IssueDto> getIssuesByProjectId(@PathVariable(name = "id") String id) {
 
-        List<Issue> issues = service.getIssuesByProjectId(id);
-        for(Issue item: issues)
-            issuesDto.add(modelMapper.map(item,IssueDto.class));
+        List<IssueDto> issuesDto = service.getIssuesByProjectId(id)
+                .stream().map(issue ->
+                    modelMapper.map(issue,IssueDto.class)
+                ).collect(Collectors.toList());
 
         return issuesDto;
     }
@@ -65,5 +67,13 @@ public class IssueController {
     public ResponseEntity deleteIssue(@PathVariable(name = "id") String id) {
         service.deleteIssue(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping(value = "project/{id}/sort")
+    public List<IssueDto> getSortedIssuesByProjectId(@PathVariable(name = "id") String id,
+                                                     @RequestBody TableSortParametersDTO sortParameters){
+        return service.getSortedIssuesByProjectId(id,sortParameters)
+                .stream().map(issue -> modelMapper.map(issue,IssueDto.class))
+                .collect(Collectors.toList());
     }
 }

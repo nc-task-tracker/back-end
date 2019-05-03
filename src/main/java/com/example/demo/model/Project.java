@@ -25,7 +25,6 @@ public class Project {
     private String id;
     private String projectName;
     private String projectDescription;
-    private ProjectType projectType;
     private String projectOwner;
     private ProjectStatus projectStatus;
 
@@ -39,10 +38,9 @@ public class Project {
     )
     private Set<Dashboard> dashboards = new HashSet<>();
 
-    public Project(String projectName, String projectDescription, ProjectType projectType, ProjectStatus projectStatus) {
+    public Project(String projectName, String projectDescription, ProjectStatus projectStatus) {
         this.projectName = projectName;
         this.projectDescription = projectDescription;
-        this.projectType = projectType;
         this.projectStatus = projectStatus;
     }
 
