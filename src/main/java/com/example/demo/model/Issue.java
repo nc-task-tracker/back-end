@@ -36,20 +36,20 @@ public class Issue {
     private Project project;
 
     @Enumerated(EnumType.STRING)
-    private IssueType issuetype;
+    private IssueType issueType;
 
     @Enumerated(EnumType.STRING)
-    private IssuePriority issuepriority;
+    private IssuePriority issuePriority;
 
     @Enumerated(EnumType.STRING)
-    private IssueStatus issuestatus;
+    private IssueStatus issueStatus;
 
-    @OneToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinColumn(name = "parentIssueId", referencedColumnName = "id")
-    private Set<Issue> childIssue = new HashSet<>();
+//    @OneToMany(cascade = {
+//            CascadeType.PERSIST,
+//            CascadeType.MERGE
+//    })
+//    @JoinColumn(name = "parentIssueId", referencedColumnName = "id")
+//    private Set<Issue> childIssue = new HashSet<>();
 
     @ManyToOne(cascade = {
             CascadeType.MERGE,
@@ -65,5 +65,6 @@ public class Issue {
     @JoinColumn(name = "assignerID", referencedColumnName = "id")
     private Profile assigner;
 
-
+    @OneToMany(mappedBy = "profile")
+    private Set<Comment> comments = new HashSet<>();
 }

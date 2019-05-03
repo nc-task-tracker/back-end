@@ -27,9 +27,6 @@ public class ProjectDto {
     private String projectDescription;
 
     @Null
-    private ProjectType projecttype;
-
-    @Null
     private ProjectStatus projectstatus;
 
     @Null

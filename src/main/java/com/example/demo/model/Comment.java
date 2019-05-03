@@ -25,15 +25,19 @@ public class Comment {
     private String commentText;
     private Date time;
 
+    @ManyToOne
+    private Profile profile;
+
     @ManyToOne(cascade = {
             CascadeType.ALL
     })
-    @JoinColumn(name = "profileId", referencedColumnName = "id")
-    private Profile profile;
+    @JoinColumn(name = "issueId", referencedColumnName = "id")
+    private Issue issue;
 
-    public Comment(String commentText, Date time, Profile profile) {
+    public Comment(String commentText, Date time, Profile profile, Issue issue) {
         this.commentText = commentText;
         this.time = time;
         this.profile = profile;
+        this.issue = issue;
     }
 }

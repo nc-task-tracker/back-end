@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.IssueDto;
+import com.example.demo.dto.UpdateIssueDto;
 import com.example.demo.model.Issue;
+import com.example.demo.service.CommentService;
 import com.example.demo.service.IssueService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +24,8 @@ public class IssueController {
     private ModelMapper modelMapper;
 
     @Autowired
-    public IssueController(IssueService service) {
-        this.service = service;
+    public IssueController(IssueService issueService, CommentService commentServeice) {
+        this.service = issueService;
     }
 
     @GetMapping(value = "/{id}")
@@ -45,10 +48,11 @@ public class IssueController {
         return service.saveIssue(issue);
     }
 
-    @PutMapping
-    public IssueDto updateIssue(@RequestBody IssueDto issueForUpdate) {
-        Issue issue = modelMapper.map(service.getIssueById(issueForUpdate.getId()), Issue.class);
-        return modelMapper.map(service.updateIssue(issue), IssueDto.class);
+    @PutMapping("{id}/acton")
+    public IssueDto updateIssue(@PathVariable(name = "id") String id,
+                                @Valid @RequestBody IssueDto issueDto) {
+        issueDto.setId(id);
+        return modelMapper.map(service.updateIssue(modelMapper.map(issueDto, Issue.class)), IssueDto.class);
     }
 
     @DeleteMapping(value = "/delete/{id}")

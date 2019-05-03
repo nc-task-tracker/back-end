@@ -17,36 +17,20 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class IssueDto {
-    @Null
+public class UpdateIssueDto {
+    @NotNull
     private String id;
-
-    @NotNull
-    private String issueName;
-
-    @NotNull
-    private String issueDescription;
-
-    @NotNull
-    @DateTimeFormat
-    private Date startDate;
 
     @NotNull
     @DateTimeFormat
     private Date dueDate;
 
     @NotNull
-    private Project project;
+    private IssueType issuetype;
 
     @NotNull
-    private IssueType issueType;
+    private IssuePriority issuepriority;
 
     @NotNull
-    private IssuePriority issuePriority;
-
-    @NotNull
-    private IssueStatus issueStatus;
-
-    @NotNull
-    private Set<Comment> comments = new HashSet<>();
+    private IssueStatus issuestatus;
 }
