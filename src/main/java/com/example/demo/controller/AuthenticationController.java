@@ -57,11 +57,11 @@ public class AuthenticationController {
         return new UserTokenModel(userService.getUserByUsername(loginUser.getLogin()), new AuthToken(token));
     }
 
-    //дата создания токена
-    @GetMapping(value = "/expDate")
-    public Date GetExpDate(@PathVariable String token) {
-        token = token.replace(Constants.TOKEN_PREFIX, "");
-        return jwtTokenUtil.getExpirationDateFromToken(token);
-    }
+//    //дата создания токена
+//    @GetMapping(value = "/expDate")
+//    public Date GetExpDate(@PathVariable String token) {
+//        token = token.replace(Constants.TOKEN_PREFIX, "");
+//        return jwtTokenUtil.getExpirationDateFromToken(token);
+//    }
 
 }
