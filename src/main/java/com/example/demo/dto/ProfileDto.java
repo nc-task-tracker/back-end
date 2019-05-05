@@ -1,7 +1,6 @@
 package com.example.demo.dto;
 
 import com.example.demo.model.Filter;
-import com.example.demo.model.IssueRole;
 import com.example.demo.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,9 +40,6 @@ public class ProfileDto {
 
     @Null
     private User user;
-
-    @Null
-    private Set<IssueRole> roles = new HashSet<>();
 
     @Null
     private Set<Filter> filters = new HashSet<>();
