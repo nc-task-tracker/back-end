@@ -25,6 +25,7 @@ public class User {
     private String id;
     private String login;
     private String password;
+    private String email;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {
             CascadeType.PERSIST,
@@ -40,11 +41,12 @@ public class User {
     @OneToOne(mappedBy = "user")
     private Profile profile;
 
-    public User(String login, String password, Set<Role> roles, Profile profile) {
+    public User(String login, String password, Set<Role> roles, Profile profile, String email) {
         this.login = login;
         this.password = password;
         this.roles = roles;
         this.profile = profile;
+        this.email = email;
     }
 
     @Override
@@ -53,7 +55,8 @@ public class User {
                 "id=" + id +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
-                ", roles=" + roles +
+                ", roles=" + roles + '\'' +
+                ", email=" + email +
                 '}';
     }
 
@@ -65,10 +68,11 @@ public class User {
         return id.equals(user.id) &&
                 login.equals(user.login) &&
                 password.equals(user.password) &&
-                roles.equals(user.roles);    }
+                roles.equals(user.roles) &&
+                email.equals(user.email);    }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, login, password, roles);
+        return Objects.hash(id, login, password, roles, email);
     }
 }

@@ -1,6 +1,5 @@
 package com.example.demo.config;
 
-
 import com.example.demo.model.AuthToken;
 import com.example.demo.model.User;
 import lombok.Data;
