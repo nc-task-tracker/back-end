@@ -53,7 +53,6 @@ public class Profile {
     @JsonManagedReference
     private Set<Filter> filters = new HashSet<>();
 
-
     public Profile(String firstName, String secondName, String email, Date birthday, User user, Set<Filter> filters) {
         this.firstName = firstName;
         this.secondName = secondName;
@@ -62,6 +61,15 @@ public class Profile {
         this.user = user;
         this.filters = filters;
     }
+
+//    public Profile(String firstName, String secondName, String email, Date birthday, User user, Filter filters) {
+//        this.firstName = firstName;
+//        this.secondName = secondName;
+//        this.email = email;
+//        this.birthday = birthday;
+//        this.user = user;
+//        this.filters = filters;
+//    }
 
     @Override
     public boolean equals(Object object) {

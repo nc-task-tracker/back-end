@@ -27,17 +27,6 @@ public class Parameter {
     @ElementCollection
     private List<String> parameterValues;
 
-//    @ManyToOne
-//    @JoinColumn(name = "filterId", referencedColumnName = "id")
-//    private Filter filter;
-
-//    public Parameter(ParameterType parameterType, String parameterValue, List<String> parameterValues, Filter filter) {
-//        this.parameterType = parameterType;
-//        this.parameterValue = parameterValue;
-//        this.parameterValues = parameterValues;
-//        this.filter = filter;
-//    }
-
     public Parameter(ParameterType parameterType, String parameterValue, List<String> parameterValues) {
         this.parameterType = parameterType;
         this.parameterValue = parameterValue;

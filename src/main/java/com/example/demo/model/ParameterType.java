@@ -3,7 +3,6 @@ package com.example.demo.model;
 import java.util.Arrays;
 import java.util.List;
 
-
 public enum ParameterType {
     ISSUE_NAME("name", null),
     ISSUE_DESCRIPTION("description", null),
