@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
             user.setPassword(bcryptEncoder.encode(user.getPassword()));
 
             Set role = new HashSet<Role>(1);
-            role.add(roleService.getRoleById("2"));
+            role.add(roleService.getRoleById("bb65ce3f-d8b9-4b08-8737-3cf55caf4bdd"));
             user.setRoles(role);
 
             return userRepository.save(user);
