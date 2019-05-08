@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,17 @@ public class ProjectController {
 
     @GetMapping(value = "/{id}")
     public ProjectDto getProjectById(@PathVariable(name = "id") String id) {
-        return modelMapper.map(service.getProjectById(id), ProjectDto.class);
+        return projectMapper.convertToDto(this.service.getProjectById(id));
+    }
+
+    @GetMapping(value= "/{code}")
+    public ProjectDto getProjectByCode(@PathVariable (name = "code") String code){
+        return projectMapper.convertToDto(this.service.getProjectByCode(code));
+    }
+
+    @GetMapping
+    public ProjectDto getProjectByName(@RequestParam(name = "name") String name){
+        return projectMapper.convertToDto(this.service.getProjectByName(name));
     }
 
     @GetMapping(value = "/all")
@@ -45,12 +56,12 @@ public class ProjectController {
     }
 
     @PostMapping
-    public ProjectDto createProject(@RequestBody ProjectDto projectDto) {
+    public ProjectDto createProject(@RequestBody @Valid ProjectDto projectDto) {
         return projectMapper.convertToDto(service.createProject(projectMapper.convertToEntity(projectDto)));
     }
 
     @PutMapping
-    public ProjectDto updateProject(@RequestBody ProjectDto projectForUpdate) {
+    public ProjectDto updateProject(@RequestBody @Valid ProjectDto projectForUpdate) {
         Project project = modelMapper.map(service.getProjectById(projectForUpdate.getId()), Project.class);
         return modelMapper.map(service.updateProject(project), ProjectDto.class);
     }

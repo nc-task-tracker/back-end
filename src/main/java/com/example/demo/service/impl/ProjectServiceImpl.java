@@ -15,18 +15,17 @@ import java.util.List;
 public class ProjectServiceImpl implements ProjectService {
 
     private ProjectRepository repository;
-    private final ProjectMapper projectMapper;
 
     @Autowired
-    public ProjectServiceImpl(ProjectRepository repository, ProjectMapper projectMapper) {
+    public ProjectServiceImpl(ProjectRepository repository) {
         this.repository = repository;
-        this.projectMapper = projectMapper;
     }
 
     @Override
     public Project createProject(Project project) {
         Project temp = repository.findProjectByProjectName(project.getProjectName());
-        if (temp == null) {
+        Project temp1 = repository.findProjectByProjectCode(project.getProjectCode());
+        if (temp == null && temp1 == null) {
             project.setProjectstatus(ProjectStatus.OPEN);
 
             return repository.save(project);
@@ -51,5 +50,15 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void deleteProject(String id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public Project getProjectByName(String name) {
+        return this.repository.findProjectByProjectName(name);
+    }
+
+    @Override
+    public Project getProjectByCode(String code) {
+        return this.repository.findProjectByProjectCode(code);
     }
 }

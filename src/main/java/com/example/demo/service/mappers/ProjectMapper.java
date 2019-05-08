@@ -23,12 +23,16 @@ public class ProjectMapper {
     }
 
     public ProjectDto convertToDto(Project project) {
+        if(project == null)
+            return null;
         ProjectDto projectDto = modelMapper.map(project, ProjectDto.class);
         projectDto.setOwnerId(project.getOwner().getId());
         return projectDto;
     }
 
     public Project convertToEntity(ProjectDto projectDto){
+        if(projectDto == null)
+            return null;
         Project project = modelMapper.map(projectDto, Project.class);
         project.setOwner(userService.getUserById(projectDto.getOwnerId()));
         return project;

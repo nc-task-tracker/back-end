@@ -24,6 +24,7 @@ public class Project {
     )
     private String id;
     private String projectName;
+    private String projectCode;
     private String projectDescription;
     private ProjectStatus projectstatus;
 
