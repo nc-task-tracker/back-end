@@ -29,7 +29,7 @@ public class AuthenticationController {
     }
 
 /*    @GetMapping(value = "/expDate")
-    public Date GetExpDate(@PathVariable String token) {
+    public Date GetExpDate(@PathVariable String token) {р
         token = token.replace(Constants.TOKEN_PREFIX, "");
         return jwtTokenUtil.getExpirationDateFromToken(token);
     }*/
