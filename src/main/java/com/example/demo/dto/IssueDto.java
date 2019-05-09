@@ -47,6 +47,9 @@ public class IssueDto {
     @NotNull
     private IssueStatus issueStatus;
 
+    @Null
+    private Set<ChildIssue> childIssue = new HashSet<>();
+
     @NotNull
     private Set<Comment> comments = new HashSet<>();
 }

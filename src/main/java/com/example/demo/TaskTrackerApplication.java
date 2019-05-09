@@ -14,7 +14,5 @@ public class TaskTrackerApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(TaskTrackerApplication.class, args);
-        System.out.println("hello world!");
     }
-
 }
