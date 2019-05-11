@@ -61,13 +61,10 @@ public class IssueDto {
     private Set<Issue> issueRoles = new HashSet<>();
 
 */
-/*
-    @Null
-    private User assignee;
 
     @Null
-    private User reporter;
-*/
+    private String assignee;
 
-
+    @Null
+    private String reporter;
 }
