@@ -1,5 +1,7 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.model.Profile;
+import com.example.demo.model.Project;
 import com.example.demo.model.Role;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
@@ -78,5 +80,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByUsername(String username) {
         return userRepository.findByLogin(username);
+    }
+
+    @Override
+    public List<Project> getPossibleProjects(String username) {
+        return userRepository.findByLogin(username).getProfile().getProjects();
     }
 }

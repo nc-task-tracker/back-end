@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.ProjectDto;
+import com.example.demo.model.Profile;
 import com.example.demo.model.Project;
 import com.example.demo.service.ProjectService;
+import com.example.demo.service.UserService;
 import com.example.demo.service.mappers.ProjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ import java.util.List;
 @RequestMapping(value = "/api/project")
 public class ProjectController {
     private ProjectService service;
+
+    private UserService userService;
 
     private final ModelMapper modelMapper;
 
@@ -38,6 +42,16 @@ public class ProjectController {
     @GetMapping(value= "/{code}")
     public ProjectDto getProjectByCode(@PathVariable (name = "code") String code){
         return projectMapper.convertToDto(this.service.getProjectByCode(code));
+    }
+
+    @GetMapping(value = "/by_user")
+    public List<ProjectDto>  getPossibleProjectsByUser(@RequestParam(name = "username") String username){
+        List<ProjectDto> projectsDto = new ArrayList<>();
+        List<Project> possibleProjects = userService.getPossibleProjects(username);
+        for (Project item : possibleProjects) {
+            projectsDto.add(modelMapper.map(item, ProjectDto.class));
+        }
+        return projectsDto;
     }
 
     @GetMapping

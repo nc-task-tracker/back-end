@@ -7,9 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "profile", schema = "new_schema")
@@ -56,6 +54,17 @@ public class Profile {
     )
     private Set<Filter> filters = new HashSet<>();
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {
+            CascadeType.MERGE,
+            CascadeType.PERSIST
+    })
+    @JoinTable(name = "project_profile",
+            joinColumns = @JoinColumn(name = "projectid"),
+            inverseJoinColumns = @JoinColumn(name = "profileid")
+    )
+    private List<Project> projects = new LinkedList<>();
+
+
     public Profile(String firstName, String secondName, String email, Date birthday, User user) {
         this.firstName = firstName;
         this.secondName = secondName;
@@ -63,6 +72,8 @@ public class Profile {
         this.birthday = birthday;
         this.user = user;
     }
+
+
 
     @Override
     public boolean equals(Object object) {

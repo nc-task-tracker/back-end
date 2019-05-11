@@ -47,10 +47,14 @@ public class Project {
     )
     private Set<Dashboard> dashboards = new HashSet<>();
 
-    public Project(String projectName, String projectDescription, ProjectStatus projectStatus) {
+
+    public Project(String projectName, String projectCode, String projectDescription, ProjectStatus projectStatus) {
+
         this.projectName = projectName;
         this.projectDescription = projectDescription;
         this.projectstatus = projectStatus;
+        this.projectCode = projectCode;
+
     }
 
     @Override

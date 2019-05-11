@@ -27,33 +27,47 @@ public class IssueDto {
     @NotNull
     private String issueDescription;
 
-    @NotNull
+    @Null
     @DateTimeFormat
     private Date startDate;
 
-    @NotNull
+    //TODO: Change annotation on notnull
+    @Null
     @DateTimeFormat
     private Date dueDate;
 
-    @NotNull
-    private Project project;
 
-    @NotNull
+    //TODO: CHANGE ANNOTATION
+//    @Null
+//    private Project project;
+
+    @Null
     private IssueType issuetype;
 
-    @NotNull
+    @Null
     private IssuePriority issuepriority;
 
-    @NotNull
+    @Null
     private IssueStatus issuestatus;
+/*
 
-    @NotNull
+    @Null
     private Set<ChildIssue> childissue = new HashSet<>();
 
-    @NotNull
+    @Null
     private Set<Issue> issues = new HashSet<>();
 
-    @NotNull
+    @Null
     private Set<Issue> issueRoles = new HashSet<>();
+
+*/
+/*
+    @Null
+    private User assignee;
+
+    @Null
+    private User reporter;
+*/
+
 
 }
