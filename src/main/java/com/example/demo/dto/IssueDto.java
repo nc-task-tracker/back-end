@@ -1,3 +1,4 @@
+
 package com.example.demo.dto;
 
 import com.example.demo.model.*;
@@ -9,9 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
-import java.sql.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Date;
 
 @Setter
 @Getter
@@ -32,39 +31,26 @@ public class IssueDto {
     private Date startDate;
 
     //TODO: Change annotation on notnull
-    @Null
+    @NotNull
     @DateTimeFormat
     private Date dueDate;
 
-
-    //TODO: CHANGE ANNOTATION
-//    @Null
-//    private Project project;
-
     @Null
+    private String parentId;
+
+    @NotNull
+    private String project;
+
+    @NotNull
     private IssueType issuetype;
 
-    @Null
+    @NotNull
     private IssuePriority issuepriority;
 
     @Null
     private IssueStatus issuestatus;
-/*
 
-    @Null
-    private Set<ChildIssue> childissue = new HashSet<>();
-
-    @Null
-    private Set<Issue> issues = new HashSet<>();
-
-    @Null
-    private Set<Issue> issueRoles = new HashSet<>();
-
-*/
-
-    @Null
     private String assignee;
 
-    @Null
     private String reporter;
 }

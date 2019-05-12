@@ -1,14 +1,12 @@
 package com.example.demo.dto;
 
 import com.example.demo.model.Filter;
-import com.example.demo.model.IssueRole;
 import com.example.demo.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.lang.NonNull;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -41,9 +39,6 @@ public class ProfileDto {
 
     @Null
     private User user;
-
-    @Null
-    private Set<IssueRole> roles = new HashSet<>();
 
     @Null
     private Set<Filter> filters = new HashSet<>();
