@@ -26,19 +26,15 @@ public class IssueDto {
     @NotNull
     private String issueDescription;
 
-    @Null
-    @DateTimeFormat
-    private Date startDate;
-
     //TODO: Change annotation on notnull
-    @NotNull
+    @Null
     @DateTimeFormat
     private Date dueDate;
 
     @Null
     private String parentId;
 
-    @NotNull
+    @Null
     private String project;
 
     @NotNull

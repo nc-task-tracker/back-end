@@ -46,6 +46,8 @@ public class Issue {
     @JoinColumn(name = "projectId", referencedColumnName = "id")
     private Project project;
 
+    private String code;
+
     @Enumerated(EnumType.STRING)
     private IssueType issuetype;
 
@@ -55,7 +57,7 @@ public class Issue {
     @Enumerated(EnumType.STRING)
     private IssueStatus issuestatus;
 
-    public Issue(String issueName, String issueDescription, Date startDate, Date dueDate, String parentId, Profile reporter, Profile assignee, Project project, IssueType issuetype, IssuePriority issuepriority, IssueStatus issuestatus) {
+    public Issue(String issueName, String issueDescription, Date startDate, Date dueDate, String parentId, Profile reporter, Profile assignee, Project project, String code, IssueType issuetype, IssuePriority issuepriority, IssueStatus issuestatus) {
         this.issueName = issueName;
         this.issueDescription = issueDescription;
         this.startDate = startDate;
@@ -64,6 +66,7 @@ public class Issue {
         this.reporter = reporter;
         this.assignee = assignee;
         this.project = project;
+        this.code = code;
         this.issuetype = issuetype;
         this.issuepriority = issuepriority;
         this.issuestatus = issuestatus;

@@ -44,7 +44,7 @@ public class ProjectController {
         return projectMapper.convertToDto(this.service.getProjectByCode(code));
     }
 
-    @GetMapping(value = "/by_user")
+    @GetMapping(value = "/possibleprojects")
     public List<ProjectDto>  getPossibleProjectsByUser(@RequestParam(name = "username") String username){
         List<ProjectDto> projectsDto = new ArrayList<>();
         List<Project> possibleProjects = userService.getPossibleProjects(username);
