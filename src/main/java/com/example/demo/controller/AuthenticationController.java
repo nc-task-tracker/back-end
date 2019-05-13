@@ -21,7 +21,7 @@ import javax.naming.AuthenticationException;
 import java.util.Date;
 
 @RestController
-@RequestMapping("/api/login")
+@RequestMapping("/api/authentication/login")
 public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;

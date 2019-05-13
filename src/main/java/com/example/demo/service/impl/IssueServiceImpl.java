@@ -1,21 +1,21 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.dto.IssueDto;
-import com.example.demo.dto.TableSortParametersDTO;
+import com.example.demo.dto.util.PageDto;
+import com.example.demo.dto.util.TableSortParametersDTO;
 import com.example.demo.model.Issue;
-import com.example.demo.model.IssuePriority;
-import com.example.demo.model.IssueStatus;
-import com.example.demo.model.IssueType;
 import com.example.demo.repository.IssueRepository;
 import com.example.demo.service.IssueService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class IssueServiceImpl implements IssueService {
@@ -55,7 +55,7 @@ public class IssueServiceImpl implements IssueService {
 
     @Override
     public List<Issue> getAllIssues() {
-        return (List<Issue>) repository.findAll();
+        return repository.findAll();
     }
 
     @Override
@@ -64,12 +64,20 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public List<Issue> getSortedIssuesByProjectId(String id, TableSortParametersDTO parametersDTO){
+    public PageDto<IssueDto> getSortedIssuesByProjectId(String id, TableSortParametersDTO parametersDTO){
+        PageDto<IssueDto> pageDto = new PageDto<>();
 
-        Sort sort = new Sort(parametersDTO.getDirection().equals("asc")? Sort.Direction.ASC:Sort.Direction.DESC,
-                parametersDTO.getColumnName());
-        Pageable pageable = PageRequest.of(parametersDTO.getPage(),parametersDTO.getMaxElemOnPage(),sort);
+        Sort sort = new Sort(parametersDTO.get_direction().equals("asc")? Sort.Direction.ASC:Sort.Direction.DESC,
+                parametersDTO.get_columnName());
+        Pageable pageable = PageRequest.of(parametersDTO.get_page(),parametersDTO.get_maxElemOnPage(),sort);
 
-        return repository.findIssuesByProjectId(id,pageable);
+        Page<Issue> all = repository.findAllByProjectId(id,pageable);
+
+        pageDto.setTotalElem(all.getTotalElements());
+        pageDto.setTotalPages(all.getTotalPages());
+        pageDto.setList(all.get().map(value -> modelMapper.map(value,IssueDto.class)).collect(Collectors.toList()));
+        pageDto.setPageSize(all.getSize());
+
+        return pageDto;
     }
 }

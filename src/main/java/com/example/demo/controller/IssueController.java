@@ -1,13 +1,13 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.IssueDto;
-import com.example.demo.dto.TableSortParametersDTO;
+import com.example.demo.dto.util.PageDto;
+import com.example.demo.dto.util.TableSortParametersDTO;
 import com.example.demo.model.Issue;
 import com.example.demo.service.IssueService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -44,12 +44,9 @@ public class IssueController {
     @GetMapping(value = "/project/{id}")
     public List<IssueDto> getIssuesByProjectId(@PathVariable(name = "id") String id) {
 
-        List<IssueDto> issuesDto = service.getIssuesByProjectId(id)
-                .stream().map(issue ->
-                    modelMapper.map(issue,IssueDto.class)
-                ).collect(Collectors.toList());
-
-        return issuesDto;
+        return service.getIssuesByProjectId(id)
+                .stream().map(issue -> modelMapper.map(issue,IssueDto.class))
+                .collect(Collectors.toList());
     }
 
     @PostMapping
@@ -70,10 +67,8 @@ public class IssueController {
     }
 
     @PostMapping(value = "project/{id}/sort")
-    public List<IssueDto> getSortedIssuesByProjectId(@PathVariable(name = "id") String id,
-                                                     @RequestBody TableSortParametersDTO sortParameters){
-        return service.getSortedIssuesByProjectId(id,sortParameters)
-                .stream().map(issue -> modelMapper.map(issue,IssueDto.class))
-                .collect(Collectors.toList());
+    public PageDto<IssueDto> getSortedIssuesByProjectId(@PathVariable(name = "id") String id,
+                                              @RequestBody TableSortParametersDTO sortParameters){
+        return service.getSortedIssuesByProjectId(id,sortParameters);
     }
 }

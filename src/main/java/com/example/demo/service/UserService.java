@@ -14,4 +14,5 @@ public interface UserService {
     List<User> getAllUsers();
     void deleteUser(String id);
     User getUserByUsername(String username);
+    List<User> getNotProjectAssigners(String projectId);
 }

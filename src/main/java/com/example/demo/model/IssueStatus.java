@@ -8,5 +8,5 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 public enum  IssueStatus {
-    Open,Resolved,Reopened,InProgress,Closed
+    DONE,REOPENED,TESTING,COMPLETE,IN_PROGRESS,TO_DO,OPEN
 }

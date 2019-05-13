@@ -8,5 +8,5 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 public enum  IssueType {
-    Task,Bug,Epic,Improvement,Feature
+    SUB_TASK,TASK,BUG,EPIC,IMPROVEMENT,NEW_FEATURE,STORY
 }

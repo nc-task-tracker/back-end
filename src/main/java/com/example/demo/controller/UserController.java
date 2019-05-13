@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/users")
@@ -37,6 +38,14 @@ public class UserController {
             usersDto.add(modelMapper.map(item, UserDto.class));
         }
         return usersDto;
+    }
+
+    @GetMapping(value = "/noassigner/project/{id}")
+    public List<UserDto> getNotAssignersProject(@PathVariable(name = "id") String projectId){
+        System.out.println("1");
+        return service.getNotProjectAssigners(projectId).stream()
+                .map(value -> modelMapper.map(value,UserDto.class))
+                .collect(Collectors.toList());
     }
 
     @PostMapping

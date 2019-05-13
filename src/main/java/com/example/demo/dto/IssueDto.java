@@ -1,10 +1,7 @@
 package com.example.demo.dto;
 
 import com.example.demo.model.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
@@ -17,17 +14,18 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class IssueDto {
     @Null
     private String id;
 
     @NotNull
-    private String issueName;
+    private String name;
 
     @NotNull
-    private String issueDescription;
+    private String description;
 
-    @Null
+    @NotNull
     @DateTimeFormat
     private Date startDate;
 
@@ -39,13 +37,13 @@ public class IssueDto {
     private Project project;
 
     @NotNull
-    private IssueType issueType;
+    private IssueType type;
 
     @NotNull
-    private IssuePriority issuePriority;
+    private IssuePriority priority;
 
     @NotNull
-    private IssueStatus issueStatus;
+    private IssueStatus status;
 
     @Null
     private Set<ChildIssue> childIssue = new HashSet<>();

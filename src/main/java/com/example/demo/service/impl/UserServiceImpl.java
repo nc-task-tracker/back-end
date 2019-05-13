@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers() {
-        return (List<User>)repository.findAll();
+        return repository.findAll();
     }
 
     @Override
@@ -65,5 +65,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(String id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<User> getNotProjectAssigners(String projectId) {
+        return repository.getNotProjectAssigners(projectId);
     }
 }

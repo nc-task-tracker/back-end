@@ -1,10 +1,7 @@
 package com.example.demo.dto;
 
 import com.example.demo.model.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.lang.NonNull;
 
 import javax.validation.constraints.NotNull;
@@ -26,12 +23,32 @@ public class ProjectDto {
     @NotNull
     private String projectDescription;
 
+    @Null
+    private User projectOwner;
+
     @NotNull
-    private String projectOwner;
+    private String projectCode;
 
     @Null
     private ProjectStatus projectStatus;
 
     @Null
+    private Set<User> assigners = new HashSet<>();
+
+    @Null
     private Set<Dashboard> dashboards = new HashSet<>();
+
+    @Override
+    public String toString() {
+        return "ProjectDto{" +
+                "id='" + id + '\'' +
+                ", projectName='" + projectName + '\'' +
+                ", projectDescription='" + projectDescription + '\'' +
+                ", projectOwner=" + projectOwner +
+                ", projectCode='" + projectCode + '\'' +
+                ", projectStatus=" + projectStatus +
+                ", assigners=" + assigners +
+                ", dashboards=" + dashboards +
+                '}';
+    }
 }

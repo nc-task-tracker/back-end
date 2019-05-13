@@ -8,5 +8,5 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 public enum  IssuePriority {
-    Lowest,Low,Medium,High,Highest
+    MINOR,TRIVIAL,BLOCKER,CRITICAL,MAJOR
 }

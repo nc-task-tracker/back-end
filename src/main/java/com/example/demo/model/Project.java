@@ -25,8 +25,26 @@ public class Project {
     private String id;
     private String projectName;
     private String projectDescription;
-    private String projectOwner;
     private ProjectStatus projectStatus;
+    private String projectCode;
+
+    @ManyToOne(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinColumn(name = "ownerId", referencedColumnName = "id")
+    private User owner;
+
+
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "project_assigner",
+               joinColumns = @JoinColumn(name = "project_id"),
+                inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<User> assigners = new HashSet<>();
 
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
@@ -52,12 +70,25 @@ public class Project {
         return Objects.equals(id, project.id) &&
                 Objects.equals(projectName, project.projectName) &&
                 Objects.equals(projectDescription, project.projectDescription) &&
-                //Objects.equals(projectType, project.projectType) &&
                 Objects.equals(projectStatus, project.projectStatus);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, projectName, projectDescription, /*projectType,*/ projectStatus);
+        return Objects.hash(id, projectName, projectDescription,projectStatus);
+    }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id='" + id + '\'' +
+                ", projectName='" + projectName + '\'' +
+                ", projectDescription='" + projectDescription + '\'' +
+                ", projectStatus=" + projectStatus +
+                ", projectCode='" + projectCode + '\'' +
+                ", owner=" + owner +
+                ", assigners=" + assigners +
+                ", dashboards=" + dashboards +
+                '}';
     }
 }

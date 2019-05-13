@@ -38,22 +38,22 @@ public class Issue {
     @JoinColumn(name = "projectId", referencedColumnName = "id")
     private Project project;
 
-    @OneToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
+    @OneToOne(cascade = {
+            CascadeType.MERGE,
+            CascadeType.PERSIST
     })
-    @JoinColumn(name = "childIssueId", referencedColumnName = "id")
-    private Set<ChildIssue> childissue = new HashSet<>();
+    @JoinColumn(name = "reporterId", referencedColumnName = "id")
+    private Profile reporter;
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
+    @ManyToOne(cascade = {
+            CascadeType.MERGE,
+            CascadeType.PERSIST
     })
-    @JoinTable(name = "issuerole_profile_issue",
-            joinColumns = @JoinColumn(name = "profileid"),
-            inverseJoinColumns = @JoinColumn(name = "issueroleid")
-    )
-    private Set<Issue> issueRoles = new HashSet<>();
+    @JoinColumn(name = "assignerID", referencedColumnName = "id")
+    private Profile assigners;
+
+    @OneToMany(mappedBy = "profile")
+    private Set<Comment> comments = new HashSet<>();
 
     public Issue(String issueName, String issueDescription, Date startDate, Date dueDate, Project project, IssueType issuetype, IssuePriority issuepriority, IssueStatus issuestatus) {
         this.issueName = issueName;
@@ -66,20 +66,5 @@ public class Issue {
         this.issueStatus = issuestatus;
     }
 
-    @Override
-    public String toString() {
-        return "Issue{" +
-                "id='" + id + '\'' +
-                ", issueName='" + issueName + '\'' +
-                ", issueDescription='" + issueDescription + '\'' +
-                ", startDate=" + startDate +
-                ", dueDate=" + dueDate +
-                ", issueType=" + issueType +
-                ", issuePriority=" + issuePriority +
-                ", issueStatus=" + issueStatus +
-                ", project=" + project +
-                ", childissue=" + childissue +
-                ", issueRoles=" + issueRoles +
-                '}';
-    }
+
 }
