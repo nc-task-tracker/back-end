@@ -24,11 +24,6 @@ public class FilterController {
         this.service = service;
     }
 
-//    @GetMapping(value = "/{id}")
-//    public FilterDto getFilterById(@PathVariable(name = "id") String id) {
-//        return modelMapper.map(service.getFilterById(id), FilterDto.class);
-//    }
-
     @GetMapping(value = "/{id}")
     public Filter getFilterById(@PathVariable(name = "id") String id) {
         return service.getFilterById(id);

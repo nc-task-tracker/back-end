@@ -1,11 +1,10 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.dto.ProjectDto;
 import com.example.demo.model.Project;
 import com.example.demo.model.ProjectStatus;
+import com.example.demo.repository.ProfileRepository;
 import com.example.demo.repository.ProjectRepository;
 import com.example.demo.service.ProjectService;
-import com.example.demo.service.mappers.ProjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

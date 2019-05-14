@@ -2,22 +2,31 @@ package com.example.demo.service.impl;
 
 import com.example.demo.model.*;
 import com.example.demo.repository.IssueRepository;
+import com.example.demo.repository.ProfileRepository;
 import com.example.demo.service.IssueService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Sort;
+import org.apache.commons.lang3.StringUtils;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class IssueServiceImpl implements IssueService {
 
     private IssueRepository repository;
+    private ProfileRepository profileRepository;
 
     @Autowired
-    public IssueServiceImpl(IssueRepository repository) {
+    public IssueServiceImpl(IssueRepository repository, ProfileRepository profileRepository) {
         this.repository = repository;
+        this.profileRepository = profileRepository;
     }
 
     @Override
@@ -43,6 +52,32 @@ public class IssueServiceImpl implements IssueService {
     @Override
     public void deleteIssue(String id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<ModelForSearch> searchAssignee(String inputValue) {
+        Sort sort = new Sort(Sort.Direction.ASC, "first_name");
+        Pageable pageable = PageRequest.of(1, 10, sort);
+        List<Profile> resultSearch = StringUtils.isEmpty(inputValue) ?
+                profileRepository.findAll(sort)
+                : profileRepository.searchAssignee(String.format("%%%s%%", inputValue));
+
+        return resultSearch.stream()
+                .map(item -> new ModelForSearch(item.getId(), item.getFirstName() == null ? null : item.getFirstName()))
+                .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Override
+    public List<ModelForSearch> searchReporter(String inputValue) {
+        Sort sort = new Sort(Sort.Direction.ASC, "first_name");
+        Pageable pageable = PageRequest.of(1, 10, sort);
+        List<Profile> resultSearch = StringUtils.isEmpty(inputValue) ?
+                profileRepository.findAll(sort)
+                : profileRepository.searchReporter(String.format("%%%s%%", inputValue));
+
+        return resultSearch.stream()
+                .map(item -> new ModelForSearch(item.getId(), item.getFirstName() == null ? null : item.getFirstName()))
+                .collect(Collectors.toCollection(LinkedList::new));
     }
 
     @Override

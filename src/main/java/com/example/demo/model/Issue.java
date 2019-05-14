@@ -44,6 +44,7 @@ public class Issue {
             CascadeType.ALL
     })
     @JoinColumn(name = "assigneeId", referencedColumnName = "id")
+    @Fetch(FetchMode.JOIN)
     private Profile assignee;
 
     @ManyToOne(cascade = {

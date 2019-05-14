@@ -1,8 +1,11 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.FilterDto;
 import com.example.demo.dto.IssueDto;
 import com.example.demo.model.Filter;
 import com.example.demo.model.Issue;
+import com.example.demo.model.ModelForSearch;
+import com.example.demo.model.UserProfile;
 import com.example.demo.service.IssueService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,8 +66,27 @@ public class IssueController {
     }
 
     @GetMapping(value = "/search/")
-    public List<Issue> findAllIssuesByPredicates(@RequestBody Filter filter) {
-//    public List<Issue> findAllIssuesByPredicates(@RequestBody Issue issue) {
-        return service.searchIssue(filter);
+    public List<IssueDto> findAllIssuesByPredicates(@RequestBody FilterDto filterDto) {
+        List<IssueDto> issuesDto = new ArrayList<>();
+        List<Issue> issues = service.searchIssue(modelMapper.map(filterDto, Filter.class));
+        for(Issue item : issues) {
+            issuesDto.add(modelMapper.map(item, IssueDto.class));
+        }
+        return issuesDto;
+    }
+
+//    @GetMapping(value="/assignee")
+//    public List<UserProfile> getAssignee(@RequestParam(required = false) String substring) {
+//        return service.getAssigneeList(substring);
+//    }
+
+    @GetMapping(value="/assigneeName")
+    public List<ModelForSearch> getAssignee(@RequestParam(required = false) String substring) {
+        return service.searchAssignee(substring);
+    }
+
+    @GetMapping(value="/reporterName")
+    public List<ModelForSearch> getReporter(@RequestParam(required = false) String substring) {
+        return service.searchReporter(substring);
     }
 }

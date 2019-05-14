@@ -52,6 +52,16 @@ public class Project {
     )
     private Set<Dashboard> dashboards = new HashSet<>();
 
+    @ManyToMany(cascade = {
+            CascadeType.MERGE,
+            CascadeType.PERSIST
+    })
+    @JoinTable(name = "project_profile",
+            joinColumns = @JoinColumn(name = "projectid"),
+            inverseJoinColumns = @JoinColumn(name = "profileid")
+    )
+    private Set<Profile> profiles = new HashSet<>();
+
     public Project(String projectName, String projectDescription, ProjectStatus projectStatus) {
         this.projectName = projectName;
         this.projectDescription = projectDescription;

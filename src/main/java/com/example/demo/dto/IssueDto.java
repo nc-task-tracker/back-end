@@ -18,35 +18,26 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class IssueDto {
-    @Null
     private String id;
 
     private String issueName;
 
-    @NotNull
     private String issueDescription;
 
-    @NotNull
     @DateTimeFormat
     private Date startDate;
 
-    @NotNull
     @DateTimeFormat
     private Date dueDate;
 
-    @NotNull
     private String parentId;
 
-    @NotNull
     private Project project;
 
-    @NotNull
     private IssueType issuetype;
 
-    @NotNull
     private IssuePriority issuepriority;
 
-    @NotNull
     private IssueStatus issuestatus;
 
     private Profile assignee;
