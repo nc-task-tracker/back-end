@@ -63,7 +63,7 @@ public class ProjectController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping(value = "/{id}/add/assigner")
+    @PostMapping(value = "/add/assigner/{id}")
     public ResponseEntity addAssigner(@RequestBody UserDto userDto,
                                       @PathVariable(name = "id") String id){
         //System.out.println("123" + projectId);
