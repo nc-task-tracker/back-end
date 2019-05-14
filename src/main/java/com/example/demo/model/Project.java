@@ -24,11 +24,18 @@ public class Project {
     )
     private String id;
     private String projectName;
-    private String projectDescription;
     private String projectCode;
+    private String projectDescription;
 
     @Enumerated(EnumType.STRING)
     private ProjectStatus projectStatus;
+    @ManyToOne(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinColumn(name = "ownerId", referencedColumnName = "id")
+    private User owner;
+
 
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
