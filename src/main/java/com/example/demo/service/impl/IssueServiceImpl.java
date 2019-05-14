@@ -29,7 +29,7 @@ public class IssueServiceImpl implements IssueService {
 
     @Override
     public Issue getIssueById (String id) {
-        return repository.findIssueById (id);
+        return repository.findIssueById(id);
     }
 
     @Override
@@ -37,10 +37,11 @@ public class IssueServiceImpl implements IssueService {
         Issue dbIssue = repository.findById (issue.getId ()).orElseThrow (InternalError::new);
         issue.setStartDate (dbIssue.getStartDate ());
 
-        if (!issue.getProject().getId().equals(dbIssue.getProject().getId())
-                || !issue.getReporter().getId().equals(dbIssue.getReporter().getId())) {
-            throw new InternalError();
-        }
+//        if (!issue.getProject().getId().equals(dbIssue.getProject().getId())
+//                || !issue.getReporter().getId().equals(dbIssue.getReporter().getId())) {
+//            throw new InternalError();
+//        }
+
         return repository.save(issue);
     }
 

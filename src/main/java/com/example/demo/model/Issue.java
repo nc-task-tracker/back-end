@@ -27,6 +27,7 @@ public class Issue {
     private String issueDescription;
     private Date startDate;
     private Date dueDate;
+    private String issueCode;
 
     @ManyToOne(cascade = {
             CascadeType.PERSIST,
@@ -44,13 +45,6 @@ public class Issue {
     @Enumerated(EnumType.STRING)
     private IssueStatus issueStatus;
 
-//    @OneToMany(cascade = {
-//            CascadeType.PERSIST,
-//            CascadeType.MERGE
-//    })
-//    @JoinColumn(name = "parentIssueId", referencedColumnName = "id")
-//    private Set<Issue> childIssue = new HashSet<>();
-
     @ManyToOne(cascade = {
             CascadeType.MERGE,
             CascadeType.PERSIST
@@ -65,6 +59,6 @@ public class Issue {
     @JoinColumn(name = "assignerID", referencedColumnName = "id")
     private Profile assigner;
 
-    @OneToMany(mappedBy = "profile")
+    @OneToMany(mappedBy = "issue")
     private Set<Comment> comments = new HashSet<>();
 }

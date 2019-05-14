@@ -35,7 +35,6 @@ public class IssueDto {
     @DateTimeFormat
     private Date dueDate;
 
-    @NotNull
     private Project project;
 
     @NotNull
@@ -47,9 +46,11 @@ public class IssueDto {
     @NotNull
     private IssueStatus issueStatus;
 
-    @Null
+    private Profile reporter;
+
+    private Profile assigner;
+
     private Set<ChildIssue> childIssue = new HashSet<>();
 
-    @NotNull
     private Set<Comment> comments = new HashSet<>();
 }
