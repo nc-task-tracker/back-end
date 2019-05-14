@@ -2,6 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.ProjectDto;
 import com.example.demo.model.Project;
+import com.example.demo.model.projectFilter.ParameterProject;
+import com.example.demo.model.projectFilter.ParameterProjectType;
+import com.example.demo.model.projectFilter.ProjectFilter;
 import com.example.demo.service.ProjectService;
 import com.example.demo.service.mappers.ProjectMapper;
 import org.modelmapper.ModelMapper;
@@ -35,14 +38,29 @@ public class ProjectController {
         return projectMapper.convertToDto(this.service.getProjectById(id));
     }
 
-    @GetMapping(value= "/{code}")
-    public ProjectDto getProjectByCode(@PathVariable (name = "code") String code){
+    @GetMapping(value = "/{code}")
+    public ProjectDto getProjectByCode(@PathVariable(name = "code") String code) {
         return projectMapper.convertToDto(this.service.getProjectByCode(code));
     }
 
     @GetMapping
-    public ProjectDto getProjectByName(@RequestParam(name = "name") String name){
-        return projectMapper.convertToDto(this.service.getProjectByName(name));
+    public List<ProjectDto> searchProjects(@RequestParam(name = "name") String name,
+                                           @RequestParam(name = "code") String code) {
+        List<ProjectDto> result = new ArrayList<>();
+
+        /*ProjectFilter projectFilter = new ProjectFilter();
+        projectFilter.getParameters().add(new ParameterProject(name, ParameterProjectType.PROJECT_NAME));
+        projectFilter.getParameters().add(new ParameterProject(code, ParameterProjectType.PROJECT_CODE));
+
+        this.service.searchProject(projectFilter).forEach(
+                project -> result.add(projectMapper.convertToDto(project)));*/
+        if(!name.equals("null")){
+            result.add(projectMapper.convertToDto(this.service.getProjectByName(name)));
+        }
+        if(!code.equals("null")){
+            result.add(projectMapper.convertToDto(this.service.getProjectByCode(code)));
+        }
+        return result;
     }
 
     @GetMapping(value = "/all")
