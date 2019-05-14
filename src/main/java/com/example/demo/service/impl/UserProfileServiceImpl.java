@@ -29,7 +29,6 @@ public class UserProfileServiceImpl implements UserProfileService {
     public List<UserProfile> getAssigneeList(String inputValue) {
         Sort sort = new Sort(Sort.Direction.ASC, "login");
         Pageable pageable = PageRequest.of(1, 10, sort);
-        //TODO: mull "" return all
         List<User> resultSearch = StringUtils.isEmpty(inputValue) ?
                 userRepository.findAll(sort)
                 : userRepository.findUserProfileBySubstring(String.format("%%%s%%", inputValue), sort);

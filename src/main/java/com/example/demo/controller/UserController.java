@@ -47,8 +47,8 @@ public class UserController {
     }
 
     @GetMapping(value="/assignee")
-    public List<UserProfile> getAssignee(@RequestParam(required = false) String substring) {
-        return userProfileService.getAssigneeList(substring);
+    public List<UserProfile> getAssignee(@RequestParam(required = false) String name) {
+        return userProfileService.getAssigneeList(name);
 
     }
 

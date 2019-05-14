@@ -28,8 +28,9 @@ public class ProjectController {
     private final ProjectMapper projectMapper;
 
     @Autowired
-    public ProjectController(ProjectService service, ModelMapper modelMapper, ProjectMapper projectMapper) {
+    public ProjectController(ProjectService service, UserService userService, ModelMapper modelMapper, ProjectMapper projectMapper) {
         this.service = service;
+        this.userService = userService;
         this.modelMapper = modelMapper;
         this.projectMapper = projectMapper;
     }

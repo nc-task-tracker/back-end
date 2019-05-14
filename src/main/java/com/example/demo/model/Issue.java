@@ -39,25 +39,25 @@ public class Issue {
     @JoinColumn(name = "assigneeId", referencedColumnName = "id")
     private Profile assignee;
 
-    @ManyToOne(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinColumn(name = "projectId", referencedColumnName = "id")
-    private Project project;
+//    @ManyToOne(cascade = {
+//            CascadeType.PERSIST,
+//            CascadeType.MERGE
+//    })
+//    @JoinColumn(name = "projectId", referencedColumnName = "id")
+//    private Project project;
 
     private String code;
 
     @Enumerated(EnumType.STRING)
-    private IssueType issuetype;
+    private IssueType issueType;
 
     @Enumerated(EnumType.STRING)
-    private IssuePriority issuepriority;
+    private IssuePriority issuePriority;
 
     @Enumerated(EnumType.STRING)
-    private IssueStatus issuestatus;
+    private IssueStatus issueStatus;
 
-    public Issue(String issueName, String issueDescription, Date startDate, Date dueDate, String parentId, Profile reporter, Profile assignee, Project project, String code, IssueType issuetype, IssuePriority issuepriority, IssueStatus issuestatus) {
+    public Issue(String issueName, String issueDescription, Date startDate, Date dueDate, String parentId, Profile reporter, Profile assignee, Project project, String code, IssueType issueType, IssuePriority issuePriority, IssueStatus issueStatus) {
         this.issueName = issueName;
         this.issueDescription = issueDescription;
         this.startDate = startDate;
@@ -65,10 +65,10 @@ public class Issue {
         this.parentId = parentId;
         this.reporter = reporter;
         this.assignee = assignee;
-        this.project = project;
+        //this.project = project;
         this.code = code;
-        this.issuetype = issuetype;
-        this.issuepriority = issuepriority;
-        this.issuestatus = issuestatus;
+        this.issueType = issueType;
+        this.issuePriority = issuePriority;
+        this.issueStatus = issueStatus;
     }
 }
