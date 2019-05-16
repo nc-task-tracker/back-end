@@ -52,7 +52,7 @@ public class IssueController {
 
     @PutMapping(value = "/{id}")
     public IssueDto updateIssue(@PathVariable(name = "id") String id,
-                                @Valid @RequestBody IssueDto issueDto) {
+                                @RequestBody IssueDto issueDto) {
         issueDto.setId(id);
         return modelMapper.map(issueService.updateIssue(modelMapper.map(issueDto, Issue.class)), IssueDto.class);
     }

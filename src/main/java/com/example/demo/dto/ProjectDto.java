@@ -32,7 +32,6 @@ public class ProjectDto {
     @NotBlank(message = "Project owner id shouldn't be blank")
     private String ownerId;
 
-
     private ProjectStatus projectStatus;
 
     private Set<Dashboard> dashboards = new HashSet<>();

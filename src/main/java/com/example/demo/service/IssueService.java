@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.UpdateIssueDto;
 import com.example.demo.model.Issue;
 
 import java.util.List;
