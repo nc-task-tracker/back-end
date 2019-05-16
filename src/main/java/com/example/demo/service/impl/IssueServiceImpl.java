@@ -14,6 +14,8 @@ import org.springframework.data.domain.Sort;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.LinkedList;
+
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,13 +26,14 @@ public class IssueServiceImpl implements IssueService {
     private ProfileRepository profileRepository;
 
     @Autowired
-    public IssueServiceImpl(IssueRepository repository, ProfileRepository profileRepository) {
+    public IssueServiceImpl(IssueRepository repository) {
         this.repository = repository;
         this.profileRepository = profileRepository;
     }
 
     @Override
     public Issue saveIssue(Issue issue) {
+//        issue.setStartDate(new Date());
         return repository.save(issue);
     }
 

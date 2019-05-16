@@ -1,13 +1,8 @@
 package com.example.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -28,8 +23,8 @@ public class Issue {
             strategy = "org.hibernate.id.UUIDGenerator"
     )
     private String id;
-    private String issueName;
-    private String issueDescription;
+    private String name;
+    private String description;
     private Date startDate;
     private Date dueDate;
     private String parentId;
@@ -44,7 +39,6 @@ public class Issue {
             CascadeType.ALL
     })
     @JoinColumn(name = "assigneeId", referencedColumnName = "id")
-    @Fetch(FetchMode.JOIN)
     private Profile assignee;
 
     @ManyToOne(cascade = {
@@ -63,9 +57,11 @@ public class Issue {
     @Enumerated(EnumType.STRING)
     private IssueStatus issuestatus;
 
-    public Issue(String issueName, String issueDescription, Date startDate, Date dueDate, String parentId, Profile reporter, Profile assignee, Project project, IssueType issuetype, IssuePriority issuepriority, IssueStatus issuestatus) {
-        this.issueName = issueName;
-        this.issueDescription = issueDescription;
+
+
+    public Issue(String issueName, String issueDescription, Date startDate, Date dueDate, Project project, IssueType issuetype, IssuePriority issuepriority, IssueStatus issuestatus) {
+        this.name = issueName;
+        this.description = issueDescription;
         this.startDate = startDate;
         this.dueDate = dueDate;
         this.parentId = parentId;

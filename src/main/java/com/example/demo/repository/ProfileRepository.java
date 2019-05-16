@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface ProfileRepository extends CrudRepository<Profile, String>{
     Profile findProfileById(String id);
+
 }
