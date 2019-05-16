@@ -38,20 +38,6 @@ public class Issue {
     @JoinColumn(name = "projectId", referencedColumnName = "id")
     private Project project;
 
-    @OneToOne(cascade = {
-            CascadeType.MERGE,
-            CascadeType.PERSIST
-    })
-    @JoinColumn(name = "reporterId", referencedColumnName = "id")
-    private Profile reporter;
-
-    @ManyToOne(cascade = {
-            CascadeType.MERGE,
-            CascadeType.PERSIST
-    })
-    @JoinColumn(name = "assignerID", referencedColumnName = "id")
-    private Profile assigners;
-
     @OneToMany(mappedBy = "profile")
     private Set<Comment> comments = new HashSet<>();
 

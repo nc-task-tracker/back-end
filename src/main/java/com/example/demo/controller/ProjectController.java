@@ -41,7 +41,6 @@ public class ProjectController {
 
     @PostMapping(value = "/all/sorted")
     public PageDto<ProjectDto> getAllSortedProjects(@RequestBody TableSortParametersDTO parameters){
-        System.out.println(parameters.toString());
         return service.getAllSortedProjects(parameters);
     }
 
@@ -66,9 +65,8 @@ public class ProjectController {
     @PostMapping(value = "/add/assigner/{id}")
     public ResponseEntity addAssigner(@RequestBody UserDto userDto,
                                       @PathVariable(name = "id") String id){
-        //System.out.println("123" + projectId);
-        System.out.println(userDto.toString());
-        //service.addAssigner(projectId,userDto.getId());
+        System.out.println("234234");
+        service.addAssigner(id,userDto.getId());
         return ResponseEntity.noContent().build();
     }
 
