@@ -36,10 +36,10 @@ public class ProfileDto {
     @NotNull
     private String description;
 
-    @Null
-    private Set<Dashboard> dashboards = new HashSet<>();
-    @Null
-    private Set<Filter> filters = new HashSet<>();
-    @Null
-    private Set<Project> projects = new HashSet<>();
+//    @Null
+//    private Set<Dashboard> dashboards = new HashSet<>();
+//    @Null
+//    private Set<Filter> filters = new HashSet<>();
+//    @Null
+//    private Set<Project> projects = new HashSet<>();
 }

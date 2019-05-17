@@ -1,6 +1,8 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.model.Dashboard;
 import com.example.demo.model.Profile;
+import com.example.demo.model.Project;
 import com.example.demo.repository.ProfileRepository;
 import com.example.demo.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,4 +38,9 @@ public class ProfileServiceImpl implements ProfileService {
     public void deleteProfile(String id) {
         repository.deleteById(id);
     }
+
+    /*@Override
+    public List<Project> getAllProjectByUserId(String id) {
+        return (List<Project>) repository.findAllByUser_Id(id);
+    }*/
 }
