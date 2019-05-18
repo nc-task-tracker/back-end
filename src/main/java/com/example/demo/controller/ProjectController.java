@@ -2,13 +2,18 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.ProjectDto;
 import com.example.demo.model.Project;
+import com.example.demo.model.projectFilter.ParameterProject;
+import com.example.demo.model.projectFilter.ParameterProjectType;
+import com.example.demo.model.projectFilter.ProjectFilter;
 import com.example.demo.service.ProjectService;
+import com.example.demo.service.mappers.ProjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,36 +22,64 @@ import java.util.List;
 public class ProjectController {
     private ProjectService service;
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
+
+    private final ProjectMapper projectMapper;
 
     @Autowired
-    public ProjectController(ProjectService service) {
+    public ProjectController(ProjectService service, ModelMapper modelMapper, ProjectMapper projectMapper) {
         this.service = service;
+        this.modelMapper = modelMapper;
+        this.projectMapper = projectMapper;
     }
 
     @GetMapping(value = "/{id}")
     public ProjectDto getProjectById(@PathVariable(name = "id") String id) {
-        return modelMapper.map(service.getProjectById(id), ProjectDto.class);
+        return projectMapper.convertToDto(this.service.getProjectById(id));
+    }
+
+    @GetMapping(value = "/{code}")
+    public ProjectDto getProjectByCode(@PathVariable(name = "code") String code) {
+        return projectMapper.convertToDto(this.service.getProjectByCode(code));
+    }
+
+    @GetMapping
+    public List<ProjectDto> searchProjects(@RequestParam(name = "name") String name,
+                                           @RequestParam(name = "code") String code) {
+        List<ProjectDto> result = new ArrayList<>();
+
+        /*ProjectFilter projectFilter = new ProjectFilter();
+        projectFilter.getParameters().add(new ParameterProject(name, ParameterProjectType.PROJECT_NAME));
+        projectFilter.getParameters().add(new ParameterProject(code, ParameterProjectType.PROJECT_CODE));
+
+        this.service.searchProject(projectFilter).forEach(
+                project -> result.add(projectMapper.convertToDto(project)));*/
+        if(!name.equals("null")){
+            result.add(projectMapper.convertToDto(this.service.getProjectByName(name)));
+        }
+        if(!code.equals("null")){
+            result.add(projectMapper.convertToDto(this.service.getProjectByCode(code)));
+        }
+        return result;
     }
 
     @GetMapping(value = "/all")
     public List<ProjectDto> getAllProjects() {
         List<ProjectDto> projectsDto = new ArrayList<>();
         List<Project> projects = service.getAllProjects();
-        for(Project item : projects) {
+        for (Project item : projects) {
             projectsDto.add(modelMapper.map(item, ProjectDto.class));
         }
         return projectsDto;
     }
 
     @PostMapping
-    public Project saveProject(@RequestBody Project project) {
-        return service.saveProject(project);
+    public ProjectDto createProject(@RequestBody @Valid ProjectDto projectDto) {
+        return projectMapper.convertToDto(service.createProject(projectMapper.convertToEntity(projectDto)));
     }
 
     @PutMapping
-    public ProjectDto updateProject(@RequestBody ProjectDto projectForUpdate) {
+    public ProjectDto updateProject(@RequestBody @Valid ProjectDto projectForUpdate) {
         Project project = modelMapper.map(service.getProjectById(projectForUpdate.getId()), Project.class);
         return modelMapper.map(service.updateProject(project), ProjectDto.class);
     }

@@ -24,21 +24,18 @@ public class Project {
     )
     private String id;
     private String projectName;
+    private String projectCode;
     private String projectDescription;
 
+    @Enumerated(EnumType.STRING)
+    private ProjectStatus projectStatus;
     @ManyToOne(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
     })
-    @JoinColumn(name = "projectTypeId", referencedColumnName = "id")
-    private ProjectType projecttype;
+    @JoinColumn(name = "ownerId", referencedColumnName = "id")
+    private User owner;
 
-    @ManyToOne(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinColumn(name = "projectStatusId", referencedColumnName = "id")
-    private ProjectStatus projectstatus;
 
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
@@ -50,11 +47,12 @@ public class Project {
     )
     private Set<Dashboard> dashboards = new HashSet<>();
 
-    public Project(String projectName, String projectDescription, ProjectType projectType, ProjectStatus projectStatus) {
+    public Project(String projectName, String projectDescription,
+                   ProjectStatus projectStatus, String projectCode) {
         this.projectName = projectName;
         this.projectDescription = projectDescription;
-        this.projecttype = projectType;
-        this.projectstatus = projectStatus;
+        this.projectStatus = projectStatus;
+        this.projectCode = projectCode;
     }
 
     @Override
@@ -65,12 +63,11 @@ public class Project {
         return Objects.equals(id, project.id) &&
                 Objects.equals(projectName, project.projectName) &&
                 Objects.equals(projectDescription, project.projectDescription) &&
-                Objects.equals(projecttype, project.projecttype) &&
-                Objects.equals(projectstatus, project.projectstatus);
+                Objects.equals(projectStatus, project.projectStatus);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, projectName, projectDescription, projecttype, projectstatus);
+        return Objects.hash(id, projectName, projectDescription, projectStatus);
     }
 }

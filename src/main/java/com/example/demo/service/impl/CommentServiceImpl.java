@@ -6,6 +6,7 @@ import com.example.demo.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -20,6 +21,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment saveComment(Comment comment) {
+        Date date = new Date ();
+        comment.setTime (date);
         return repository.save(comment);
     }
 
