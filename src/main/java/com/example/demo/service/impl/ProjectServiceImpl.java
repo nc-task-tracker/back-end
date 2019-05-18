@@ -1,7 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.model.*;
-import com.example.demo.model.QProject;
+//import com.example.demo.model.QProject;
 import com.example.demo.model.projectFilter.ParameterProject;
 import com.example.demo.model.projectFilter.ProjectFilter;
 import com.example.demo.repository.ProjectRepository;
@@ -69,20 +69,20 @@ public class ProjectServiceImpl implements ProjectService {
         return (List<Project>) repository.findAll(createProjectSearchPredicate(projectFilter));
     }*/
 
-    public Predicate createProjectSearchPredicate(ProjectFilter projectFilter) {
-        BooleanBuilder expression = new BooleanBuilder();
-        QProject project = QProject.project;
-
-        projectFilter.getParameters().forEach(parameterProject -> {
-            switch (parameterProject.getParameterProjectType()) {
-                case PROJECT_NAME:
-                    expression.and(project.projectName.stringValue().in(parameterProject.getParameterValue()));
-                    break;
-                case PROJECT_CODE:
-                    expression.and(project.projectCode.stringValue().in(parameterProject.getParameterValue()));
-                    break;
-            }
-        });
-        return expression;
-    }
+//    public Predicate createProjectSearchPredicate(ProjectFilter projectFilter) {
+//        BooleanBuilder expression = new BooleanBuilder();
+//        QProject project = QProject.project;
+//
+//        projectFilter.getParameters().forEach(parameterProject -> {
+//            switch (parameterProject.getParameterProjectType()) {
+//                case PROJECT_NAME:
+//                    expression.and(project.projectName.stringValue().in(parameterProject.getParameterValue()));
+//                    break;
+//                case PROJECT_CODE:
+//                    expression.and(project.projectCode.stringValue().in(parameterProject.getParameterValue()));
+//                    break;
+//            }
+//        });
+//        return expression;
+//    }
 }

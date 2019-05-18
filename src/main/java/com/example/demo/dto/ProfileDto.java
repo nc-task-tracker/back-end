@@ -33,7 +33,7 @@ public class ProfileDto {
     @DateTimeFormat
     private Date birthday;
 
-    private User user;
-
-    private Set<Filter> filters = new HashSet<>();
+//    private User user;
+//
+//    private Set<Filter> filters = new HashSet<>();
 }

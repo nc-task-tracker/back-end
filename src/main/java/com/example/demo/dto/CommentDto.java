@@ -22,11 +22,10 @@ public class CommentDto {
     @NotNull
     private String commentText;
 
+    @DateTimeFormat
     private Date time;
 
-    @NotNull
-    private Profile profile;
+    private ProfileDto profile;
 
     private String issueId;
-
 }

@@ -36,7 +36,6 @@ public class Project {
     @JoinColumn(name = "ownerId", referencedColumnName = "id")
     private User owner;
 
-
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE

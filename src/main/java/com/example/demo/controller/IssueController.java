@@ -63,8 +63,25 @@ public class IssueController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping(value = "/saveComment")
-    public CommentDto saveComment (@RequestBody CommentDto commentDto) {
+    @PostMapping(value = "/{id}/saveComment")
+    public CommentDto saveComment (@PathVariable(name = "id") String id,
+                                   @RequestBody CommentDto commentDto) {
         return modelMapper.map(commentService.saveComment(modelMapper.map(commentDto, Comment.class)), CommentDto.class);
     }
+
+    @GetMapping(value = "/allComments")
+    public List<CommentDto> getAllComments() {
+        List<CommentDto> commentsDto = new ArrayList<>();
+        List<Comment> comments = commentService.getAllComments();
+        for(Comment item : comments) {
+            commentsDto.add(modelMapper.map(item, CommentDto.class));
+        }
+        return commentsDto;
+    }
+
+////    @DeleteMapping(value = "/delete/{id}")
+////    public ResponseEntity deleteComment(@PathVariable(name = "id") String id) {
+////        commentService.deleteComment(id);
+////        return ResponseEntity.noContent().build();
+////    }
 }

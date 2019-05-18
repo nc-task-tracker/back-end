@@ -52,5 +52,5 @@ public class IssueDto {
 
     private Set<ChildIssue> childIssue = new HashSet<>();
 
-    private Set<Comment> comments = new HashSet<>();
+    private Set<CommentDto> comments = new HashSet<>();
 }
