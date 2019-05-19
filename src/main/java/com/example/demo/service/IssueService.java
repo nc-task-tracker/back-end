@@ -5,7 +5,7 @@ import com.example.demo.model.Issue;
 import java.util.List;
 
 public interface IssueService {
-    Issue saveIssue(Issue issue);
+    Issue createIssue(String projectId, Issue issue);
     Issue getIssueById(String id);
     Issue updateIssue(Issue issue);
     List<Issue> getAllIssues();

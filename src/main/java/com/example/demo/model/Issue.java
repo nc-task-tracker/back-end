@@ -39,12 +39,12 @@ public class Issue {
     @JoinColumn(name = "assigneeId", referencedColumnName = "id")
     private Profile assignee;
 
-//    @ManyToOne(cascade = {
-//            CascadeType.PERSIST,
-//            CascadeType.MERGE
-//    })
-//    @JoinColumn(name = "projectId", referencedColumnName = "id")
-//    private Project project;
+    @ManyToOne(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinColumn(name = "projectId", referencedColumnName = "id")
+    private Project project;
 
     private String code;
 
@@ -65,7 +65,7 @@ public class Issue {
         this.parentId = parentId;
         this.reporter = reporter;
         this.assignee = assignee;
-        //this.project = project;
+        this.project = project;
         this.code = code;
         this.issueType = issueType;
         this.issuePriority = issuePriority;

@@ -32,9 +32,9 @@ public class IssueDto {
     private Date dueDate;
 
     private String parentId;
-//
-//    @Null
-//    private String project;
+
+    @Null
+    private Project project;
 
     @NotNull
     private IssueType issueType;
@@ -45,8 +45,9 @@ public class IssueDto {
     @Null
     private IssueStatus issueStatus;
 
-
+    @Null
     private String assignee;
 
+    @Null
     private String reporter;
 }
