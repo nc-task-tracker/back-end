@@ -44,22 +44,19 @@ public class ProjectController {
     }
 
     @GetMapping
-    public List<ProjectDto> searchProjects(@RequestParam(name = "name") String name,
-                                           @RequestParam(name = "code") String code) {
+    public List<ProjectDto> searchProjects(@RequestParam(name = "name", required = false) String name,
+                                           @RequestParam(name = "code", required = false) String code) {
         List<ProjectDto> result = new ArrayList<>();
 
-        /*ProjectFilter projectFilter = new ProjectFilter();
-        projectFilter.getParameters().add(new ParameterProject(name, ParameterProjectType.PROJECT_NAME));
-        projectFilter.getParameters().add(new ParameterProject(code, ParameterProjectType.PROJECT_CODE));
-
+        ProjectFilter projectFilter = new ProjectFilter();
+        if (name != null) {
+            projectFilter.getParameters().add(new ParameterProject(name, ParameterProjectType.PROJECT_NAME));
+        }
+        if (code != null) {
+            projectFilter.getParameters().add(new ParameterProject(code, ParameterProjectType.PROJECT_CODE));
+        }
         this.service.searchProject(projectFilter).forEach(
-                project -> result.add(projectMapper.convertToDto(project)));*/
-        if(!name.equals("null")){
-            result.add(projectMapper.convertToDto(this.service.getProjectByName(name)));
-        }
-        if(!code.equals("null")){
-            result.add(projectMapper.convertToDto(this.service.getProjectByCode(code)));
-        }
+                project -> result.add(projectMapper.convertToDto(project)));
         return result;
     }
 

@@ -1,7 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.model.*;
-import com.example.demo.model.QProject;
+//import com.example.demo.model.QProject;
 import com.example.demo.model.projectFilter.ParameterProject;
 import com.example.demo.model.projectFilter.ProjectFilter;
 import com.example.demo.repository.ProjectRepository;
@@ -64,10 +64,10 @@ public class ProjectServiceImpl implements ProjectService {
         return this.repository.findProjectByProjectCode(code);
     }
 
-    /*@Override
+    @Override
     public List<Project> searchProject(ProjectFilter projectFilter) {
         return (List<Project>) repository.findAll(createProjectSearchPredicate(projectFilter));
-    }*/
+    }
 
     public Predicate createProjectSearchPredicate(ProjectFilter projectFilter) {
         BooleanBuilder expression = new BooleanBuilder();
