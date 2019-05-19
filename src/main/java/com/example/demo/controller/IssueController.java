@@ -46,8 +46,8 @@ public class IssueController {
     }
 
     @PostMapping
-    public Issue saveIssue(@RequestBody Issue issue) {
-        return issueService.saveIssue(issue);
+    public IssueDto saveIssue(@Valid @RequestBody IssueDto issue) {
+        return modelMapper.map(issueService.saveIssue(modelMapper.map(issue, Issue.class)), IssueDto.class);
     }
 
     @PutMapping(value = "/{id}")

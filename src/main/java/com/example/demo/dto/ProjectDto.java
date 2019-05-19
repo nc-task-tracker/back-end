@@ -19,15 +19,15 @@ public class ProjectDto {
     private String id;
 
     @NotBlank(message = "Project name shouldn't be blank")
-    private String projectName;
+    private String name;
 
     @NotBlank(message = "Project code shouldn't be blank")
     @Size(min = 3, max = 5, message = "Code size should be between 3 & 5")
     @Pattern(regexp = "[A-Z]+")
-    private String projectCode;
+    private String code;
 
 
-    private String projectDescription;
+    private String description;
 
     @NotBlank(message = "Project owner id shouldn't be blank")
     private String ownerId;

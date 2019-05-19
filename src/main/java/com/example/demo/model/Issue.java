@@ -28,13 +28,13 @@ public class Issue {
     private Date startDate;
     private Date dueDate;
     private String issueCode;
+    private String parentId;
 
-    @ManyToOne(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
+    @OneToOne(cascade = {
+            CascadeType.ALL
     })
-    @JoinColumn(name = "projectId", referencedColumnName = "id")
-    private Project project;
+    @JoinColumn(name = "reporterId", referencedColumnName = "id")
+    private Profile reporter;
 
     @Enumerated(EnumType.STRING)
     private IssueType issueType;
@@ -49,16 +49,9 @@ public class Issue {
             CascadeType.MERGE,
             CascadeType.PERSIST
     })
-    @JoinColumn(name = "reporterID", referencedColumnName = "id")
-    private Profile reporter;
-
-    @ManyToOne(cascade = {
-            CascadeType.MERGE,
-            CascadeType.PERSIST
-    })
     @JoinColumn(name = "assignerID", referencedColumnName = "id")
     private Profile assigner;
 
     @OneToMany(mappedBy = "issue")
-    private Set<Comment> comments = new HashSet<>();
+    private Set<Comment> comments = new HashSet<> ();
 }

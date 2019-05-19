@@ -1,5 +1,7 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.model.Profile;
+import com.example.demo.model.Project;
 import com.example.demo.model.Role;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
@@ -36,7 +38,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean existByEmail(String email) {
-        return userRepository.existsByEmail(email);
+        //return userRepository.existsByEmail(email);
+        return null;
     }
 
     @Override
@@ -70,12 +73,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void deleteUser(String id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
     public User getUserByUsername(String username) {
         return userRepository.findByLogin(username);
     }
 
     @Override
-    public void deleteUser(String id) {
-        userRepository.deleteById(id);
+    public List<Project> getPossibleProjects(String username) {
+        return userRepository.findByLogin(username).getProfile().getProjects();
     }
 }

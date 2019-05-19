@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -23,8 +24,10 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public Issue saveIssue (Issue issue) {
-        return repository.save (issue);
+    public Issue saveIssue(Issue issue) {
+        Date d = new Date();
+        issue.setStartDate(new java.sql.Date(d.getTime()));
+        return repository.save(issue);
     }
 
     @Override
