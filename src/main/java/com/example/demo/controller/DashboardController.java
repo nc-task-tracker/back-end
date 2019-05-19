@@ -1,14 +1,17 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.DashboardDto;
-import com.example.demo.dto.UserDto;
+import com.example.demo.dto.WidgetDto;
 import com.example.demo.model.Dashboard;
+import com.example.demo.model.Widget;
 import com.example.demo.service.DashboardService;
+import com.example.demo.service.WidgetService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,13 +21,17 @@ public class DashboardController {
 
     private final DashboardService dashboardService;
 
+    private final WidgetService widgetService;
+
     private final ModelMapper modelMapper;
 
     @Autowired
     public DashboardController(DashboardService dashboardService,
-                               ModelMapper modelMapper) {
+                               ModelMapper modelMapper,
+                               WidgetService widgetService) {
         this.dashboardService = dashboardService;
         this.modelMapper = modelMapper;
+        this.widgetService = widgetService;
     }
 
     @GetMapping(value = "/{id}")
@@ -32,8 +39,8 @@ public class DashboardController {
         return modelMapper.map(dashboardService.getDashboardById(id), DashboardDto.class);
     }
 
-    @GetMapping(value = "/all/{id}")
-    public List<DashboardDto> getAllDashboardById(@PathVariable(name = "id") String id) {
+    @GetMapping(value = "/{user_id}/allDashboards")
+    public List<DashboardDto> getAllDashboardsByUserId(@PathVariable(name = "user_id") String id) {
         List<DashboardDto> dashboardsDto = new ArrayList<>();
         List<Dashboard> dashboards = dashboardService.getAllDashboardByUserId(id);
         for(Dashboard item : dashboards) {
@@ -42,13 +49,23 @@ public class DashboardController {
         return dashboardsDto;
     }
 
+    @GetMapping(value = "/{dashboard_id}/allWidgets")
+    public List<WidgetDto> getAllWidgetDashboardById(@PathVariable(name = "dashboard_id") String id) {
+        List<WidgetDto> widgetDto = new ArrayList<>();
+        List<Widget> widgets = widgetService.getAllWidgetsById(id);
+        for(Widget item : widgets) {
+            widgetDto.add(modelMapper.map(item, WidgetDto.class));
+        }
+        return widgetDto;
+    }
+
     @PostMapping(value = "/add")
-    public Dashboard addDashboard(@RequestBody DashboardDto dashboardDto) {
+    public Dashboard addDashboard(@RequestBody @Valid DashboardDto dashboardDto) {
         return dashboardService.addDashboard(modelMapper.map(dashboardDto, Dashboard.class));
     }
 
     @PutMapping
-    public DashboardDto updateDashboard(@RequestBody DashboardDto dashboardForUpdate) {
+    public DashboardDto updateDashboard(@RequestBody @Valid DashboardDto dashboardForUpdate) {
         Dashboard dashboard = modelMapper.map(dashboardService.getDashboardById(dashboardForUpdate.getId()), Dashboard.class);
         return modelMapper.map(dashboardService.updateDashboard(dashboard), DashboardDto.class);
     }

@@ -46,6 +46,6 @@ public class DashboardServiceImpl implements DashboardService {
 
     @Override
     public List<Dashboard> getAllDashboardByUserId(String id) {
-        return (List<Dashboard>) repository.findAllByUser_Id(id);
+        return repository.findAllByUser_Id(id);
     }
 }

@@ -17,7 +17,7 @@ public class Widget {
     )
     private String id;
     private String widgetName;
-    private String widgetOrder;
+    private Integer widgetOrder;
     private String type;
     private String description;
 
@@ -30,4 +30,5 @@ public class Widget {
 
     private String Assign;
     private String Priority;
+    private String dashboardId;
 }

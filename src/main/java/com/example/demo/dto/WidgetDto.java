@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 
+import com.example.demo.model.Filter;
 import lombok.*;
 import org.springframework.lang.NonNull;
 
@@ -10,12 +11,25 @@ public class WidgetDto {
     @Null
     private String id;
 
-    @NonNull
-    private String login;
+    @Null
+    private String widgetName;
 
     @Null
-    private String email;
+    private Integer widgetOrder;
 
-    @NonNull
-    private String password;
+    @Null
+    private String type;
+
+    @Null
+    private Filter filter;
+
+    @Null
+    private String assign;
+
+    @Null
+    private String Priority;
+
+    @Null
+    private String dashboardId;
+
 }

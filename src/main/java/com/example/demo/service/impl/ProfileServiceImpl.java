@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.model.Filter;
 import com.example.demo.model.Profile;
 import com.example.demo.repository.ProfileRepository;
 import com.example.demo.service.ProfileService;
@@ -36,6 +37,11 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public List<Profile> getAllProfiles() {
         return (List<Profile>) repository.findAll();
+    }
+
+    public List<Filter> getAllFilter() {
+        //return ((List<Filter>) repository.getAllFilterByIdUser());
+        return null;
     }
 
     @Override

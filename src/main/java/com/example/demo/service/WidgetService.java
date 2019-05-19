@@ -12,4 +12,5 @@ public interface WidgetService {
     Widget updateWidget(Widget widget);
     List<Widget> getAllWidgets();
     void deleteWidget(String id);
+    List<Widget> getAllWidgetsById(String id);
 }

@@ -2,6 +2,7 @@ package com.example.demo.service.impl;
 
 import com.example.demo.model.Widget;
 import com.example.demo.repository.WidgetRepository;
+import com.example.demo.service.FilterService;
 import com.example.demo.service.WidgetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,13 +14,18 @@ public class WidgetServiceImpl implements WidgetService {
 
     private WidgetRepository widgetRepository;
 
+    private FilterService filterService;
+
     @Autowired
-    public WidgetServiceImpl(WidgetRepository widgetRepository){
+    public WidgetServiceImpl(WidgetRepository widgetRepository,
+                             FilterService filterService){
         this.widgetRepository = widgetRepository;
+        this.filterService = filterService;
     }
 
     @Override
     public Widget addWidget(Widget widget) {
+        widget.setFilter(filterService.getFilterById(null));
         return widgetRepository.save(widget);
     }
 
@@ -41,5 +47,10 @@ public class WidgetServiceImpl implements WidgetService {
     @Override
     public void deleteWidget(String id) {
         widgetRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Widget> getAllWidgetsById(String id) {
+        return widgetRepository.findAllByDashboardId(id);
     }
 }
