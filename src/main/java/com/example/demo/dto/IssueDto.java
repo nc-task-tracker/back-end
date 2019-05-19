@@ -46,9 +46,9 @@ public class IssueDto {
     @NotNull
     private IssueStatus issueStatus;
 
-    private String reporterId;
+    private ProfileDto reporter;
 
-    private String assignerId;
+    private ProfileDto assignee;
 
     private Set<ChildIssue> childIssue = new HashSet<> ();
 

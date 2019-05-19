@@ -66,6 +66,7 @@ public class IssueController {
     @PostMapping(value = "/{id}/saveComment")
     public CommentDto saveComment (@PathVariable(name = "id") String id,
                                    @RequestBody CommentDto commentDto) {
+        commentDto.setIssueId (id);
         return modelMapper.map(commentService.saveComment(modelMapper.map(commentDto, Comment.class)), CommentDto.class);
     }
 
