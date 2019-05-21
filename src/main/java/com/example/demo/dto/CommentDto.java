@@ -16,17 +16,17 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentDto {
-    @Null
+
     private String id;
 
     @NotNull
     private String commentText;
 
-    @NotNull
-    @DateTimeFormat
     private Date time;
 
     @NotNull
     private Profile profile;
+
+    private String issueId;
 
 }

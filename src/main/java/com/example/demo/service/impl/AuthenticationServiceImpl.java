@@ -50,7 +50,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         String token = getToken(userDto);
 
-        return new UserTokenModel(user, new AuthToken(token));
+        return new UserTokenModel(modelMapper.map(user, UserDto.class), new AuthToken(token));
     }
 
     @Override
@@ -59,7 +59,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         String token = getToken(userDto);
 
-        return new UserTokenModel(user, new AuthToken(token));
+        return new UserTokenModel(modelMapper.map(user, UserDto.class), new AuthToken(token));
     }
 
     private String getToken(UserDto user) {

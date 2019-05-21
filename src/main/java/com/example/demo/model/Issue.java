@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,8 +13,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "issue", schema = "new_schema")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class Issue {
     @Id
@@ -27,6 +27,7 @@ public class Issue {
     private String issueDescription;
     private Date startDate;
     private Date dueDate;
+    private String issueCode;
 
     @ManyToOne(cascade = {
             CascadeType.PERSIST,
@@ -35,62 +36,29 @@ public class Issue {
     @JoinColumn(name = "projectId", referencedColumnName = "id")
     private Project project;
 
-    @ManyToOne(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinColumn(name = "issueTypeId", referencedColumnName = "id")
-    private IssueType issuetype;
+    @Enumerated(EnumType.STRING)
+    private IssueType issueType;
+
+    @Enumerated(EnumType.STRING)
+    private IssuePriority issuePriority;
+
+    @Enumerated(EnumType.STRING)
+    private IssueStatus issueStatus;
 
     @ManyToOne(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
+            CascadeType.MERGE,
+            CascadeType.PERSIST
     })
-    @JoinColumn(name ="issuePriorityId", referencedColumnName = "id")
-    private IssuePriority issuepriority;
+    @JoinColumn(name = "reporterID", referencedColumnName = "id")
+    private Profile reporter;
 
     @ManyToOne(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
+            CascadeType.MERGE,
+            CascadeType.PERSIST
     })
-    @JoinColumn(name = "issueStatusId", referencedColumnName = "id")
-    private IssueStatus issuestatus;
+    @JoinColumn(name = "assignerID", referencedColumnName = "id")
+    private Profile assigner;
 
-    @OneToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinColumn(name = "childIssueId", referencedColumnName = "id")
-    private Set<ChildIssue> childissue = new HashSet<>();
-
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinTable(name = "project_profile_projectrole",
-            joinColumns = @JoinColumn(name = "profileid"),
-            inverseJoinColumns = @JoinColumn(name = "issueid")
-    )
-    private Set<Issue> issues = new HashSet<>();
-
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinTable(name = "issuerole_profile_issue",
-            joinColumns = @JoinColumn(name = "profileid"),
-            inverseJoinColumns = @JoinColumn(name = "issueroleid")
-    )
-    private Set<Issue> issueRoles = new HashSet<>();
-
-    public Issue(String issueName, String issueDescription, Date startDate, Date dueDate, Project project, IssueType issuetype, IssuePriority issuepriority, IssueStatus issuestatus) {
-        this.issueName = issueName;
-        this.issueDescription = issueDescription;
-        this.startDate = startDate;
-        this.dueDate = dueDate;
-        this.project = project;
-        this.issuetype = issuetype;
-        this.issuepriority = issuepriority;
-        this.issuestatus = issuestatus;
-    }
+    @OneToMany(mappedBy = "issue")
+    private Set<Comment> comments = new HashSet<>();
 }

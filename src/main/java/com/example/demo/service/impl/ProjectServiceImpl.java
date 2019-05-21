@@ -28,7 +28,7 @@ public class ProjectServiceImpl implements ProjectService {
         Project temp = repository.findProjectByProjectName(project.getProjectName());
         Project temp1 = repository.findProjectByProjectCode(project.getProjectCode());
         if (temp == null && temp1 == null) {
-            project.setProjectstatus(ProjectStatus.OPEN);
+            project.setProjectStatus(ProjectStatus.OPEN);
 
             return repository.save(project);
         } else return null;

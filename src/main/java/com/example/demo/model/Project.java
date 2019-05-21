@@ -26,9 +26,9 @@ public class Project {
     private String projectName;
     private String projectCode;
     private String projectDescription;
-    private ProjectStatus projectstatus;
 
-
+    @Enumerated(EnumType.STRING)
+    private ProjectStatus projectStatus;
     @ManyToOne(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
@@ -47,10 +47,12 @@ public class Project {
     )
     private Set<Dashboard> dashboards = new HashSet<>();
 
-    public Project(String projectName, String projectDescription, ProjectStatus projectStatus) {
+    public Project(String projectName, String projectDescription,
+                   ProjectStatus projectStatus, String projectCode) {
         this.projectName = projectName;
         this.projectDescription = projectDescription;
-        this.projectstatus = projectStatus;
+        this.projectStatus = projectStatus;
+        this.projectCode = projectCode;
     }
 
     @Override
@@ -61,11 +63,11 @@ public class Project {
         return Objects.equals(id, project.id) &&
                 Objects.equals(projectName, project.projectName) &&
                 Objects.equals(projectDescription, project.projectDescription) &&
-                Objects.equals(projectstatus, project.projectstatus);
+                Objects.equals(projectStatus, project.projectStatus);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, projectName, projectDescription, projectstatus);
+        return Objects.hash(id, projectName, projectDescription, projectStatus);
     }
 }

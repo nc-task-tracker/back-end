@@ -6,6 +6,7 @@ import com.example.demo.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.naming.AuthenticationException;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/authentication")
@@ -24,7 +25,7 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = "/register")
-    public UserTokenModel register(@RequestBody UserDto registerUser) throws AuthenticationException {
+    public UserTokenModel register(@RequestBody @Valid UserDto registerUser) throws AuthenticationException {
         return authenticationService.register(registerUser);
     }
 
