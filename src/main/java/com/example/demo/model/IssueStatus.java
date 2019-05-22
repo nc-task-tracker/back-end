@@ -1,12 +1,10 @@
 package com.example.demo.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.*;
-
-public enum  IssueStatus {
-    DONE,REOPENED,TESTING,COMPLETE,IN_PROGRESS,TO_DO,OPEN
+public enum IssueStatus {
+    TO_DO,
+    PROGRESS,
+    OPEN,
+    CLOSED,
+    REOPENED,
+    RESOLVED
 }

@@ -1,21 +1,23 @@
 package com.example.demo.dto;
 
-import lombok.AllArgsConstructor;
+import com.example.demo.model.ProjectRole;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
-public class IssueRoleDto {
-    @Null
+public class ProjectMemberDto {
+
+    @NotNull
     private String id;
 
     @NotNull
-    private String issueRoleName;
+    private ProfileDto profile;
+
+    @NotNull
+    private ProjectRole role;
 }

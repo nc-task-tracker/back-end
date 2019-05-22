@@ -40,14 +40,6 @@ public class UserController {
         return usersDto;
     }
 
-    @GetMapping(value = "/noassigner/project/{id}")
-    public List<UserDto> getNotAssignersProject(@PathVariable(name = "id") String projectId){
-        System.out.println("1");
-        return service.getNotProjectAssigners(projectId).stream()
-                .map(value -> modelMapper.map(value,UserDto.class))
-                .collect(Collectors.toList());
-    }
-
     @PostMapping
     public User saveUser(@RequestBody User account) {
         return service.saveUser(account);

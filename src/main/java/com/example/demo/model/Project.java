@@ -25,6 +25,8 @@ public class Project {
     private String id;
     private String projectName;
     private String projectDescription;
+
+    @Enumerated(EnumType.STRING)
     private ProjectStatus projectStatus;
     private String projectCode;
 
@@ -36,15 +38,11 @@ public class Project {
     private User owner;
 
 
-    @ManyToMany(cascade = {
+    @OneToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
     })
-    @JoinTable(name = "project_assigner",
-               joinColumns = @JoinColumn(name = "project_id"),
-                inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private Set<User> assigners = new HashSet<>();
+    private Set<ProjectMember> members = new HashSet<>();
 
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
@@ -56,10 +54,12 @@ public class Project {
     )
     private Set<Dashboard> dashboards = new HashSet<>();
 
-    public Project(String projectName, String projectDescription, ProjectStatus projectStatus) {
+    public Project(String projectName, String projectDescription,
+                   ProjectStatus projectStatus, String projectCode) {
         this.projectName = projectName;
         this.projectDescription = projectDescription;
         this.projectStatus = projectStatus;
+        this.projectCode = projectCode;
     }
 
     @Override
@@ -78,17 +78,4 @@ public class Project {
         return Objects.hash(id, projectName, projectDescription,projectStatus);
     }
 
-    @Override
-    public String toString() {
-        return "Project{" +
-                "id='" + id + '\'' +
-                ", projectName='" + projectName + '\'' +
-                ", projectDescription='" + projectDescription + '\'' +
-                ", projectStatus=" + projectStatus +
-                ", projectCode='" + projectCode + '\'' +
-                ", owner=" + owner +
-                ", assigners=" + assigners +
-                ", dashboards=" + dashboards +
-                '}';
-    }
 }

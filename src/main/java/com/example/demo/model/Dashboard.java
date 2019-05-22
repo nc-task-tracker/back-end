@@ -23,18 +23,23 @@ public class Dashboard {
     )
     private String id;
     private String dashboardName;
-    @ManyToMany(cascade = {
+
+    @OneToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
     })
-    @JoinTable(name = "dashboard_filter",
-            joinColumns = @JoinColumn(name = "dashboardid"),
-            inverseJoinColumns = @JoinColumn(name = "filterid")
-    )
-    private Set<Filter> filters = new HashSet<>();
+    @JoinColumn(name = "dashboardId", referencedColumnName = "id")
+    private Set<Widget> widgets = new HashSet<>();
 
-    public Dashboard(String dashboardName, Set<Filter> filters) {
+    @ManyToOne(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinColumn(name = "userId", referencedColumnName = "id")
+    private User user;
+
+    public Dashboard(String dashboardName, Set<Widget> widgets) {
         this.dashboardName = dashboardName;
-        this.filters = filters;
+        this.widgets = widgets;
     }
 }
