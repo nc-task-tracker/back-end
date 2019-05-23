@@ -11,12 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/issue")
+@RequestMapping(value = "/api/issue") //TODO: RENAME ISSUE->ISSUERVICE
 public class IssueController {
     private IssueService issueService;
     private CommentService commentService;
@@ -45,9 +44,11 @@ public class IssueController {
         return issuesDto;
     }
 
-    @PostMapping
-    public IssueDto saveIssue(@Valid @RequestBody IssueDto issue) {
-        return modelMapper.map(issueService.saveIssue(modelMapper.map(issue, Issue.class)), IssueDto.class);
+    @PostMapping(value = "/project/{projectId}")
+    public IssueDto createIssue( @PathVariable (name = "projectId") String projectId,
+                                 @RequestBody IssueDto issue) {
+         Issue is = modelMapper.map(issue, Issue.class);
+        return modelMapper.map(issueService.createIssue(projectId, is), IssueDto.class);
     }
 
     @PutMapping(value = "/{id}")

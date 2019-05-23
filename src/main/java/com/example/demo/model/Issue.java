@@ -36,6 +36,21 @@ public class Issue {
     @JoinColumn(name = "reporterId", referencedColumnName = "id")
     private Profile reporter;
 
+    @OneToOne(cascade = {
+            CascadeType.ALL
+    })
+    @JoinColumn(name = "assigneeId", referencedColumnName = "id")
+    private Profile assignee;
+
+    @ManyToOne(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinColumn(name = "projectId", referencedColumnName = "id")
+    private Project project;
+
+    private String code;
+
     @Enumerated(EnumType.STRING)
     private IssueType issueType;
 

@@ -35,7 +35,10 @@ public class IssueDto {
     @DateTimeFormat
     private Date dueDate;
 
-    private String projectId;
+    private String parentId;
+
+    @Null
+    private Project project;
 
     @NotNull
     private IssueType issueType;
@@ -43,7 +46,7 @@ public class IssueDto {
     @NotNull
     private IssuePriority issuePriority;
 
-    @NotNull
+    @Null
     private IssueStatus issueStatus;
 
     private ProfileDto reporter;
