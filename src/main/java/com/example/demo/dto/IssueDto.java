@@ -33,7 +33,6 @@ public class IssueDto {
     @DateTimeFormat
     private Date dueDate;
 
-    @NotNull
     private Project project;
 
     @NotNull
