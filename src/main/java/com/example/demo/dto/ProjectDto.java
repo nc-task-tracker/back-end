@@ -1,11 +1,13 @@
 package com.example.demo.dto;
 
 import com.example.demo.model.*;
-import lombok.*;
-import org.springframework.lang.NonNull;
+import com.example.demo.dto.ProjectMemberDto;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
+import javax.validation.constraints.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,41 +16,26 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProjectDto {
-    @Null
     private String id;
 
-    @NotNull
+    @NotBlank(message = "Project name shouldn't be blank")
     private String projectName;
 
-    @NotNull
-    private String projectDescription;
-
-    @Null
-    private User projectOwner;
-
-    @NotNull
+    @NotBlank(message = "Project code shouldn't be blank")
+    @Size(min = 3, max = 5, message = "Code size should be between 3 & 5")
+    @Pattern(regexp = "[A-Z]+")
     private String projectCode;
 
-    @Null
+    private String projectDescription;
+
+    private User projectOwner;
+
+    @NotBlank(message = "Project owner id shouldn't be blank")
+    private String ownerId;
+
     private ProjectStatus projectStatus;
 
-    @Null
-    private Set<User> assigners = new HashSet<>();
+    private Set<ProjectMemberDto> members = new HashSet<>();
 
-    @Null
-    private Set<Dashboard> dashboards = new HashSet<>();
-
-    @Override
-    public String toString() {
-        return "ProjectDto{" +
-                "id='" + id + '\'' +
-                ", projectName='" + projectName + '\'' +
-                ", projectDescription='" + projectDescription + '\'' +
-                ", projectOwner=" + projectOwner +
-                ", projectCode='" + projectCode + '\'' +
-                ", projectStatus=" + projectStatus +
-                ", assigners=" + assigners +
-                ", dashboards=" + dashboards +
-                '}';
-    }
+    private Set<DashboardDto> dashboards = new HashSet<>();
 }

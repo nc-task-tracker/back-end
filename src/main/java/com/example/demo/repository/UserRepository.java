@@ -15,7 +15,9 @@ import java.util.List;
 public interface UserRepository extends CrudRepository<User, String>, JpaRepository<User, String> {
     //Boolean existsByEmail(String email);
     Boolean existsByLogin(String login);
+
     User findByLogin(String login);
+
     User findUserById(String id);
 
     @Query("select u from User u where upper(u.login) like upper(?1) or exists (select p from Profile p where p.user = u and upper(p.firstName) like upper(?1))")
@@ -24,5 +26,4 @@ public interface UserRepository extends CrudRepository<User, String>, JpaReposit
     @Query(value = "select * from new_schema.user u where u.id not in(select v.user_id from project_assigner v join project p on p.id=:projectId and" +
             " p.id=v.project_id)", nativeQuery = true)
     List<User> getNotProjectAssigners(@Param("projectId") String id);
-}
 }
