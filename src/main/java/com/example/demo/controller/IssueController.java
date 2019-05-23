@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/issue") //TODO: RENAME ISSUE->ISSUERVICE
+@RequestMapping(value = "/api/issue") //TODO: RENAME ISSUE->ISSUSERVICE
 public class IssueController {
     private IssueService issueService;
 
