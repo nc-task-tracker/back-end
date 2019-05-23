@@ -1,12 +1,11 @@
 package com.example.demo.dto;
 
 import com.example.demo.model.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.lang.NonNull;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,25 +14,41 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProjectDto {
-
+    @Null
     private String id;
 
-    @NotBlank(message = "Project name shouldn't be blank")
-    private String name;
+    @NotNull
+    private String projectName;
 
-    @NotBlank(message = "Project code shouldn't be blank")
-    @Size(min = 3, max = 5, message = "Code size should be between 3 & 5")
-    @Pattern(regexp = "[A-Z]+")
-    private String code;
+    @NotNull
+    private String projectDescription;
 
+    @Null
+    private User projectOwner;
 
-    private String description;
+    @NotNull
+    private String projectCode;
 
-    @NotBlank(message = "Project owner id shouldn't be blank")
-    private String ownerId;
+    @Null
+    private ProjectStatus projectStatus;
 
+    @Null
+    private Set<User> assigners = new HashSet<>();
 
-    private ProjectStatus status;
-
+    @Null
     private Set<Dashboard> dashboards = new HashSet<>();
+
+    @Override
+    public String toString() {
+        return "ProjectDto{" +
+                "id='" + id + '\'' +
+                ", projectName='" + projectName + '\'' +
+                ", projectDescription='" + projectDescription + '\'' +
+                ", projectOwner=" + projectOwner +
+                ", projectCode='" + projectCode + '\'' +
+                ", projectStatus=" + projectStatus +
+                ", assigners=" + assigners +
+                ", dashboards=" + dashboards +
+                '}';
+    }
 }

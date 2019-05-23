@@ -10,8 +10,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-
-public enum  ProjectStatus {
-    OPEN,
-    ON
+public enum ProjectStatus {
+   OPEN,CLOSE
 }

@@ -24,10 +24,9 @@ public class Project {
     )
     private String id;
     private String projectName;
-    private String projectCode;
     private String projectDescription;
-    private ProjectStatus projectstatus;
-
+    private ProjectStatus projectStatus;
+    private String projectCode;
 
     @ManyToOne(cascade = {
             CascadeType.PERSIST,
@@ -41,20 +40,26 @@ public class Project {
             CascadeType.PERSIST,
             CascadeType.MERGE
     })
+    @JoinTable(name = "project_assigner",
+               joinColumns = @JoinColumn(name = "project_id"),
+                inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<User> assigners = new HashSet<>();
+
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     @JoinTable(name = "dashboard_project",
             joinColumns = @JoinColumn(name = "projectid"),
             inverseJoinColumns = @JoinColumn(name = "dashboardid")
     )
     private Set<Dashboard> dashboards = new HashSet<>();
 
-
-    public Project(String projectName, String projectCode, String projectDescription, ProjectStatus projectStatus) {
-
+    public Project(String projectName, String projectDescription, ProjectStatus projectStatus) {
         this.projectName = projectName;
         this.projectDescription = projectDescription;
-        this.projectstatus = projectStatus;
-        this.projectCode = projectCode;
-
+        this.projectStatus = projectStatus;
     }
 
     @Override
@@ -65,11 +70,25 @@ public class Project {
         return Objects.equals(id, project.id) &&
                 Objects.equals(projectName, project.projectName) &&
                 Objects.equals(projectDescription, project.projectDescription) &&
-                Objects.equals(projectstatus, project.projectstatus);
+                Objects.equals(projectStatus, project.projectStatus);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, projectName, projectDescription, projectstatus);
+        return Objects.hash(id, projectName, projectDescription,projectStatus);
+    }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id='" + id + '\'' +
+                ", projectName='" + projectName + '\'' +
+                ", projectDescription='" + projectDescription + '\'' +
+                ", projectStatus=" + projectStatus +
+                ", projectCode='" + projectCode + '\'' +
+                ", owner=" + owner +
+                ", assigners=" + assigners +
+                ", dashboards=" + dashboards +
+                '}';
     }
 }

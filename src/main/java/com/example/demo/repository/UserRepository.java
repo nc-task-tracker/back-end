@@ -5,6 +5,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,4 +21,8 @@ public interface UserRepository extends CrudRepository<User, String>, JpaReposit
     @Query("select u from User u where upper(u.login) like upper(?1) or exists (select p from Profile p where p.user = u and upper(p.firstName) like upper(?1))")
     List<User> findUserProfileBySubstring(String substring, Sort sort);
 
+    @Query(value = "select * from new_schema.user u where u.id not in(select v.user_id from project_assigner v join project p on p.id=:projectId and" +
+            " p.id=v.project_id)", nativeQuery = true)
+    List<User> getNotProjectAssigners(@Param("projectId") String id);
+}
 }

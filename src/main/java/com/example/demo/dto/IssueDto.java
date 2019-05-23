@@ -1,21 +1,20 @@
-
 package com.example.demo.dto;
 
 import com.example.demo.model.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class IssueDto {
     @Null
     private String id;
@@ -26,8 +25,11 @@ public class IssueDto {
     @NotNull
     private String issueDescription;
 
-    //TODO: Change annotation on notnull
+    @NotNull
+    @DateTimeFormat
+    private Date startDate;
 
+    @NotNull
     @DateTimeFormat
     private Date dueDate;
 
@@ -50,4 +52,8 @@ public class IssueDto {
 
     @Null
     private String reporter;
+
+    @Null
+    private Set<ChildIssue> childIssue = new HashSet<>();
+
 }
