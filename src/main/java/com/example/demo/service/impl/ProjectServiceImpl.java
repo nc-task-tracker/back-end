@@ -1,11 +1,11 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.dto.ProjectDto;
+import com.example.demo.dto.ProjectMemberDto;
 import com.example.demo.dto.util.PageDto;
 import com.example.demo.dto.util.TableSortParametersDTO;
-import com.example.demo.model.Project;
-import com.example.demo.model.ProjectStatus;
-import com.example.demo.model.User;
+import com.example.demo.model.*;
+import com.example.demo.repository.ProfileRepository;
 import com.example.demo.repository.ProjectRepository;
 import com.example.demo.service.ProjectService;
 import org.modelmapper.ModelMapper;
@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,15 +27,20 @@ public class ProjectServiceImpl implements ProjectService {
     private ModelMapper mapper;
 
     @Autowired
-    public ProjectServiceImpl(ProjectRepository repository,ModelMapper modelMapper) {
+    public ProjectServiceImpl(ProjectRepository repository,ModelMapper modelMapper){
         this.repository = repository;
         this.mapper = modelMapper;
     }
 
     @Override
-    public Project saveProject(Project project) {
-        project.setProjectStatus(ProjectStatus.OPEN);
-        return repository.save(project);
+    public Project createProject(Project project) {
+        Project temp = repository.findProjectByProjectName(project.getProjectName());
+        Project temp1 = repository.findProjectByProjectCode(project.getProjectCode());
+        if (temp == null && temp1 == null) {
+            project.setProjectStatus(ProjectStatus.OPEN);
+
+            return repository.save(project);
+        } else return null;
     }
 
     @Override
@@ -77,12 +83,38 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void addAssigner(String projectId,String userId){
-        repository.addAssigner(projectId,userId);
+    public Project getProjectByName(String name) {
+        return this.repository.findProjectByProjectName(name);
     }
 
     @Override
-    public void deleteAssigner(String projectId,String userId) {
-        repository.deleteAssigner(projectId,userId);
+    public Project getProjectByCode(String code) {
+        return this.repository.findProjectByProjectCode(code);
+    }
+
+//    @Override
+//    public void addAssigner(String code,String userId){
+//        repository.addAssigner(code,userId);
+//    }
+//
+//    @Override
+//    public void deleteAssigner(String code,String userId) {
+//        repository.deleteAssigner(code,userId);
+//    }
+
+    @Override
+    public List<ProjectMemberDto> getProjectMembers(String id) {
+
+//        List<Profile> members = profileRepository.findProjectMembersByProjectId(id);
+//
+//        return members.stream().map(value ->{
+//            ProjectMemberDto memberDto = new ProjectMemberDto();
+//            memberDto.setMembers(new ArrayList<>());
+//
+//            memberDto.getMembers().add(value);
+//            memberDto.setProjectRole(projectRoleRepository.findProjectMemberRoleByProjectIdAndProfileId(id,value.getId()));
+//            return memberDto;
+//        }).collect(Collectors.toList());
+        return null;
     }
 }

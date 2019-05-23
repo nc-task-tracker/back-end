@@ -1,15 +1,10 @@
 package com.example.demo.model;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 
 public enum IssueType {
+    TASK,
     BUG,
     EPIC,
     IMPROVEMENT,
-    NEW_FEATURE,
     STORY,
-    SUB_TASK,
-    TASK;
+    NEW_FEATIRE
 }

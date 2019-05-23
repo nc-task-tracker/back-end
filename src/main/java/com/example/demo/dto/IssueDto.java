@@ -33,9 +33,9 @@ public class IssueDto {
     @DateTimeFormat
     private Date dueDate;
 
-    private String parentId;
-
     @Null
+    @NotNull
+    private String projectId;
     private Project project;
 
     @NotNull
@@ -56,4 +56,5 @@ public class IssueDto {
     @Null
     private Set<ChildIssue> childIssue = new HashSet<>();
 
+    private Set<Comment> comments = new HashSet<>();
 }

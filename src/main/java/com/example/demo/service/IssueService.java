@@ -10,7 +10,7 @@ import java.util.List;
 public interface IssueService {
     Issue createIssue(String projectId, Issue issue);
     Issue getIssueById(String id);
-    Issue updateIssue(Issue issue);
+    Issue updateIssue(Issue updateIssueDto);
     List<Issue> getAllIssues();
     List<Issue> getIssuesByProjectId(String id);
     void deleteIssue(String id);

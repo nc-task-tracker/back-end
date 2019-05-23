@@ -27,12 +27,21 @@ public class ChildIssue {
     private Date childIssueStartDate;
     private Date childIssueDueDate;
     private IssueStatus issueStatus;
+    private String childIssueId;
+    private String childIssueCode;
 
-    public ChildIssue(String childIssueName, String childIssueDescription, Date childIssueStartDate, Date childIssueDueDate, IssueStatus issueStatus) {
+    @ManyToOne(cascade = {
+            CascadeType.ALL
+    })
+    @JoinColumn(name = "issueId", referencedColumnName = "id")
+    private Issue issue;
+
+    public ChildIssue(String childIssueName, String childIssueDescription, Date childIssueStartDate, Date childIssueDueDate, IssueStatus issueStatus, Issue issue) {
         this.childIssueName = childIssueName;
         this.childIssueDescription = childIssueDescription;
         this.childIssueStartDate = childIssueStartDate;
         this.childIssueDueDate = childIssueDueDate;
         this.issueStatus = issueStatus;
+        this.issue = issue;
     }
 }

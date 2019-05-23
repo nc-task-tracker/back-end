@@ -25,6 +25,7 @@ public class User {
     private String id;
     private String login;
     private String password;
+    private String email;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {
             CascadeType.PERSIST,
@@ -40,11 +41,12 @@ public class User {
     @OneToOne(mappedBy = "user")
     private Profile profile;
 
-    public User(String login, String password, Set<Role> roles, Profile profile) {
+    public User(String login, String password, Set<Role> roles, Profile profile, String email) {
         this.login = login;
         this.password = password;
         this.roles = roles;
         this.profile = profile;
+        this.email = email;
     }
 
     @Override

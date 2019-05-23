@@ -63,7 +63,8 @@ public class UserController {
 
     @PostMapping
     public User saveUser(@RequestBody User account) {
-        return userService.addUser(account);
+               return userService.addUser(account);
+        //return userService.saveUser(account);
     }
 
     @PutMapping

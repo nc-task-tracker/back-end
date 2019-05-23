@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import java.util.Set;
 @Table(name = "issue", schema = "new_schema")
 @Getter
 @Setter
+@Data
 @NoArgsConstructor
 public class Issue {
     @Id
@@ -55,6 +57,8 @@ public class Issue {
 
     @Enumerated(EnumType.STRING)
     private IssuePriority issuePriority;
+    @OneToMany(mappedBy = "issue")
+    private Set<Comment> comments = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
     private IssueStatus issueStatus;
@@ -73,4 +77,6 @@ public class Issue {
         this.issuePriority = issuePriority;
         this.issueStatus = issueStatus;
     }
+
+
 }

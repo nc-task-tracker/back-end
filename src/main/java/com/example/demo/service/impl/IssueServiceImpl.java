@@ -5,10 +5,10 @@ import com.example.demo.dto.IssueDto;
 import com.example.demo.dto.util.PageDto;
 import com.example.demo.dto.util.TableSortParametersDTO;
 import com.example.demo.model.Issue;
+import com.example.demo.repository.IssueRepository;
 import com.example.demo.model.IssueStatus;
 import com.example.demo.model.Project;
 import com.example.demo.repository.IdentificatorRepository;
-import com.example.demo.repository.IssueRepository;
 import com.example.demo.repository.ProjectRepository;
 import com.example.demo.service.IssueService;
 import org.modelmapper.ModelMapper;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @Service
 public class IssueServiceImpl implements IssueService {
 
-    private IssueRepository repository;
+    private IssueRepository issueRepository;
     private ModelMapper modelMapper;
 
     private final IdentificatorRepository idRepository;
@@ -38,7 +38,6 @@ public class IssueServiceImpl implements IssueService {
     public IssueServiceImpl(IssueRepository repository,
                             IdentificatorRepository idRepository,
                             ProjectRepository projectRepository) {
-        this.repository = repository;
         this.idRepository = idRepository;
         this.projectRepository = projectRepository;
         this.modelMapper = modelMapper;
@@ -60,32 +59,32 @@ public class IssueServiceImpl implements IssueService {
         issue.setStartDate(new java.sql.Date(d.getTime()));
         issue.setCode(issueCode);
         issue.setIssueStatus(IssueStatus.OPEN);
-        return repository.save(issue);
+        return issueRepository.save(issue);
     }
 
     @Override
     public Issue getIssueById(String id) {
-        return repository.findIssueById(id);
+        return issueRepository.findIssueById(id);
     }
 
     @Override
     public List<Issue> getIssuesByProjectId(String id) {
-        return repository.findIssuesByProjectId(id);
+        return issueRepository.findIssuesByProjectId(id);
     }
 
     @Override
     public Issue updateIssue(Issue issue) {
-        return repository.save(issue);
+        return issueRepository.save(issue);
     }
 
     @Override
     public List<Issue> getAllIssues() {
-        return repository.findAll();
+        return issueRepository.findAll();
     }
 
     @Override
     public void deleteIssue(String id) {
-        repository.deleteById(id);
+        issueRepository.deleteById(id);
     }
 
     @Override
@@ -96,7 +95,7 @@ public class IssueServiceImpl implements IssueService {
                 parametersDTO.get_columnName());
         Pageable pageable = PageRequest.of(parametersDTO.get_page(),parametersDTO.get_maxElemOnPage(),sort);
 
-        Page<Issue> all = repository.findAllByProjectId(id,pageable);
+        Page<Issue> all = issueRepository.findAllByProjectId(id,pageable);
 
         pageDto.setTotalElem(all.getTotalElements());
         pageDto.setTotalPages(all.getTotalPages());

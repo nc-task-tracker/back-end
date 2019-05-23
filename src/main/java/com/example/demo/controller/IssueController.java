@@ -1,9 +1,13 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.CommentDto;
+import com.example.demo.dto.CommentDto;
 import com.example.demo.dto.IssueDto;
 import com.example.demo.dto.util.PageDto;
 import com.example.demo.dto.util.TableSortParametersDTO;
+import com.example.demo.model.Comment;
 import com.example.demo.model.Issue;
+import com.example.demo.service.CommentService;
 import com.example.demo.service.IssueService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,13 +24,15 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/api/issue")
 public class IssueController {
     private IssueService issueService;
+    private CommentService commentService;
 
     @Autowired
     private ModelMapper modelMapper;
 
     @Autowired
-    public IssueController(IssueService service) {
-        this.issueService = service;
+    public IssueController(IssueService issueService, CommentService commentService) {
+        this.issueService = issueService;
+        this.commentService = commentService;
     }
 
     @GetMapping(value = "/{id}")
@@ -57,11 +64,11 @@ public class IssueController {
          Issue is = modelMapper.map(issue, Issue.class);
         return modelMapper.map(issueService.createIssue(projectId, is), IssueDto.class);
     }
-
-    @PutMapping
-    public IssueDto updateIssue(@RequestBody IssueDto issueForUpdate) {
-        Issue issue = modelMapper.map(issueService.getIssueById(issueForUpdate.getId()), Issue.class);
-        return modelMapper.map(issueService.updateIssue(issue), IssueDto.class);
+    @PutMapping(value = "/{id}")
+    public IssueDto updateIssue(@PathVariable(name = "id") String id,
+                                @RequestBody IssueDto issueDto) {
+        issueDto.setId(id);
+        return modelMapper.map(issueService.updateIssue(modelMapper.map(issueDto, Issue.class)), IssueDto.class);
     }
 
     @DeleteMapping(value = "/delete/{id}")
@@ -71,8 +78,13 @@ public class IssueController {
     }
 
     @PostMapping(value = "project/{id}/sort")
-    public PageDto<IssueDto> getSortedIssuesByProjectId(@PathVariable(name = "id") String id,
+    public PageDto<IssueDto> getSortedIssuesByProjectId(@PathVariable(name = "id") String code,
                                               @RequestBody TableSortParametersDTO sortParameters){
-        return issueService.getSortedIssuesByProjectId(id,sortParameters);
+        return issueService.getSortedIssuesByProjectId(code,sortParameters);
+    }
+
+    @PostMapping(value = "/saveComment")
+    public CommentDto saveComment (@RequestBody CommentDto commentDto) {
+        return modelMapper.map(commentService.saveComment(modelMapper.map(commentDto, Comment.class)), CommentDto.class);
     }
 }

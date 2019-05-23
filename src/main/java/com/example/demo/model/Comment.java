@@ -7,7 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Table(name = "comment", schema = "new_schema")
@@ -25,15 +25,16 @@ public class Comment {
     private String commentText;
     private Date time;
 
-    @ManyToOne(cascade = {
-            CascadeType.ALL
-    })
-    @JoinColumn(name = "profileId", referencedColumnName = "id")
+    @ManyToOne
     private Profile profile;
 
-    public Comment(String commentText, Date time, Profile profile) {
+    @ManyToOne
+    private Issue issue;
+
+    public Comment(String commentText, Date time, Profile profile, Issue issue) {
         this.commentText = commentText;
         this.time = time;
         this.profile = profile;
+        this.issue = issue;
     }
 }
