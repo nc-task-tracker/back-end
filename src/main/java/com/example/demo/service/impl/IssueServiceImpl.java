@@ -4,9 +4,9 @@ import com.example.demo.dto.IssueDto;
 import com.example.demo.dto.util.PageDto;
 import com.example.demo.dto.util.TableSortParametersDTO;
 import com.example.demo.model.Issue;
+import org.modelmapper.ModelMapper;
 import com.example.demo.repository.IssueRepository;
 import com.example.demo.service.IssueService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,16 +31,12 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public Issue saveIssue(IssueDto issueDto) {
-        Issue issue = modelMapper.map(issueDto,Issue.class);
-        //issue.setIssueStatus(IssueStatus.Open);
-        //issue.setIssueType(IssueType.Feature);
-        //issue.setIssuePriority(IssuePriority.Medium);
+    public Issue saveIssue (Issue issue) {
         return repository.save(issue);
     }
 
     @Override
-    public Issue getIssueById(String id) {
+    public Issue getIssueById (String id) {
         return repository.findIssueById(id);
     }
 
@@ -49,7 +46,15 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public Issue updateIssue(Issue issue) {
+    public Issue updateIssue (Issue issue) {
+        Issue dbIssue = repository.findById (issue.getId ()).orElseThrow (InternalError::new);
+        issue.setStartDate (dbIssue.getStartDate ());
+
+//        if (!issue.getProject().getId().equals(dbIssue.getProject().getId())
+//                || !issue.getReporter().getId().equals(dbIssue.getReporter().getId())) {
+//            throw new InternalError();
+//        }
+
         return repository.save(issue);
     }
 
@@ -59,8 +64,8 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public void deleteIssue(String id) {
-        repository.deleteById(id);
+    public void deleteIssue (String id) {
+        repository.deleteById (id);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,8 +13,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "issue", schema = "new_schema")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class Issue {
     @Id
@@ -27,9 +27,7 @@ public class Issue {
     private String issueDescription;
     private Date startDate;
     private Date dueDate;
-    private IssueType issueType;
-    private IssuePriority issuePriority;
-    private IssueStatus issueStatus;
+    private String issueCode;
 
     @ManyToOne(cascade = {
             CascadeType.PERSIST,
@@ -38,33 +36,49 @@ public class Issue {
     @JoinColumn(name = "projectId", referencedColumnName = "id")
     private Project project;
 
-    @OneToOne(cascade = {
+    @Enumerated(EnumType.STRING)
+    private IssueType issueType;
+
+    @Enumerated(EnumType.STRING)
+    private IssuePriority issuePriority;
+
+    @Enumerated(EnumType.STRING)
+    private IssueStatus issueStatus;
+
+    @ManyToOne(cascade = {
             CascadeType.MERGE,
             CascadeType.PERSIST
     })
-    @JoinColumn(name = "reporterId", referencedColumnName = "id")
+    @JoinColumn(name = "reporterID", referencedColumnName = "id")
     private Profile reporter;
+
 
     @ManyToOne(cascade = {
             CascadeType.MERGE,
             CascadeType.PERSIST
     })
     @JoinColumn(name = "assignerID", referencedColumnName = "id")
-    private Profile assigners;
+    private Profile assignee;
 
-    @OneToMany(mappedBy = "profile")
+    @OneToMany(mappedBy = "issue")
     private Set<Comment> comments = new HashSet<>();
 
-    public Issue(String issueName, String issueDescription, Date startDate, Date dueDate, Project project, IssueType issuetype, IssuePriority issuepriority, IssueStatus issuestatus) {
-        this.issueName = issueName;
-        this.issueDescription = issueDescription;
-        this.startDate = startDate;
-        this.dueDate = dueDate;
-        this.project = project;
-        this.issueType = issuetype;
-        this.issuePriority = issuepriority;
-        this.issueStatus = issuestatus;
+    @Override
+    public String toString() {
+        return "Issue{" +
+                "id='" + id + '\'' +
+                ", issueName='" + issueName + '\'' +
+                ", issueDescription='" + issueDescription + '\'' +
+                ", startDate=" + startDate +
+                ", dueDate=" + dueDate +
+                ", issueCode='" + issueCode + '\'' +
+                ", project=" + project +
+                ", issueType=" + issueType +
+                ", issuePriority=" + issuePriority +
+                ", issueStatus=" + issueStatus +
+                ", reporter=" + reporter +
+                ", assignee=" + assignee +
+                ", comments=" + comments +
+                '}';
     }
-
-
 }

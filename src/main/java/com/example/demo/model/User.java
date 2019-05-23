@@ -37,14 +37,10 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
-    @OneToOne(mappedBy = "user")
-    private Profile profile;
-
     public User(String login, String password, Set<Role> roles, Profile profile) {
         this.login = login;
         this.password = password;
         this.roles = roles;
-        this.profile = profile;
     }
 
     @Override

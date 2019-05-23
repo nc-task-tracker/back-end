@@ -8,9 +8,9 @@ import com.example.demo.model.Issue;
 import java.util.List;
 
 public interface IssueService {
-    Issue saveIssue(IssueDto issue);
+    Issue saveIssue(Issue issue);
     Issue getIssueById(String id);
-    Issue updateIssue(Issue issue);
+    Issue updateIssue(Issue updateIssueDto);
     List<Issue> getAllIssues();
     List<Issue> getIssuesByProjectId(String id);
     void deleteIssue(String id);
