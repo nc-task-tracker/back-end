@@ -30,26 +30,14 @@ public class Issue {
     private String issueCode;
     private String parentId;
 
-    @OneToOne(cascade = {
-            CascadeType.ALL
-    })
-    @JoinColumn(name = "reporterId", referencedColumnName = "id")
+    @OneToOne
     private Profile reporter;
 
-    @OneToOne(cascade = {
-            CascadeType.ALL
-    })
-    @JoinColumn(name = "assigneeId", referencedColumnName = "id")
+    @OneToOne
     private Profile assignee;
 
-    @ManyToOne(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinColumn(name = "projectId", referencedColumnName = "id")
+    @ManyToOne
     private Project project;
-
-    private String code;
 
     @Enumerated(EnumType.STRING)
     private IssueType issueType;
@@ -60,12 +48,9 @@ public class Issue {
     @Enumerated(EnumType.STRING)
     private IssueStatus issueStatus;
 
-    @ManyToOne(cascade = {
-            CascadeType.MERGE,
-            CascadeType.PERSIST
-    })
-    @JoinColumn(name = "assignerID", referencedColumnName = "id")
-    private Profile assigner;
+    @OneToMany
+    @JoinColumn(name = "parentId", referencedColumnName = "id")
+    private Set<Issue> subtasks = new HashSet<> ();
 
     @OneToMany(mappedBy = "issue")
     private Set<Comment> comments = new HashSet<> ();

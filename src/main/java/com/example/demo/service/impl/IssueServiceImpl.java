@@ -46,7 +46,7 @@ public class IssueServiceImpl implements IssueService {
         identificator.setCurFreedom(identificator.getCurFreedom()+1);
         idRepository.save(identificator);
         issue.setStartDate(new java.sql.Date(d.getTime()));
-        issue.setCode(issueCode);
+        issue.setIssueCode (issueCode);
         issue.setIssueStatus(IssueStatus.OPEN);
         return repository.save(issue);
     }

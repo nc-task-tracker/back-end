@@ -6,5 +6,6 @@ public enum IssueType {
     EPIC,
     IMPROVEMENT,
     STORY,
-    NEW_FEATURE
+    NEW_FEATURE,
+    SUBTASK
 }

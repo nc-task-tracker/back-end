@@ -25,6 +25,7 @@ public class AuthenticationController {
 
     @PostMapping(value = "/register")
     public UserTokenModel register(@RequestBody UserDto registerUser) throws AuthenticationException {
+
         return authenticationService.register(registerUser);
     }
 

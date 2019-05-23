@@ -19,12 +19,12 @@ public class ProjectDto {
     private String id;
 
     @NotBlank(message = "Project name shouldn't be blank")
-    private String name;
+    private String projectName;
 
     @NotBlank(message = "Project code shouldn't be blank")
     @Size(min = 3, max = 5, message = "Code size should be between 3 & 5")
     @Pattern(regexp = "[A-Z]+")
-    private String code;
+    private String projectCode;
 
 
     private String description;
@@ -34,5 +34,5 @@ public class ProjectDto {
 
     private ProjectStatus projectStatus;
 
-    private Set<Dashboard> dashboards = new HashSet<>();
+//    private Set<Dashboard> dashboards = new HashSet<>();
 }
