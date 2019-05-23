@@ -15,5 +15,5 @@ public interface ProjectService {
     void deleteProject(String id);
     Project getProjectByName(String name);
     Project getProjectByCode(String code);
-   /* List<Project> searchProject(ProjectFilter projectFilter);*/
+    List<Project> searchProject(ProjectFilter projectFilter);
 }

@@ -34,7 +34,7 @@ public class UserProfileServiceImpl implements UserProfileService {
                 : userRepository.findUserProfileBySubstring(String.format("%%%s%%", inputValue), sort);
 
         return resultSearch.stream()
-                .map(item -> new UserProfile(item.getId(), item.getProfile() == null ? null : item.getProfile().getFirstName(), item.getLogin()))
+                .map(item -> new UserProfile(item.getId(), item.getProfile() == null ? null : item.getProfile().getFullName (), item.getLogin()))
                 .collect(Collectors.toCollection(LinkedList::new));
 
     }

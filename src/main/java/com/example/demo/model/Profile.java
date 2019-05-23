@@ -1,18 +1,18 @@
 package com.example.demo.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "profile", schema = "new_schema")
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
 @NoArgsConstructor
 public class Profile {
     @Id
@@ -22,19 +22,22 @@ public class Profile {
             strategy = "org.hibernate.id.UUIDGenerator"
     )
     private String id;
-    private String firstName;
-    private String secondName;
+    private String fullName;
     private String email;
+    private String skype;
+    private String telephone;
+    private String additional;
     private Date birthday;
+    private String description;
 
-    @OneToOne (cascade = {
+    @OneToOne(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
     })
     @JoinColumn(name = "userid", referencedColumnName = "id")
     private User user;
 
-    @ManyToMany(cascade = {
+    @OneToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
     })
@@ -42,44 +45,29 @@ public class Profile {
             joinColumns = @JoinColumn(name = "profileid"),
             inverseJoinColumns = @JoinColumn(name = "filterid")
     )
+    @JsonManagedReference
     private Set<Filter> filters = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {
-            CascadeType.MERGE,
-            CascadeType.PERSIST
+    @OneToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
     })
-    @JoinTable(name = "project_profile",
-            joinColumns = @JoinColumn(name = "projectid"),
-            inverseJoinColumns = @JoinColumn(name = "profileid")
+    @JoinTable(name = "profile_dashboard",
+            joinColumns = @JoinColumn(name = "profileid"),
+            inverseJoinColumns = @JoinColumn(name = "dashboardid")
     )
-    private List<Project> projects = new LinkedList<>();
+    @JsonManagedReference
+    private Set<Dashboard> dashboards = new HashSet<>();
 
+    @OneToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "profile_project",
+            joinColumns = @JoinColumn(name = "profileid"),
+            inverseJoinColumns = @JoinColumn(name = "projectid")
+    )
+    @JsonManagedReference
+    private Set<Project> projects = new HashSet<>();
 
-    public Profile(String firstName, String secondName, String email, Date birthday, User user) {
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.email = email;
-        this.birthday = birthday;
-        this.user = user;
-    }
-
-
-
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-        Profile profile = (Profile) object;
-        return Objects.equals(id, profile.id) &&
-                Objects.equals(firstName, profile.firstName) &&
-                Objects.equals(secondName, profile.secondName) &&
-                Objects.equals(email, profile.email) &&
-                Objects.equals(birthday, profile.birthday) &&
-                Objects.equals(user, profile.user);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, secondName, email, birthday, user);
-    }
 }

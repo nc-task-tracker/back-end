@@ -64,25 +64,31 @@ public class ProjectServiceImpl implements ProjectService {
         return this.repository.findProjectByProjectCode(code);
     }
 
-    /*@Override
-    public List<Project> searchProject(ProjectFilter projectFilter) {
-        return (List<Project>) repository.findAll(createProjectSearchPredicate(projectFilter));
-    }*/
 
-//    public Predicate createProjectSearchPredicate(ProjectFilter projectFilter) {
-//        BooleanBuilder expression = new BooleanBuilder();
-//        QProject project = QProject.project;
-//
-//        projectFilter.getParameters().forEach(parameterProject -> {
-//            switch (parameterProject.getParameterProjectType()) {
-//                case PROJECT_NAME:
-//                    expression.and(project.projectName.stringValue().in(parameterProject.getParameterValue()));
-//                    break;
-//                case PROJECT_CODE:
-//                    expression.and(project.projectCode.stringValue().in(parameterProject.getParameterValue()));
-//                    break;
-//            }
-//        });
-//        return expression;
-//    }
+    // заменить на метод ниже
+    @Override
+    public List<Project> searchProject (ProjectFilter projectFilter) {
+        return null;
+    }
+//    @Override
+//    public List<Project> searchProject(ProjectFilter projectFilter) {
+//        return (List<Project>) repository.findAll(createProjectSearchPredicate(projectFilter));
+//  public List<Project> searchProject(ProjectFilter projectFilter) {
+
+    public Predicate createProjectSearchPredicate(ProjectFilter projectFilter) {
+        BooleanBuilder expression = new BooleanBuilder();
+        QProject project = QProject.project;
+
+        projectFilter.getParameters().forEach(parameterProject -> {
+            switch (parameterProject.getParameterProjectType()) {
+                case PROJECT_NAME:
+                    expression.and(project.projectName.stringValue().in(parameterProject.getParameterValue()));
+                    break;
+                case PROJECT_CODE:
+                    expression.and(project.projectCode.stringValue().in(parameterProject.getParameterValue()));
+                    break;
+            }
+        });
+        return expression;
+    }
 }

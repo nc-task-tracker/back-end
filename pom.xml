@@ -11,14 +11,12 @@
 <groupId>com.example</groupId>
 <artifactId>demo</artifactId>
 <version>0.0.1-SNAPSHOT</version>
-<name>tast_tracker</name>
+<name>task_tracker</name>
 <description>Demo project for Spring Boot</description>
 
 <properties>
     <java.version>1.8</java.version>
 </properties>
-
-
 
 <dependencies>
     <dependency>
@@ -98,12 +96,11 @@
             <version>5.1.4.RELEASE</version>
         </dependency>
 
-
-    <dependency>
-        <groupId>org.modelmapper</groupId>
-        <artifactId>modelmapper</artifactId>
-        <version>2.3.0</version>
-    </dependency>
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>2.3.0</version>
+        </dependency>
 
     <dependency>
         <groupId>org.projectlombok</groupId>
@@ -118,11 +115,55 @@
     </dependency>
 
     <dependency>
+        <groupId>com.google.apis</groupId>
+        <artifactId>google-api-services-drive</artifactId>
+        <version>v3-rev110-1.23.0</version>
+        <!--<version>v3-rev160-1.25.0</version>-->
+    </dependency>
+
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client-java6</artifactId>
+            <version>1.23.0</version>
+            <!--<version>1.12.0-beta</version>-->
+        </dependency>
+        <dependency>
+            <groupId>com.google.oauth-client</groupId>
+            <artifactId>google-oauth-client-jetty</artifactId>
+            <version>1.23.0</version>
+            <!--<version>1.12.0-beta</version>-->
+        </dependency>
+    <dependency>
+        <groupId>com.google.http-client</groupId>
+        <artifactId>google-http-client-jackson2</artifactId>
+        <version>1.23.0</version>
+        <!--<version>1.12.0-beta</version>-->
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/com.querydsl/querydsl-jpa -->
+    <dependency>
+        <groupId>com.querydsl</groupId>
+        <artifactId>querydsl-apt</artifactId>
+        <version>4.2.1</version>
+    </dependency>
+
+    <!--<dependency>-->
+        <!--<groupId>com.querydsl</groupId>-->
+        <!--<artifactId>querydsl-jpa</artifactId>-->
+        <!--<version>4.0.6</version>-->
+    <!--</dependency>-->
+
+    <dependency>
+        <groupId>com.querydsl</groupId>
+        <artifactId>querydsl-jpa</artifactId>
+        <version>4.2.1</version>
+    </dependency>
+
+    <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-annotations</artifactId>
         <version>2.9.0</version>
     </dependency>
-
 
 </dependencies>
 <build>
