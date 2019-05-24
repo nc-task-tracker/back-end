@@ -26,11 +26,7 @@ import java.util.List;
 @RequestMapping(value = "/api/profile")
 public class ProfileController {
 
-    private ProfileService service;
-    private ModelMapper modelMapper;
-    private DashboardService dashboardService;
-    private FilterService filterService;
-    private ProjectService projectService;
+    private ProfileService service; private ModelMapper modelMapper; private DashboardService dashboardService;
 
     @Autowired
     public ProfileController(ProfileService service,
@@ -38,21 +34,20 @@ public class ProfileController {
                              DashboardService dashboardService) {
         this.dashboardService = dashboardService;
         this.modelMapper = modelMapper;
-        this.service = service;
-    }
+        this.service = service; }
 
     @GetMapping(value = "/{id}")
     public ProfileDto getProfileById(@PathVariable(name = "id") String id) {
         return modelMapper.map(service.getProfileById(id), ProfileDto.class);
     }
 
+
     @GetMapping(value = "/all")
     public List<ProfileDto> getAllProfiles() {
         List<ProfileDto> profilesDto = new ArrayList<>();
         List<Profile> users = service.getAllProfiles();
         for(Profile item : users) {
-            profilesDto.add(modelMapper.map(item, ProfileDto.class));
-        }
+            profilesDto.add(modelMapper.map(item, ProfileDto.class)); }
         return profilesDto;
     }
 
@@ -69,6 +64,7 @@ public class ProfileController {
         service.deleteProfile(id);
         return ResponseEntity.noContent().build();
     }
+
     @GetMapping(value = "/{user_id}/all_dashboards")
     public List<DashboardDto> getAllDashboardById(@PathVariable(name = "user_id") String id) {
         List<DashboardDto> dashboardsDto = new ArrayList<>();
@@ -77,6 +73,7 @@ public class ProfileController {
         }
         return dashboardsDto;
     }
+
     /*@GetMapping(value = "/{user_id}/all_projects")
     public List<ProjectDto> getAllProjectById(@PathVariable(name = "user_id") String id) {
         List<ProjectDto> projectsDto = new ArrayList<>();
@@ -93,5 +90,4 @@ public class ProfileController {
         }
         return null;
     }*/
-
 }

@@ -1,39 +1,39 @@
 package com.example.demo.dto;
 
-import com.example.demo.model.*;
+import com.example.demo.model.Dashboard;
+import com.example.demo.model.Filter;
+import com.example.demo.model.Project;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
+import javax.validation.constraints.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProfileDto {
-    @Null
+
     private String id;
-    @NotNull
+    @NotNull(message = "fullName field must be filled")
+    @Size(min = 3)
     private String fullName;
-    @NotNull
-    @Email
+    @NotBlank()
+    @Email(message = "enter a valid email")
     private String email;
-    @NotNull
+    @NotNull(message = "")
+    @Size(min = 3, max = 30, message = "Login skype size should be between 3 & 30")
     private String skype;
-    @NotNull
+    @NotBlank()
+    @Size( max = 15, message = "telephone number must be less than 15 characters")
     private String telephone;
-    @NotNull
+
     private String additional;
-    @NotNull
-    @DateTimeFormat
+    @NotNull(message = "enter a valid birthday")
     private Date birthday;
-    @NotNull
+
     private String description;
 
 //    @Null
