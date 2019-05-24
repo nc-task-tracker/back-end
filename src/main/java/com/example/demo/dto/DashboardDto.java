@@ -23,5 +23,5 @@ public class DashboardDto {
     private String dashboardName;
 
     @NotNull
-    private Set<Filter> filters = new HashSet<>();
+    private Set<FilterDto> filters = new HashSet<>();
 }

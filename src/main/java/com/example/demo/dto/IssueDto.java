@@ -1,10 +1,12 @@
 package com.example.demo.dto;
 
 import com.example.demo.model.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.codehaus.jackson.annotate.JsonBackReference;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
@@ -20,9 +22,9 @@ import java.util.Set;
 public class IssueDto {
     private String id;
 
-    private String issueName;
+    private String name;
 
-    private String issueDescription;
+    private String description;
 
     @DateTimeFormat
     private Date startDate;
@@ -32,7 +34,12 @@ public class IssueDto {
 
     private String parentId;
 
-    private Project project;
+//    @JsonBackReference
+    private ProfileDto reporter;
+//    @JsonBackReference
+    private ProfileDto assignee;
+
+    private ProjectDto project;
 
     private IssueType issuetype;
 
@@ -40,7 +47,7 @@ public class IssueDto {
 
     private IssueStatus issuestatus;
 
-    private Profile assignee;
 
-    private Profile reporter;
+
+
 }

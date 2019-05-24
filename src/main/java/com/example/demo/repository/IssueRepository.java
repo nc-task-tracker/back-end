@@ -18,8 +18,8 @@ public interface IssueRepository extends CrudRepository<Issue, String>,
     Issue findIssueById(String id);
 
 //    @Query(" select pr from Profile as pr join issue as i on i.assigne_id = pr.id where upper(pr.firstName) like upper(?1)" )
-////    @Query("select iss from Issue iss where upper(iss.assignee) like upper(?1) or exists (select p from Profile p where p.user = u and upper(p.firstName) like upper(?1))")
-//    List<UserProfile> findProfileBySubstring(String substring, Sort sort);
+    @Query("select iss from Issue iss where upper(iss.name) like upper(?1)")
+    List<Issue> findIssueNameBySubstring(String substring, Sort sort);
 //
 //    @Query(" select pr.firstName from Profile as pr join issue as i on i.assigne = pr.id where upper(pr.firstName) like upper(?1)" )
 //    @Query("SELECT profile.first_name\n" +

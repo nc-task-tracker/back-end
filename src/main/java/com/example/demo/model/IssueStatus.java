@@ -9,10 +9,5 @@ import javax.persistence.*;
 
 public enum IssueStatus {
     OPEN,
-    TO_GO,
-    IN_PROGRESS,
-    COMPLETE,
-    TESTING,
-    REOPENED,
-    DONE
+    CLOSED
 }

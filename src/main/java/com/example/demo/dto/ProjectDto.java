@@ -35,5 +35,5 @@ public class ProjectDto {
 
     private ProjectStatus projectStatus;
 
-    private Set<Dashboard> dashboards = new HashSet<>();
+    private Set<DashboardDto> dashboards = new HashSet<>();
 }

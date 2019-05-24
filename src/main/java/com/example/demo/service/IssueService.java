@@ -15,8 +15,8 @@ public interface IssueService {
     Issue updateIssue(Issue issue);
     List<Issue> getAllIssues();
     void deleteIssue(String id);
-//    List<Issue> searchIssue(Issue issue);
     List<Issue> searchIssue(Filter filter);
-    List<ModelForSearch> searchAssignee(String inputValue);
-    List<ModelForSearch> searchReporter(String inputValue);
+    List<Issue> getIssueName(String inputValue);
+//    List<ModelForSearch> searchAssignee(String inputValue);
+//    List<ModelForSearch> searchReporter(String inputValue);
 }

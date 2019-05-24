@@ -40,8 +40,9 @@ public class FilterController {
     }
 
     @PostMapping
-    public Filter createFilter(@RequestBody Filter filter) {
-        return service.saveFilter(filter);
+    public FilterDto createFilter(@RequestBody FilterDto filter) {
+        System.out.println("filter search");
+        return modelMapper.map(service.saveFilter(modelMapper.map(filter, Filter.class)), FilterDto.class);
     }
 
     @PutMapping

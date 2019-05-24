@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -39,6 +40,7 @@ public class Profile {
             CascadeType.MERGE
     })
     @JoinColumn(name = "userid", referencedColumnName = "id")
+    @JsonManagedReference
     private User user;
 
     @Fetch(value = FetchMode.SELECT)
@@ -50,7 +52,7 @@ public class Profile {
             joinColumns = @JoinColumn(name = "profileid"),
             inverseJoinColumns = @JoinColumn(name = "filterid")
     )
-    @JsonManagedReference
+    @JsonBackReference
     private Set<Filter> filters = new HashSet<>();
 
     public Profile(String firstName, String secondName, String email, Date birthday, User user, Set<Filter> filters) {
@@ -62,30 +64,16 @@ public class Profile {
         this.filters = filters;
     }
 
-//    public Profile(String firstName, String secondName, String email, Date birthday, User user, Filter filters) {
-//        this.firstName = firstName;
-//        this.secondName = secondName;
-//        this.email = email;
-//        this.birthday = birthday;
-//        this.user = user;
-//        this.filters = filters;
-//    }
-
     @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-        Profile profile = (Profile) object;
-        return Objects.equals(id, profile.id) &&
-                Objects.equals(firstName, profile.firstName) &&
-                Objects.equals(secondName, profile.secondName) &&
-                Objects.equals(email, profile.email) &&
-                Objects.equals(birthday, profile.birthday) &&
-                Objects.equals(user, profile.user);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, secondName, email, birthday, user);
+    public String toString() {
+        return "Profile{" +
+                "id='" + id + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", secondName='" + secondName + '\'' +
+                ", email='" + email + '\'' +
+                ", birthday=" + birthday +
+                ", user=" + user +
+                ", filters=" + filters +
+                '}';
     }
 }

@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.FilterDto;
 import com.example.demo.dto.IssueDto;
+import com.example.demo.model.Filter;
 import com.example.demo.model.Issue;
 import com.example.demo.service.IssueService;
 import org.modelmapper.ModelMapper;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +43,18 @@ public class IssueController {
         return issuesDto;
     }
 
+    @GetMapping(value = "/searchByName")
+    public List<IssueDto> getAllIssueName(@RequestParam(required = false) String name) {
+        List<IssueDto> issuesDto = new ArrayList<>();
+        List<Issue> issues = issueService.getIssueName(name);
+        for(Issue item : issues) {
+            issuesDto.add(modelMapper.map(item, IssueDto.class));
+        }
+        return issuesDto;
+
+//        return modelMapper.map(issueService.getIssueName(name), IssueDto.class);
+    }
+
     @PostMapping
     public IssueDto saveIssue(@Valid @RequestBody IssueDto issue) {
         return modelMapper.map(issueService.saveIssue(modelMapper.map(issue, Issue.class)), IssueDto.class);
@@ -57,7 +72,8 @@ public class IssueController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping(value = "/search/")
+//    @GetMapping(value = "/search/")
+    @PostMapping(value = "/search/")
     public List<IssueDto> findAllIssuesByPredicates(@RequestBody FilterDto filterDto) {
         List<IssueDto> issuesDto = new ArrayList<>();
         List<Issue> issues = issueService.searchIssue(modelMapper.map(filterDto, Filter.class));
