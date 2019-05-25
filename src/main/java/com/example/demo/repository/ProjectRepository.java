@@ -4,6 +4,7 @@ import com.example.demo.model.Profile;
 import com.example.demo.model.Project;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
@@ -20,6 +21,9 @@ public interface ProjectRepository extends JpaRepository<Project, String> {
     Project findProjectByProjectName(String name);
     Project findProjectByProjectCode(String projectCode);
     Page<Project> findAll(Pageable pageable);
+
+    @Query("select u from Project u where upper(u.projectName) like upper(?1)")
+    List<Project> findProjectBySubstring(String substring, Sort sort);
 
 //    @Query(value = "insert into new_schema.project_assigner(project_id,user_id) " +
 //            "values (:projectId,:userId)",nativeQuery = true)

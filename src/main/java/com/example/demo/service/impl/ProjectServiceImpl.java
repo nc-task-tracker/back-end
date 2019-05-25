@@ -8,6 +8,7 @@ import com.example.demo.model.*;
 import com.example.demo.repository.ProfileRepository;
 import com.example.demo.repository.ProjectRepository;
 import com.example.demo.service.ProjectService;
+import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +29,7 @@ public class ProjectServiceImpl implements ProjectService {
     private ModelMapper mapper;
 
     @Autowired
-    public ProjectServiceImpl(ProjectRepository repository,ModelMapper modelMapper){
+    public ProjectServiceImpl(ProjectRepository repository, ModelMapper modelMapper) {
         this.repository = repository;
         this.mapper = modelMapper;
     }
@@ -62,13 +64,13 @@ public class ProjectServiceImpl implements ProjectService {
     public PageDto<ProjectDto> getAllSortedProjects(TableSortParametersDTO parameters) {
         PageDto<ProjectDto> pageDto = new PageDto<>();
 
-        Sort sort = new Sort(parameters.get_direction().equals("asc")? Sort.Direction.ASC: Sort.Direction.DESC,
+        Sort sort = new Sort(parameters.get_direction().equals("asc") ? Sort.Direction.ASC : Sort.Direction.DESC,
                 parameters.get_columnName());
-        Pageable pageable = PageRequest.of(parameters.get_page(),parameters.get_maxElemOnPage(),sort);
+        Pageable pageable = PageRequest.of(parameters.get_page(), parameters.get_maxElemOnPage(), sort);
 
         Page<Project> page = repository.findAll(pageable);
 
-        pageDto.setList(page.get().map(value -> mapper.map(value,ProjectDto.class))
+        pageDto.setList(page.get().map(value -> mapper.map(value, ProjectDto.class))
                 .collect(Collectors.toList()));
         pageDto.setTotalElem(page.getTotalElements());
         pageDto.setTotalPages(page.getTotalPages());
@@ -117,4 +119,18 @@ public class ProjectServiceImpl implements ProjectService {
 //        }).collect(Collectors.toList());
         return null;
     }
+
+    @Override
+    public List<Project> getProjectsBySubstring(String name) {
+
+
+        Sort sort = new Sort(Sort.Direction.ASC, "projectName");
+        Pageable pageable = PageRequest.of(1, 10, sort);
+        List<Project> resultSearch = StringUtils.isEmpty(name) ?
+                repository.findAll(sort)
+                : repository.findProjectBySubstring(String.format("%%%s%%", name), sort);
+
+        return resultSearch;
+    }
+
 }

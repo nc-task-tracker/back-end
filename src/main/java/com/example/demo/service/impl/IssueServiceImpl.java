@@ -5,11 +5,9 @@ import com.example.demo.dto.IssueDto;
 import com.example.demo.dto.util.PageDto;
 import com.example.demo.dto.util.TableSortParametersDTO;
 import com.example.demo.model.Issue;
-import com.example.demo.repository.IssueRepository;
+import com.example.demo.repository.*;
 import com.example.demo.model.IssueStatus;
 import com.example.demo.model.Project;
-import com.example.demo.repository.IdentificatorRepository;
-import com.example.demo.repository.ProjectRepository;
 import com.example.demo.service.IssueService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +32,21 @@ public class IssueServiceImpl implements IssueService {
 
     private final ProjectRepository projectRepository;
 
+    private final ProfileRepository profileRepository;
+
+    private final UserRepository userRepository;
+
     @Autowired
-    public IssueServiceImpl(IssueRepository repository,
+    public IssueServiceImpl(IssueRepository issueRepository,
+                            UserRepository userRepository,
+                            ProfileRepository profileRepository,
                             IdentificatorRepository idRepository,
-                            ProjectRepository projectRepository) {
+                            ProjectRepository projectRepository,
+                            ModelMapper modelMapper) {
+        this.issueRepository = issueRepository;
+        this.userRepository = userRepository;
         this.idRepository = idRepository;
+        this.profileRepository = profileRepository;
         this.projectRepository = projectRepository;
         this.modelMapper = modelMapper;
 
@@ -46,10 +54,11 @@ public class IssueServiceImpl implements IssueService {
 
     @Transactional
     @Override
-    public Issue createIssue(String projectId, Issue issue) {
+    public Issue createIssue(String projectId, String assigneeId, String reporterId,  Issue issue) {
         Date d = new Date();
         Project project = projectRepository.findProjectById(projectId);
         issue.setProject(project);
+
 
         String parentProjectCode = issue.getProject().getProjectCode();
         Identificator identificator = idRepository.findIdentificatorById(1236751267);
@@ -57,6 +66,8 @@ public class IssueServiceImpl implements IssueService {
         identificator.setCurFreedom(identificator.getCurFreedom()+1);
         idRepository.save(identificator);
         issue.setStartDate(new java.sql.Date(d.getTime()));
+        issue.setAssignee(userRepository.findUserById(assigneeId).getProfile());
+        issue.setReporter(userRepository.findUserById(reporterId).getProfile());
         issue.setCode(issueCode);
         issue.setIssueStatus(IssueStatus.OPEN);
         return issueRepository.save(issue);

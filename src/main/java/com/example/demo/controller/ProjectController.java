@@ -54,10 +54,10 @@ public class ProjectController {
 
         this.service.searchProject(projectFilter).forEach(
                 project -> result.add(projectMapper.convertToDto(project)));*/
-        if(!name.equals("null")){
+        if (!name.equals("null")) {
             result.add(projectMapper.convertToDto(this.service.getProjectByName(name)));
         }
-        if(!code.equals("null")){
+        if (!code.equals("null")) {
             result.add(projectMapper.convertToDto(this.service.getProjectByCode(code)));
         }
         return result;
@@ -66,12 +66,12 @@ public class ProjectController {
     @GetMapping(value = "/all")
     public List<ProjectDto> getAllProjects() {
         return service.getAllProjects().stream()
-                .map(value -> modelMapper.map(value,ProjectDto.class))
+                .map(value -> modelMapper.map(value, ProjectDto.class))
                 .collect(Collectors.toList());
     }
 
     @PostMapping(value = "/all/sorted")
-    public PageDto<ProjectDto> getAllSortedProjects(@RequestBody TableSortParametersDTO parameters){
+    public PageDto<ProjectDto> getAllSortedProjects(@RequestBody TableSortParametersDTO parameters) {
         return service.getAllSortedProjects(parameters);
     }
 
@@ -107,7 +107,12 @@ public class ProjectController {
 //    }
 
     @GetMapping("/{id}/members")
-    public List<ProjectMemberDto> getProjectMembers(@PathVariable(name = "id") String id){
+    public List<ProjectMemberDto> getProjectMembers(@PathVariable(name = "id") String id) {
         return service.getProjectMembers(id);
+    }
+
+    @GetMapping("/name")
+    public List<Project> getProjectsBySubstring(@RequestParam(name = "substring") String name) {
+        return service.getProjectsBySubstring(name);
     }
 }

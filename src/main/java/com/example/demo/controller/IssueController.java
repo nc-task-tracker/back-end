@@ -60,9 +60,11 @@ public class IssueController {
 
     @PostMapping(value = "/project/{projectId}")
     public IssueDto createIssue( @PathVariable (name = "projectId") String projectId,
-                                 @RequestBody IssueDto issue) {
+                                 /*@Valid*/ @RequestBody IssueDto issue) {
          Issue is = modelMapper.map(issue, Issue.class);
-        return modelMapper.map(issueService.createIssue(projectId, is), IssueDto.class);
+         String assigneeId = issue.getAssignee().getId();
+         String reporterId = issue.getReporter();
+        return modelMapper.map(issueService.createIssue(projectId, assigneeId, reporterId, is), IssueDto.class);
     }
     @PutMapping(value = "/{id}")
     public IssueDto updateIssue(@PathVariable(name = "id") String id,

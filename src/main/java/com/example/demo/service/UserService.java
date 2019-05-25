@@ -20,5 +20,4 @@ public interface UserService {
     void deleteUser(String id);
     User getUserByUsername(String username);
     List<User> getNotProjectAssigners(String projectId);
-    List<Project> getPossibleProjects(String username);
 }

@@ -4,8 +4,10 @@ import com.example.demo.model.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,13 +18,15 @@ import java.util.Set;
 @AllArgsConstructor
 @ToString
 public class IssueDto {
-    @Null
+
     private String id;
 
-    @NotNull
+    @NotBlank(message = "Name may not be empty!")
+    @Size(min = 3, message = "Name may not be longer!")
     private String issueName;
 
-    @NotNull
+    @NotBlank(message = "Description may not be empty!")
+    @Size(min = 1, max = 1000)
     private String issueDescription;
 
     @NotNull
@@ -36,6 +40,8 @@ public class IssueDto {
     @Null
     @NotNull
     private String projectId;
+
+
     private Project project;
 
     @NotNull
@@ -48,13 +54,9 @@ public class IssueDto {
     private IssueStatus issueStatus;
 
     @Null
-    private String assignee;
+    private UserProfileDto assignee;
 
-    @Null
     private String reporter;
-
-    @Null
-    private Set<ChildIssue> childIssue = new HashSet<>();
 
     private Set<Comment> comments = new HashSet<>();
 }

@@ -23,4 +23,5 @@ public interface ProjectService {
     //void addAssigner(String code,String userId);
     //void deleteAssigner(String code, String userId);
     List<ProjectMemberDto> getProjectMembers(String id);
+    List<Project> getProjectsBySubstring(String name);
 }
