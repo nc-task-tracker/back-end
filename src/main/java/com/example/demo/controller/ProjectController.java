@@ -9,6 +9,7 @@ import com.example.demo.service.ProjectService;
 import com.example.demo.service.mappers.ProjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -70,7 +71,7 @@ public class ProjectController {
         return projectsDto;
     }
 
-    @PostMapping
+    @PostMapping(value = "/create")
     public ProjectDto createProject(@RequestBody @Valid ProjectDto projectDto) {
         return projectMapper.convertToDto(service.createProject(projectMapper.convertToEntity(projectDto)));
     }

@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.UserDto;
 import com.example.demo.model.User;
+import com.example.demo.model.usersFilters.UserFilter;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface UserService {
     List<User> getAllUsers();
     void deleteUser(String id);
     User getUserByUsername(String username);
+    List<User> searchUsers (UserFilter filter);
+    String encodePassword(String password);
 }

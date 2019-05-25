@@ -15,12 +15,12 @@ import java.util.*;
 public class UserController {
     private UserService service;
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public UserController(UserService service) {
+    public UserController(UserService service, ModelMapper modelMapper) {
         this.service = service;
+        this.modelMapper = modelMapper;
     }
 
 

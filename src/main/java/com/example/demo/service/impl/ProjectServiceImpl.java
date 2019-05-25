@@ -69,7 +69,7 @@ public class ProjectServiceImpl implements ProjectService {
         return (List<Project>) repository.findAll(createProjectSearchPredicate(projectFilter));
     }
 
-    public Predicate createProjectSearchPredicate(ProjectFilter projectFilter) {
+    private Predicate createProjectSearchPredicate(ProjectFilter projectFilter) {
         BooleanBuilder expression = new BooleanBuilder();
         QProject project = QProject.project;
 
