@@ -10,11 +10,14 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "issue", schema = "new_schema")
 @Getter
 @Setter
+@Data
 @NoArgsConstructor
 public class Issue {
     @Id
@@ -56,6 +59,8 @@ public class Issue {
 
     @Enumerated(EnumType.STRING)
     private IssuePriority issuepriority;
+    @OneToMany(mappedBy = "issue")
+    private Set<Comment> comments = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
     private IssueStatus issuestatus;
@@ -73,5 +78,4 @@ public class Issue {
         this.issuepriority = issuepriority;
         this.issuestatus = issuestatus;
     }
-
 }

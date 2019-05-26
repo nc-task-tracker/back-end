@@ -22,5 +22,5 @@ public interface UserService {
     User getUserByUsername(String username);
     List<User> searchUsers (UserFilter filter);
     String encodePassword(String password);
-    List<Project> getPossibleProjects(String username);
+    List<User> getNotProjectAssigners(String projectId);
 }

@@ -28,11 +28,11 @@ public class Project {
     )
     private String id;
     private String projectName;
-    private String projectCode;
     private String projectDescription;
 
     @Enumerated(EnumType.STRING)
     private ProjectStatus projectStatus;
+    private String projectCode;
 
     @ManyToOne(cascade = {
             CascadeType.PERSIST,
@@ -40,6 +40,13 @@ public class Project {
     })
     @JoinColumn(name = "ownerId", referencedColumnName = "id")
     private User owner;
+
+
+    @OneToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    private Set<ProjectMember> members = new HashSet<>();
 
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
@@ -58,4 +65,21 @@ public class Project {
         this.projectStatus = projectStatus;
         this.projectCode = projectCode;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Project project = (Project) object;
+        return Objects.equals(id, project.id) &&
+                Objects.equals(projectName, project.projectName) &&
+                Objects.equals(projectDescription, project.projectDescription) &&
+                Objects.equals(projectStatus, project.projectStatus);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, projectName, projectDescription,projectStatus);
+    }
+
 }

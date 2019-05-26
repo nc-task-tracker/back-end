@@ -50,6 +50,19 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    public User saveUser(User user) {
+        User temp = userRepository.findByLogin(user.getLogin());
+        if (user.getId() != null || temp == null) {
+            user.setPassword(bcryptEncoder.encode(user.getPassword()));
+
+            Set role = new HashSet<Role>(1);
+            role.add(roleService.getRoleById("bb65ce3f-d8b9-4b08-8737-3cf55caf4bdd"));
+            user.setRoles(role);
+
+            return userRepository.save(user);
+        } else return null;
+    }
+
     @Override
     public User addUser(User user) {
         User temp = userRepository.findByLogin(user.getLogin());
@@ -82,12 +95,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers() {
-        return (List<User>)userRepository.findAll();
-    }
-
-    @Override
-    public void deleteUser(String id) {
-        userRepository.deleteById(id);
+        return userRepository.findAll();
     }
 
     @Override
@@ -115,6 +123,16 @@ public class UserServiceImpl implements UserService {
             }
         });
         return expression;
+    }
+
+    @Override
+    public void deleteUser(String id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public List<User> getNotProjectAssigners(String projectId) {
+        return userRepository.getNotProjectAssigners(projectId);
     }
 
     @Override
