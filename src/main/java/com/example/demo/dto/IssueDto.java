@@ -39,7 +39,7 @@ public class IssueDto {
 
     @Null
     @NotNull
-    private String projectId;
+    private String parentId;
 
 
     private Project project;

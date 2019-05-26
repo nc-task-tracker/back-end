@@ -54,7 +54,7 @@ public class IssueServiceImpl implements IssueService {
 
     @Transactional
     @Override
-    public Issue createIssue(String projectId, String assigneeId, String reporterId,  Issue issue) {
+    public Issue createIssue(String projectId, String assigneeId, String reporterId, Issue issue) {
         Date d = new Date();
         Project project = projectRepository.findProjectById(projectId);
         issue.setProject(project);
@@ -63,13 +63,14 @@ public class IssueServiceImpl implements IssueService {
         String parentProjectCode = issue.getProject().getProjectCode();
         Identificator identificator = idRepository.findIdentificatorById(1236751267);
         String issueCode = String.format("%s-%d", parentProjectCode, identificator.getCurFreedom());
-        identificator.setCurFreedom(identificator.getCurFreedom()+1);
+        identificator.setCurFreedom(identificator.getCurFreedom() + 1);
         idRepository.save(identificator);
         issue.setStartDate(new java.sql.Date(d.getTime()));
         issue.setAssignee(userRepository.findUserById(assigneeId).getProfile());
         issue.setReporter(userRepository.findUserById(reporterId).getProfile());
         issue.setCode(issueCode);
         issue.setIssueStatus(IssueStatus.OPEN);
+
         return issueRepository.save(issue);
     }
 
@@ -99,18 +100,18 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
-    public PageDto<IssueDto> getSortedIssuesByProjectId(String id, TableSortParametersDTO parametersDTO){
+    public PageDto<IssueDto> getSortedIssuesByProjectId(String id, TableSortParametersDTO parametersDTO) {
         PageDto<IssueDto> pageDto = new PageDto<>();
 
-        Sort sort = new Sort(parametersDTO.get_direction().equals("asc")? Sort.Direction.ASC:Sort.Direction.DESC,
+        Sort sort = new Sort(parametersDTO.get_direction().equals("asc") ? Sort.Direction.ASC : Sort.Direction.DESC,
                 parametersDTO.get_columnName());
-        Pageable pageable = PageRequest.of(parametersDTO.get_page(),parametersDTO.get_maxElemOnPage(),sort);
+        Pageable pageable = PageRequest.of(parametersDTO.get_page(), parametersDTO.get_maxElemOnPage(), sort);
 
-        Page<Issue> all = issueRepository.findAllByProjectId(id,pageable);
+        Page<Issue> all = issueRepository.findAllByProjectId(id, pageable);
 
         pageDto.setTotalElem(all.getTotalElements());
         pageDto.setTotalPages(all.getTotalPages());
-        pageDto.setList(all.get().map(value -> modelMapper.map(value,IssueDto.class)).collect(Collectors.toList()));
+        pageDto.setList(all.get().map(value -> modelMapper.map(value, IssueDto.class)).collect(Collectors.toList()));
         pageDto.setPageSize(all.getSize());
 
         return pageDto;
