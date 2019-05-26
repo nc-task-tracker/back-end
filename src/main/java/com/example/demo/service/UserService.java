@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.UserDto;
+import com.example.demo.model.Profile;
+import com.example.demo.model.Project;
 import com.example.demo.model.User;
 import org.springframework.data.domain.Page;
 
@@ -17,4 +19,5 @@ public interface UserService {
     List<User> getAllUsers();
     void deleteUser(String id);
     User getUserByUsername(String username);
+    List<Project> getPossibleProjects(String username);
 }

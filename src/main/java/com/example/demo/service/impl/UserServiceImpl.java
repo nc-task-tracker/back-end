@@ -1,5 +1,7 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.model.Profile;
+import com.example.demo.model.Project;
 import com.example.demo.model.Role;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
@@ -36,7 +38,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean existByEmail(String email) {
-        return userRepository.existsByEmail(email);
+        //return userRepository.existsByEmail(email);
+        return null;
     }
 
     @Override
@@ -47,7 +50,7 @@ public class UserServiceImpl implements UserService {
             user.setPassword(bcryptEncoder.encode(user.getPassword()));
 
             Set role = new HashSet<Role>(1);
-            role.add(roleService.getRoleById("bb65ce3f-d8b9-4b08-8737-3cf55caf4bdd"));
+            role.add(roleService.getRoleById(""));
             user.setRoles(role);
 
             return userRepository.save(user);
@@ -70,12 +73,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void deleteUser(String id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
     public User getUserByUsername(String username) {
         return userRepository.findByLogin(username);
     }
 
     @Override
-    public void deleteUser(String id) {
-        userRepository.deleteById(id);
+    public List<Project> getPossibleProjects(String username) {
+        return (List<Project>) userRepository.findByLogin(username).getProfile().getProjects ();
     }
 }
