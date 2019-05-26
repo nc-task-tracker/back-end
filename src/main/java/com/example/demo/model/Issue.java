@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.codehaus.jackson.annotate.JsonBackReference;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -31,7 +30,7 @@ public class Issue {
     private String issueDescription;
     private Date startDate;
     private Date dueDate;
-    private String issueCode;
+    private String code;
     private String parentId;
 
     @OneToOne(cascade = {
@@ -55,17 +54,17 @@ public class Issue {
     private Project project;
 
     @Enumerated(EnumType.STRING)
-    private IssueType issuetype;
+    private IssueType issueType;
 
     @Enumerated(EnumType.STRING)
-    private IssuePriority issuepriority;
+    private IssuePriority issuePriority;
     @OneToMany(mappedBy = "issue")
     private Set<Comment> comments = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
-    private IssueStatus issuestatus;
+    private IssueStatus issueStatus;
 
-    public Issue(String name, String description, Date startDate, Date dueDate, String parentId, Profile reporter, Profile assignee, Project project, IssueType issuetype, IssuePriority issuepriority, IssueStatus issuestatus) {
+    public Issue(String name, String description, Date startDate, Date dueDate, String parentId, Profile reporter, Profile assignee, Project project, IssueType issueType, IssuePriority issuePriority, IssueStatus issueStatus) {
         this.issueName = name;
         this.issueDescription = description;
         this.startDate = startDate;
@@ -74,8 +73,8 @@ public class Issue {
         this.reporter = reporter;
         this.assignee = assignee;
         this.project = project;
-        this.issuetype = issuetype;
-        this.issuepriority = issuepriority;
-        this.issuestatus = issuestatus;
+        this.issueType = issueType;
+        this.issuePriority = issuePriority;
+        this.issueStatus = issueStatus;
     }
 }

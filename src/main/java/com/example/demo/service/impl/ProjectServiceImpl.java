@@ -5,12 +5,15 @@ import com.example.demo.dto.ProjectMemberDto;
 import com.example.demo.dto.util.PageDto;
 import com.example.demo.dto.util.TableSortParametersDTO;
 import com.example.demo.model.*;
+import com.example.demo.model.projectFilter.ProjectFilter;
 import com.example.demo.repository.ProfileRepository;
 import com.example.demo.model.Project;
 import com.example.demo.model.ProjectStatus;
 import com.example.demo.repository.ProfileRepository;
 import com.example.demo.repository.ProjectRepository;
 import com.example.demo.service.ProjectService;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,6 +103,23 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<Project> searchProject(ProjectFilter projectFilter) {
         return (List<Project>) repository.findAll(createProjectSearchPredicate(projectFilter));
+    }
+
+    public Predicate createProjectSearchPredicate(ProjectFilter projectFilter) {
+        BooleanBuilder expression = new BooleanBuilder();
+        QProject project = QProject.project;
+
+        projectFilter.getParameters().forEach(parameterProject -> {
+            switch (parameterProject.getParameterProjectType()) {
+                case PROJECT_NAME:
+                    expression.and(project.projectName.stringValue().in(parameterProject.getParameterValue()));
+                    break;
+                case PROJECT_CODE:
+                    expression.and(project.projectCode.stringValue().in(parameterProject.getParameterValue()));
+                    break;
+            }
+        });
+        return expression;
     }
 
     @Override

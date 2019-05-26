@@ -5,12 +5,13 @@ import com.example.demo.config.Constants;
 //import com.example.demo.config.JwtTokenUtil;
 import com.example.demo.config.JwtTokenUtil;
 import com.example.demo.config.UserTokenModel;
+import com.example.demo.dto.UserDto;
 import com.example.demo.model.AuthToken;
 import com.example.demo.model.LoginUser;
 import com.example.demo.model.usersFilters.ParameterUser;
 import com.example.demo.model.usersFilters.ParameterUserType;
 import com.example.demo.model.usersFilters.UserFilter;
-import com.example.demo.service.UserService;
+import com.example.demo.service.AuthenticationService;
 import com.example.demo.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.naming.AuthenticationException;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +33,7 @@ import java.util.Date;
 public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
+    private final AuthenticationService authenticationService;
 
     private final UserService userService;
 
@@ -40,13 +41,13 @@ public class AuthenticationController {
 
     private final JwtTokenUtil jwtTokenUtil;
 
-    private final UserService userService;
 
     private final ModelMapper modelMapper;
 
     @Autowired
-    public AuthenticationController(AuthenticationManager authenticationManager, UserService userService, @Qualifier("userDetailsService") UserDetailsService userDetailsService, JwtTokenUtil jwtTokenUtil) {
+    public AuthenticationController(AuthenticationManager authenticationManager, AuthenticationService authenticationService, UserService userService, @Qualifier("userDetailsService") UserDetailsService userDetailsService, JwtTokenUtil jwtTokenUtil, ModelMapper modelMapper) {
         this.authenticationManager = authenticationManager;
+        this.authenticationService = authenticationService;
         this.userService = userService;
         this.userDetailsService = userDetailsService;
         this.jwtTokenUtil = jwtTokenUtil;
@@ -69,7 +70,7 @@ public class AuthenticationController {
         final String token = jwtTokenUtil.generateToken(authenticationToken);
 
 
-        return new UserTokenModel(userService.getUserByUsername(loginUser.getLogin()), new AuthToken(token));
+        return new UserTokenModel(modelMapper.map(userService.getUserByUsername(loginUser.getLogin()), UserDto.class), new AuthToken(token));
     }
 
     @PostMapping(value = "/register")
@@ -92,6 +93,7 @@ public class AuthenticationController {
                 user -> result.add(modelMapper.map(user, UserDto.class)));
         return result;
     }
+
     @GetMapping(value = "/expDate")
     public Date GetExpDate(@PathVariable String token) {
         token = token.replace(Constants.TOKEN_PREFIX, "");

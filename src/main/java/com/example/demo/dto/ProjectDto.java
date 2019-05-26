@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -23,14 +24,13 @@ public class ProjectDto {
     private String projectCode;
 
     private String projectDescription;
-    private User projectOwner;
+    private UserDto projectOwner;
 
     @NotBlank(message = "Project owner id shouldn't be blank")
     private String ownerId;
     private ProjectStatus projectStatus;
 
-    private Set<DashboardDto> dashboards;
-    private Set<ProjectMemberDto> members = new HashSet<>();
+    private Set<ProjectMemberDto> members;
 
-    private Set<DashboardDto> dashboards = new HashSet<>();
+    private Set<DashboardDto> dashboards;
 }

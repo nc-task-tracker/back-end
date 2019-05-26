@@ -7,6 +7,9 @@ import com.example.demo.dto.util.PageDto;
 import com.example.demo.dto.util.TableSortParametersDTO;
 import com.example.demo.model.Project;
 import com.example.demo.model.ProjectMember;
+import com.example.demo.model.projectFilter.ParameterProject;
+import com.example.demo.model.projectFilter.ParameterProjectType;
+import com.example.demo.model.projectFilter.ProjectFilter;
 import com.example.demo.service.ProjectService;
 import org.modelmapper.ModelMapper;
 import com.example.demo.service.mappers.ProjectMapper;
@@ -21,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Controller
+@RestController
 @RequestMapping(value = "/api/project")
 public class ProjectController {
     private ProjectService service;

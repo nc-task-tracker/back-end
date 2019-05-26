@@ -10,11 +10,11 @@ import lombok.Setter;
 public class UserProfile {
     private String id;
     private String login;
-    private String FIO;
+    private String fio;
 
-    public UserProfile(String id, String login, String FIO) {
+    public UserProfile(String id, String fio, String login) {
         this.id = id;
         this.login = login;
-        this.FIO = FIO;
+        this.fio = fio;
     }
 }

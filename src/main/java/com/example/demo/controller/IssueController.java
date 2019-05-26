@@ -81,14 +81,6 @@ public class IssueController {
                 .collect(Collectors.toList());
     }
 
-
-    @PostMapping(value = "/project/{projectId}")
-    public IssueDto createIssue( @PathVariable (name = "projectId") String projectId,
-                                 @RequestBody IssueDto issue) {
-         Issue is = modelMapper.map(issue, Issue.class);
-        return modelMapper.map(issueService.createIssue(projectId, is), IssueDto.class);
-    }
-
     @PostMapping(value = "/project/{projectId}")
     public IssueDto createIssue( @PathVariable (name = "projectId") String projectId,
                                  /*@Valid*/ @RequestBody IssueDto issue) {

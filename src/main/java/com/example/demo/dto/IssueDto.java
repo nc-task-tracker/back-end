@@ -37,12 +37,12 @@ public class IssueDto {
     @DateTimeFormat
     private Date dueDate;
 
-    @Null
     @NotNull
     private String parentId;
 
+    private String code;
 
-    private Project project;
+    private ProjectDto project;
 
     @NotNull
     private IssueType issueType;
@@ -58,5 +58,5 @@ public class IssueDto {
 
     private String reporter;
 
-    private Set<Comment> comments = new HashSet<>();
+    private Set<CommentDto> comments;
 }

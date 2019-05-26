@@ -11,7 +11,6 @@ import com.example.demo.dto.util.PageDto;
 import com.example.demo.dto.util.TableSortParametersDTO;
 import com.example.demo.model.Issue;
 import com.example.demo.repository.*;
-import com.example.demo.model.IssueStatus;
 import com.example.demo.model.Project;
 import com.example.demo.service.IssueService;
 import com.querydsl.core.BooleanBuilder;
@@ -21,11 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Sort;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.transaction.Transactional;
@@ -40,7 +36,6 @@ public class IssueServiceImpl implements IssueService {
 
     private IssueRepository issueRepository;
     private ModelMapper modelMapper;
-    private ProfileRepository profileRepository;
 
     private final IdentificatorRepository idRepository;
 
@@ -72,8 +67,6 @@ public class IssueServiceImpl implements IssueService {
         Date d = new Date();
         Project project = projectRepository.findProjectById(projectId);
         issue.setProject(project);
-
-
         String parentProjectCode = issue.getProject().getProjectCode();
         Identificator identificator = idRepository.findIdentificatorById(1236751267);
         String issueCode = String.format("%s-%d", parentProjectCode, identificator.getCurFreedom());
@@ -82,9 +75,8 @@ public class IssueServiceImpl implements IssueService {
         issue.setStartDate(new java.sql.Date(d.getTime()));
         issue.setAssignee(userRepository.findUserById(assigneeId).getProfile());
         issue.setReporter(userRepository.findUserById(reporterId).getProfile());
-        issue.setIssueCode (issueCode);
-//        issue.setIssueStatus(IssueStatus.OPEN);
-
+        issue.setCode(issueCode);
+        issue.setIssueStatus(IssueStatus.OPEN);
         return issueRepository.save(issue);
     }
 
@@ -159,7 +151,7 @@ public class IssueServiceImpl implements IssueService {
 
     @Override
     public List<Issue> searchIssue(Filter filter) {
-        return (List<Issue>) repository.findAll(createIssueSearchPredicate(filter));
+        return (List<Issue>) issueRepository.findAll(createIssueSearchPredicate(filter));
     }
 
     @Override
@@ -167,8 +159,8 @@ public class IssueServiceImpl implements IssueService {
         Sort sort = new Sort(Sort.Direction.ASC, "name");
         Pageable pageable = PageRequest.of(1, 10, sort);
         List<Issue> resultSearch = StringUtils.isEmpty(inputValue) ?
-                repository.findAll(sort)
-                : repository.findIssueNameBySubstring(String.format("%%%s%%", inputValue), sort);
+                issueRepository.findAll(sort)
+                : issueRepository.findIssueNameBySubstring(String.format("%%%s%%", inputValue), sort);
 
         return resultSearch.stream()
 //                .map(item -> new Issue(item.getIssueName() == null ? null : item.getIssueName()))
@@ -176,37 +168,37 @@ public class IssueServiceImpl implements IssueService {
     }
 
     //todo: fix add parameters
-    public Predicate createIssueSearchPredicate(Filter filterForSearch){
+    public Predicate createIssueSearchPredicate(Filter filterForSearch) {
         BooleanBuilder expression = new BooleanBuilder();
         QIssue issue = QIssue.issue;
         QProfile profile = QProfile.profile;
 
         filterForSearch.getParameters().forEach(parameter -> {
-            switch (parameter.getParameterType()){
+            switch (parameter.getParameterType()) {
                 case ISSUE_NAME:
                     expression.and(issue.issueName.stringValue().in(parameter.getParameterValue()));
                     break;
                 case ISSUE_TYPE:
-                    if(parameter.getParameterValues()!=null) {
-                            expression.and(issue.issuetype.stringValue().in(parameter.getParameterValues()));
+                    if (parameter.getParameterValues() != null) {
+                        expression.and(issue.issuetype.stringValue().in(parameter.getParameterValues()));
                     }
                     break;
                 case ISSUE_STATUS:
-                    if(parameter.getParameterValues()!=null) {
+                    if (parameter.getParameterValues() != null) {
                         parameter.getParameterValues().forEach(val -> {
                             expression.and(issue.issuestatus.stringValue().in(val));
                         });
                     }
                     break;
                 case ISSUE_PRIORITY:
-                    if(parameter.getParameterValues()!=null) {
+                    if (parameter.getParameterValues() != null) {
                         parameter.getParameterValues().forEach(val -> {
                             expression.and(issue.issuepriority.stringValue().in(val));
                         });
                     }
                     break;
                 case ASSIGNEE:
-                    if(parameter.getParameterValues()!=null) {
+                    if (parameter.getParameterValues() != null) {
                         parameter.getParameterValues().forEach(val -> {
 //                            expression.and(issue.assignee.firstName.in(val).or(expression.and(profile.user.login.in(val))));
                             expression.and(issue.assignee.fullName.in(val));
@@ -215,7 +207,7 @@ public class IssueServiceImpl implements IssueService {
 //                    expression.and(issue.assignee.firstName.in(parameter.getParameterValue()));
                     break;
                 case REPORTER:
-                    if(parameter.getParameterValues()!=null) {
+                    if (parameter.getParameterValues() != null) {
                         parameter.getParameterValues().forEach(val -> {
                             expression.and(issue.reporter.fullName.in(val));
 //                            expression.and(issue.reporter.firstName.in(val).or(expression.and(profile.user.login.in(val))));
@@ -230,7 +222,7 @@ public class IssueServiceImpl implements IssueService {
                     expression.and(issue.startDate.stringValue().in(parameter.getParameterValue()));
                     break;
                 case PROJECT_NAME:
-                    if(parameter.getParameterValues()!=null) {
+                    if (parameter.getParameterValues() != null) {
                         parameter.getParameterValues().forEach(val -> {
                             expression.and(issue.project.projectName.stringValue().in(val));
                         });

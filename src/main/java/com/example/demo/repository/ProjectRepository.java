@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 @Repository
-public interface ProjectRepository extends CrudRepository<Project, String>, QuerydslPredicateExecutor<Project> {
+public interface ProjectRepository extends JpaRepository<Project, String>, QuerydslPredicateExecutor<Project> {
     Project findProjectById(String id);
     Project findProjectByProjectName(String name);
     Project findProjectByProjectCode(String projectCode);

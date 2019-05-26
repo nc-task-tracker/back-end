@@ -22,7 +22,7 @@ public interface UserRepository extends CrudRepository<User, String>, JpaReposit
 
     User findUserById(String id);
 
-    @Query("select u from User u where upper(u.login) like upper(?1) or exists (select p from Profile p where p.user = u and upper(p.fullName) like upper(?1))")
+    @Query("select u from User u where upper(u.login) like upper(?1) or exists (select p from Profile p where p.user = u and (p.fullName is not null) and upper(p.fullName) like upper(?1))")
     List<User> findUserProfileBySubstring(String substring, Sort sort);
 
     @Query(value = "select * from new_schema.user u where u.id not in(select v.user_id from project_assigner v join project p on p.id=:projectId and" +

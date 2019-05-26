@@ -25,5 +25,5 @@ public class DashboardDto {
     private UserDto user;
 
     @Null
-    private Set<WidgetDto> widgets = new HashSet<>();
+    private Set<WidgetDto> widgets;
 }

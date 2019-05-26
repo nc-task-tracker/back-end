@@ -135,7 +135,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.getNotProjectAssigners(projectId);
     }
 
-    @Override
     public List<Project> getPossibleProjects(String username) {
         return (List<Project>) userRepository.findByLogin(username).getProfile();
     }

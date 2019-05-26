@@ -36,7 +36,7 @@ public class ProfileDto {
     @NotNull
     private String description;
 
-    private User user;
+    private UserDto user;
 
-    private Set<Filter> filters = new HashSet<>();
+    private Set<FilterDto> filters;
 }
