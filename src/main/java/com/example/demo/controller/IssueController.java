@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,11 +39,6 @@ public class IssueController {
         });
     }
 
-    @GetMapping(value = "/{id}")
-    public IssueDto getIssueById(@PathVariable(name = "id") String id) {
-        return modelMapper.map(issueService.getIssueById(id), IssueDto.class);
-    }
-
     @GetMapping(value = "/all")
     public List<IssueDto> getAllIssues() {
         List<IssueDto> issuesDto = new ArrayList<>();
@@ -60,17 +56,16 @@ public class IssueController {
         return modelMapper.map(issueService.createIssue(projectId, is), IssueDto.class);
     }
 
+    @GetMapping(value = "/{id}")
+    public IssueDto getIssueById(@PathVariable(name = "id") String id) {
+        return modelMapper.map(issueService.getIssueById(id), IssueDto.class);
+    }
+
     @PutMapping(value = "/{id}")
     public IssueDto updateIssue(@PathVariable(name = "id") String id,
                                 @RequestBody IssueDto issueDto) {
         issueDto.setId(id);
         return modelMapper.map(issueService.updateIssue(modelMapper.map(issueDto, Issue.class)), IssueDto.class);
-    }
-
-    @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity deleteIssue(@PathVariable(name = "id") String id) {
-        issueService.deleteIssue(id);
-        return ResponseEntity.noContent().build();
     }
 
     @PostMapping(value = "/{id}/saveComment")
@@ -91,6 +86,18 @@ public class IssueController {
         return commentsDto;
     }
 
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity deleteIssue(@PathVariable(name = "id") String id) {
+        issueService.deleteIssue(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping(value = "/deleteComment/{id}")
+    public ResponseEntity deleteComment(@PathVariable(name = "id") String id) {
+        commentService.deleteComment(id);
+        return ResponseEntity.noContent().build();
+    }
+
 //    @GetMapping(value = "/{id}")
 //    public CommentDto getCommentById(@PathVariable(name = "id") String id) {
 //        return modelMapper.map(commentService.getCommentById(id), CommentDto.class);
@@ -102,9 +109,4 @@ public class IssueController {
 //        return modelMapper.map(commentService.updateComment(comment), CommentDto.class);
 //    }
 //
-//    @DeleteMapping(value = "/delete/{id}")
-//    public ResponseEntity deleteComment(@PathVariable(name = "id") String id) {
-//        commentService.deleteComment(id);
-//        return ResponseEntity.noContent().build();
-//    }
 }
