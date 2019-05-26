@@ -24,11 +24,11 @@ public class Project {
     )
     private String id;
     private String projectName;
+    private String projectCode;
     private String projectDescription;
 
     @Enumerated(EnumType.STRING)
     private ProjectStatus projectStatus;
-    private String projectCode;
 
     @ManyToOne(cascade = {
             CascadeType.PERSIST,
@@ -78,7 +78,6 @@ public class Project {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, projectName, projectDescription,projectStatus);
+        return Objects.hash(id, projectName, projectDescription, projectStatus);
     }
-
 }

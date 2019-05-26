@@ -25,7 +25,7 @@ public class ProjectMapper {
         if(project == null)
             return null;
         ProjectDto projectDto = modelMapper.map(project, ProjectDto.class);
-        projectDto.setOwnerId(project.getOwner().getId());
+        projectDto.setProjectOwner(project.getOwner());
         return projectDto;
     }
 
@@ -33,7 +33,7 @@ public class ProjectMapper {
         if(projectDto == null)
             return null;
         Project project = modelMapper.map(projectDto, Project.class);
-        project.setOwner(userService.getUserById(projectDto.getOwnerId()));
+        project.setOwner(projectDto.getProjectOwner());
         return project;
     }
 }

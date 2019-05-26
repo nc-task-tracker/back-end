@@ -1,6 +1,5 @@
 package com.example.demo.dto;
 
-import com.example.demo.model.Profile;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,8 +7,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
-import java.sql.Date;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -22,11 +20,12 @@ public class CommentDto {
     @NotNull
     private String commentText;
 
+    @DateTimeFormat
     private Date time;
 
-    @NotNull
-    private Profile profile;
+    private String profileId;
+
+    private ProfileDto profile;
 
     private String issueId;
-
 }

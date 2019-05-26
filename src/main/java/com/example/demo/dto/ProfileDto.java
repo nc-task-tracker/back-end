@@ -1,39 +1,45 @@
 package com.example.demo.dto;
 
-import com.example.demo.model.Filter;
-import com.example.demo.model.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.example.demo.model.*;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
-import java.sql.Date;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter
+
 @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProfileDto {
     @Null
     private String id;
-
-    private String firstName;
-
-    private String secondName;
-
+    @NotNull
+    private String fullName;
+    @NotNull
     @Email
     private String email;
-
+    @NotNull
+    private String skype;
+    @NotNull
+    private String telephone;
+    @NotNull
+    private String additional;
+    @NotNull
     @DateTimeFormat
     private Date birthday;
+    @NotNull
+    private String description;
 
-    private User user;
-
-    private Set<Filter> filters = new HashSet<>();
+//    @Null
+//    private Set<Dashboard> dashboards = new HashSet<>();
+//    @Null
+//    private Set<Filter> filters = new HashSet<>();
+//    @Null
+//    private Set<Project> projects = new HashSet<>();
 }

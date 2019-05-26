@@ -15,6 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProjectDto {
+
     private String id;
 
     @NotBlank(message = "Project name shouldn't be blank")
@@ -27,14 +28,10 @@ public class ProjectDto {
 
     private String projectDescription;
 
-    private User projectOwner;
-
     @NotBlank(message = "Project owner id shouldn't be blank")
-    private String ownerId;
-
+    private User projectOwner;
     private ProjectStatus projectStatus;
-
+    private Set<DashboardDto> dashboards;
     private Set<ProjectMemberDto> members = new HashSet<>();
 
-    private Set<DashboardDto> dashboards = new HashSet<>();
 }

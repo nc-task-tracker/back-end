@@ -3,6 +3,7 @@ package com.example.demo.repository;
 import com.example.demo.model.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import com.example.demo.model.Project;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -10,9 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
+import java.util.List;
+
 @Repository
 public interface ProfileRepository extends JpaRepository<Profile, String> {
+    Project findDashboardById(String id);
     Profile findProfileById(String id);
+
 
     @Query(value = "select * from new_schema.profile p where p.id in(select ppp.profileid from new_schema.project_member ppp" +
             " where ppp.projectid=:id)",nativeQuery = true)

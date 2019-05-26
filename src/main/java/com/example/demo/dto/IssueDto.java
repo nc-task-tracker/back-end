@@ -6,7 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
-import java.sql.Date;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,6 +35,8 @@ public class IssueDto {
 
     @NotNull
     private String projectId;
+    @Null
+    private ProjectDto project;
 
     @NotNull
     private IssueType type;
@@ -42,16 +44,18 @@ public class IssueDto {
     @NotNull
     private IssuePriority priority;
 
+    @Null
+    private IssueStatus issueStatus;
+
+    @Null
+    private String parentId;
+
     @NotNull
-    private IssueStatus status;
+    private ProfileDto reporter;
 
-    @Null
-    private Profile reporter;
+    private UserProfileDto assignee;
 
-    @Null
-    private Profile assignee;
+    private Set<IssueDto> subtasks = new HashSet<> ();
 
-    private Set<ChildIssue> childIssue = new HashSet<>();
-
-    private Set<Comment> comments = new HashSet<>();
+    private Set<CommentDto> comments = new HashSet<>();
 }

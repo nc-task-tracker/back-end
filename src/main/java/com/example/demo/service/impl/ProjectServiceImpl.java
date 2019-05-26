@@ -5,6 +5,7 @@ import com.example.demo.dto.ProjectMemberDto;
 import com.example.demo.dto.util.PageDto;
 import com.example.demo.dto.util.TableSortParametersDTO;
 import com.example.demo.model.*;
+import com.example.demo.model.projectFilter.ProjectFilter;
 import com.example.demo.repository.ProfileRepository;
 import com.example.demo.repository.ProjectRepository;
 import com.example.demo.service.ProjectService;
@@ -21,6 +22,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.example.demo.model.projectFilter.ParameterProjectType.PROJECT_CODE;
+import static com.example.demo.model.projectFilter.ParameterProjectType.PROJECT_NAME;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -94,15 +98,27 @@ public class ProjectServiceImpl implements ProjectService {
         return this.repository.findProjectByProjectCode(code);
     }
 
-//    @Override
-//    public void addAssigner(String code,String userId){
-//        repository.addAssigner(code,userId);
-//    }
-//
-//    @Override
-//    public void deleteAssigner(String code,String userId) {
-//        repository.deleteAssigner(code,userId);
-//    }
+    /*@Override
+    public List<Project> searchProject(ProjectFilter projectFilter) {
+        return (List<Project>) repository.findAll(createProjectSearchPredicate(projectFilter));
+    }*/
+
+    private Predicate createProjectSearchPredicate(ProjectFilter projectFilter) {
+        BooleanBuilder expression = new BooleanBuilder();
+        QProject project = QProject.project;
+
+        projectFilter.getParameters().forEach(parameterProject -> {
+            switch (parameterProject.getParameterProjectType()) {
+                case PROJECT_NAME:
+                    expression.and(project.projectName.stringValue().in(parameterProject.getParameterValue()));
+                    break;
+                case PROJECT_CODE:
+                    expression.and(project.projectCode.stringValue().in(parameterProject.getParameterValue()));
+                    break;
+            }
+        });
+        return expression;
+    }
 
     @Override
     public List<ProjectMemberDto> getProjectMembers(String id) {
@@ -119,4 +135,19 @@ public class ProjectServiceImpl implements ProjectService {
 //        }).collect(Collectors.toList());
         return null;
     }
+
+    @Override
+    public List<Project> searchProject(ProjectFilter projectFilter) {
+        return (List<Project>) repository.findAll(createProjectSearchPredicate(projectFilter));
+    }
+
+    //    @Override
+//    public void addAssigner(String code,String userId){
+//        repository.addAssigner(code,userId);
+//    }
+//
+//    @Override
+//    public void deleteAssigner(String code,String userId) {
+//        repository.deleteAssigner(code,userId);
+//    }
 }

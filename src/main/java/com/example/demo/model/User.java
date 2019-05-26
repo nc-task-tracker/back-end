@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,6 +27,7 @@ public class User {
     private String id;
     private String login;
     private String password;
+    private String email;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {
             CascadeType.PERSIST,
@@ -37,20 +40,14 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
+    @OneToOne(mappedBy = "user")
+    @JsonBackReference
+    private Profile profile;
+
     public User(String login, String password, Set<Role> roles, Profile profile) {
         this.login = login;
         this.password = password;
         this.roles = roles;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", roles=" + roles +
-                '}';
     }
 
     @Override

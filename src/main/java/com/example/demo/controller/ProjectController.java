@@ -2,14 +2,16 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.ProjectDto;
 import com.example.demo.dto.ProjectMemberDto;
-import com.example.demo.dto.UserDto;
 import com.example.demo.dto.util.PageDto;
 import com.example.demo.dto.util.TableSortParametersDTO;
 import com.example.demo.model.Project;
-import com.example.demo.model.ProjectMember;
+import com.example.demo.model.projectFilter.ParameterProject;
+import com.example.demo.model.projectFilter.ParameterProjectType;
+import com.example.demo.model.projectFilter.ProjectFilter;
 import com.example.demo.service.ProjectService;
-import org.modelmapper.ModelMapper;
+import com.example.demo.service.UserService;
 import com.example.demo.service.mappers.ProjectMapper;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,10 +27,12 @@ public class ProjectController {
     private ProjectService service;
     private ModelMapper modelMapper;
     private ProjectMapper projectMapper;
+    private UserService userService;
 
     @Autowired
-    public ProjectController(ProjectService service, ModelMapper modelMapper, ProjectMapper projectMapper) {
+    public ProjectController(ProjectService service, UserService userService, ModelMapper modelMapper, ProjectMapper projectMapper) {
         this.service = service;
+        this.userService = userService;
         this.modelMapper = modelMapper;
         this.projectMapper = projectMapper;
     }
@@ -43,23 +47,30 @@ public class ProjectController {
 //        return projectMapper.convertToDto(this.service.getProjectByCode(code));
 //    }
 
+    @GetMapping(value = "/possibleprojects")
+    public List<ProjectDto>  getPossibleProjectsByUser(@RequestParam(name = "username") String username){
+        List<ProjectDto> projectsDto = new ArrayList<>();
+        List<Project> possibleProjects = userService.getPossibleProjects(username);
+        for (Project item : possibleProjects) {
+            projectsDto.add(modelMapper.map(item, ProjectDto.class));
+        }
+        return projectsDto;
+    }
+
     @GetMapping
-    public List<ProjectDto> searchProjects(@RequestParam(name = "name") String name,
-                                           @RequestParam(name = "code") String code) {
+    public List<ProjectDto> searchProjects(@RequestParam(name = "name", required = false) String name,
+                                           @RequestParam(name = "code", required = false) String code) {
         List<ProjectDto> result = new ArrayList<>();
 
-        /*ProjectFilter projectFilter = new ProjectFilter();
-        projectFilter.getParameters().add(new ParameterProject(name, ParameterProjectType.PROJECT_NAME));
-        projectFilter.getParameters().add(new ParameterProject(code, ParameterProjectType.PROJECT_CODE));
-
+        ProjectFilter projectFilter = new ProjectFilter();
+        if (name != null) {
+            projectFilter.getParameters().add(new ParameterProject(name, ParameterProjectType.PROJECT_NAME));
+        }
+        if (code != null) {
+            projectFilter.getParameters().add(new ParameterProject(code, ParameterProjectType.PROJECT_CODE));
+        }
         this.service.searchProject(projectFilter).forEach(
-                project -> result.add(projectMapper.convertToDto(project)));*/
-        if(!name.equals("null")){
-            result.add(projectMapper.convertToDto(this.service.getProjectByName(name)));
-        }
-        if(!code.equals("null")){
-            result.add(projectMapper.convertToDto(this.service.getProjectByCode(code)));
-        }
+                project -> result.add(projectMapper.convertToDto(project)));
         return result;
     }
 
@@ -75,7 +86,7 @@ public class ProjectController {
         return service.getAllSortedProjects(parameters);
     }
 
-    @PostMapping
+    @PostMapping(value = "/create")
     public ProjectDto createProject(@RequestBody @Valid ProjectDto projectDto) {
         return projectMapper.convertToDto(service.createProject(projectMapper.convertToEntity(projectDto)));
     }
