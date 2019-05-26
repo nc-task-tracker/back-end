@@ -16,18 +16,17 @@ import java.util.*;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    private final UserProfileService userProfileService;
+
+    private final ModelMapper modelMapper;
 
     @Autowired
-    private UserProfileService userProfileService;
-
-    @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
-    public UserController(UserService service) {
-        this.userService = service;
+    public UserController(UserProfileService userProfileService, ModelMapper modelMapper, UserService userService) {
+        this.userProfileService = userProfileService;
+        this.modelMapper = modelMapper;
+        this.userService = userService;
     }
 
 

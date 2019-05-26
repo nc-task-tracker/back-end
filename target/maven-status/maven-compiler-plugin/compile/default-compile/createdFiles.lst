@@ -23,6 +23,7 @@ com\example\demo\dto\DashboardDto.class
 com\example\demo\dto\ParameterValueDto.class
 com\example\demo\dto\UserProfileDto.class
 com\example\demo\controller\IssueController.class
+com\example\demo\model\usersFilters\UserFilter.class
 com\example\demo\service\impl\UserDetailsServiceImpl.class
 com\example\demo\model\Issue.class
 com\example\demo\model\ParameterValue.class
@@ -44,6 +45,7 @@ com\example\demo\service\ProfileService.class
 com\example\demo\model\Dashboard.class
 com\example\demo\repository\CommentRepository.class
 com\example\demo\model\IssuePriority.class
+com\example\demo\service\impl\ProjectServiceImpl$1.class
 com\example\demo\service\impl\ProjectServiceImpl.class
 com\example\demo\service\ProjectService.class
 com\example\demo\dto\ProfileDto.class
@@ -94,11 +96,14 @@ com\example\demo\repository\ProfileRepository.class
 com\example\demo\config\JwtAuthenticationFilter.class
 com\example\demo\config\CORSFilter.class
 com\example\demo\controller\ParameterValueController.class
+com\example\demo\model\usersFilters\ParameterUserType.class
 com\example\demo\model\IssueType.class
 com\example\demo\config\JwtTokenUtil.class
 com\example\demo\model\Comment.class
 com\example\demo\repository\ParameterRepository.class
 com\example\demo\service\impl\ParameterValueServiceImpl.class
+com\example\demo\model\usersFilters\ParameterUser.class
+com\example\demo\service\impl\UserServiceImpl$1.class
 com\example\demo\repository\RoleRepository.class
 com\example\demo\service\ParameterService.class
 com\example\demo\controller\DashboardController.class
