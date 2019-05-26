@@ -28,12 +28,15 @@ public class Issue {
     private Date startDate;
     private Date dueDate;
     private String issueCode;
+    private String parentId;
 
-    @ManyToOne(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinColumn(name = "projectId", referencedColumnName = "id")
+    @OneToOne
+    private Profile reporter;
+
+    @OneToOne
+    private Profile assignee;
+
+    @ManyToOne
     private Project project;
 
     @Enumerated(EnumType.STRING)
@@ -45,20 +48,10 @@ public class Issue {
     @Enumerated(EnumType.STRING)
     private IssueStatus issueStatus;
 
-    @ManyToOne(cascade = {
-            CascadeType.MERGE,
-            CascadeType.PERSIST
-    })
-    @JoinColumn(name = "reporterID", referencedColumnName = "id")
-    private Profile reporter;
-
-    @ManyToOne(cascade = {
-            CascadeType.MERGE,
-            CascadeType.PERSIST
-    })
-    @JoinColumn(name = "assignerID", referencedColumnName = "id")
-    private Profile assigner;
+    @OneToMany
+    @JoinColumn(name = "parentId", referencedColumnName = "id")
+    private Set<Issue> subtasks = new HashSet<> ();
 
     @OneToMany(mappedBy = "issue")
-    private Set<Comment> comments = new HashSet<>();
+    private Set<Comment> comments = new HashSet<> ();
 }

@@ -1,7 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.model.*;
-//import com.example.demo.model.QProject;
+import com.example.demo.model.QProject;
 import com.example.demo.model.projectFilter.ParameterProject;
 import com.example.demo.model.projectFilter.ProjectFilter;
 import com.example.demo.repository.ProjectRepository;

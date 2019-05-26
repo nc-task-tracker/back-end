@@ -9,7 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
-import java.sql.Date;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,7 +35,8 @@ public class IssueDto {
     @DateTimeFormat
     private Date dueDate;
 
-    private String projectId;
+    @Null
+    private ProjectDto project;
 
     @NotNull
     private IssueType issueType;
@@ -43,14 +44,18 @@ public class IssueDto {
     @NotNull
     private IssuePriority issuePriority;
 
-    @NotNull
+    @Null
     private IssueStatus issueStatus;
 
-    private String reporterId;
+    @Null
+    private String parentId;
 
-    private String assignerId;
+    @NotNull
+    private ProfileDto reporter;
 
-    private Set<ChildIssue> childIssue = new HashSet<>();
+    private UserProfileDto assignee;
 
-    private Set<Comment> comments = new HashSet<>();
+    private Set<IssueDto> subtasks = new HashSet<> ();
+
+    private Set<CommentDto> comments = new HashSet<>();
 }

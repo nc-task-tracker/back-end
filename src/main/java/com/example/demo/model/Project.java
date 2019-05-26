@@ -29,13 +29,13 @@ public class Project {
 
     @Enumerated(EnumType.STRING)
     private ProjectStatus projectStatus;
+
     @ManyToOne(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
     })
     @JoinColumn(name = "ownerId", referencedColumnName = "id")
     private User owner;
-
 
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
