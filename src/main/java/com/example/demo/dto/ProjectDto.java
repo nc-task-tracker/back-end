@@ -1,4 +1,5 @@
 package com.example.demo.dto;
+
 import com.example.demo.model.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,8 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.*;
-import java.util.HashSet;
 import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,5 +28,5 @@ public class ProjectDto {
     private String ownerId;
     private ProjectStatus projectStatus;
 
-    private Set<Dashboard> dashboards = new HashSet<>();
+    private Set<DashboardDto> dashboards;
 }

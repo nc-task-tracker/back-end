@@ -1,5 +1,9 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -53,21 +57,5 @@ public class Project {
         this.projectDescription = projectDescription;
         this.projectStatus = projectStatus;
         this.projectCode = projectCode;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-        Project project = (Project) object;
-        return Objects.equals(id, project.id) &&
-                Objects.equals(projectName, project.projectName) &&
-                Objects.equals(projectDescription, project.projectDescription) &&
-                Objects.equals(projectStatus, project.projectStatus);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, projectName, projectDescription, projectStatus);
     }
 }

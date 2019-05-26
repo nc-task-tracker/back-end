@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -46,11 +47,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public UserTokenModel login(UserDto userDto) {
-        User user = userService.getUserByUsername(userDto.getLogin());
-
-        String token = getToken(userDto);
-
-        return new UserTokenModel(modelMapper.map(user, UserDto.class), new AuthToken(token));
+        try {
+            User user = userService.getUserByUsername(userDto.getLogin());
+            String token = getToken(userDto);
+            return new UserTokenModel(modelMapper.map(user, UserDto.class), new AuthToken(token));
+        } catch (AuthenticationException ex){
+            return null;
+        }
     }
 
     @Override

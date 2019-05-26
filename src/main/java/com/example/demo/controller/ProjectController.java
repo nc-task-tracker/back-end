@@ -11,7 +11,9 @@ import com.example.demo.service.UserService;
 import com.example.demo.service.mappers.ProjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,7 +21,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping(value = "/api/project")
 public class ProjectController {
     private ProjectService service;
@@ -85,7 +87,7 @@ public class ProjectController {
         return projectsDto;
     }
 
-    @PostMapping
+    @PostMapping(value = "/create")
     public ProjectDto createProject(@RequestBody @Valid ProjectDto projectDto) {
         return projectMapper.convertToDto(service.createProject(projectMapper.convertToEntity(projectDto)));
     }
