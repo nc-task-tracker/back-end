@@ -10,7 +10,6 @@ import java.util.List;
 
 @Service
 public class ParameterServiceImpl implements ParameterService {
-
     private ParameterRepository repository;
 
     @Autowired
@@ -18,11 +17,12 @@ public class ParameterServiceImpl implements ParameterService {
         this.repository = repository;
     }
 
+
     @Override
-    public Parameter saveParameter(Parameter parameter) {
+    public Parameter saveParameter(Parameter parameter, String authorId)
+    {
         return repository.save(parameter);
     }
-
     @Override
     public Parameter getParameterById(String id) {
         return repository.findParameterById(id);

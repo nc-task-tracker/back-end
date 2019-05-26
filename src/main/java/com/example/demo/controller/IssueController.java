@@ -1,9 +1,11 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.CommentDto;
+import com.example.demo.dto.FilterDto;
 import com.example.demo.dto.IssueDto;
 import com.example.demo.dto.ProfileDto;
 import com.example.demo.model.Comment;
+import com.example.demo.model.Filter;
 import com.example.demo.model.Issue;
 import com.example.demo.service.CommentService;
 import com.example.demo.service.IssueService;
@@ -11,13 +13,15 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/issue") //TODO: RENAME ISSUE->ISSUERVICE
+@RequestMapping(value = "/api/issue")
 public class IssueController {
     private IssueService issueService;
     private CommentService commentService;
@@ -51,6 +55,18 @@ public class IssueController {
             issuesDto.add(modelMapper.map(item, IssueDto.class));
         }
         return issuesDto;
+    }
+
+    @GetMapping(value = "/searchByName")
+    public List<IssueDto> getAllIssueName(@RequestParam(required = false) String name) {
+        List<IssueDto> issuesDto = new ArrayList<>();
+        List<Issue> issues = issueService.getIssueName(name);
+        for(Issue item : issues) {
+            issuesDto.add(modelMapper.map(item, IssueDto.class));
+        }
+        return issuesDto;
+
+//        return modelMapper.map(issueService.getIssueName(name), IssueDto.class);
     }
 
     @PostMapping(value = "/project/{projectId}")
@@ -107,4 +123,14 @@ public class IssueController {
 //        commentService.deleteComment(id);
 //        return ResponseEntity.noContent().build();
 //    }
+
+    @PostMapping(value = "/search/")
+    public List<IssueDto> findAllIssuesByPredicates(@RequestBody FilterDto filterDto) {
+        List<IssueDto> issuesDto = new ArrayList<>();
+        List<Issue> issues = issueService.searchIssue(modelMapper.map(filterDto, Filter.class));
+        for(Issue item : issues) {
+            issuesDto.add(modelMapper.map(item, IssueDto.class));
+        }
+        return issuesDto;
+    }
 }

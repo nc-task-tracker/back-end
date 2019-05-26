@@ -13,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,7 +21,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping(value = "/api/project")
 public class ProjectController {
     private ProjectService service;

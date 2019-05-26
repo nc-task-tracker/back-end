@@ -1,14 +1,13 @@
 package com.example.demo.dto;
 
 import com.example.demo.model.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,14 +16,17 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class IssueDto {
-    @Null
+
     private String id;
 
-    @NotNull
+    @NotBlank(message = "Name may not be empty!")
+    @Size(min = 3, message = "Name may not be longer!")
     private String issueName;
 
-    @NotNull
+    @NotBlank(message = "Description may not be empty!")
+    @Size(min = 1, max = 1000)
     private String issueDescription;
 
     @NotNull
@@ -36,7 +38,11 @@ public class IssueDto {
     private Date dueDate;
 
     @Null
-    private ProjectDto project;
+    @NotNull
+    private String parentId;
+
+
+    private Project project;
 
     @NotNull
     private IssueType issueType;
@@ -48,14 +54,9 @@ public class IssueDto {
     private IssueStatus issueStatus;
 
     @Null
-    private String parentId;
-
-    @NotNull
-    private ProfileDto reporter;
-
     private UserProfileDto assignee;
 
-    private Set<IssueDto> subtasks = new HashSet<> ();
+    private String reporter;
 
-    private Set<CommentDto> comments = new HashSet<>();
+    private Set<Comment> comments = new HashSet<>();
 }

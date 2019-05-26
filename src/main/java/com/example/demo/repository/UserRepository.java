@@ -21,5 +21,4 @@ public interface UserRepository extends CrudRepository<User, String>, JpaReposit
 
     @Query("select u from User u where upper(u.login) like upper(?1) or exists (select p from Profile p where p.user = u and upper(p.fullName) like upper(?1))")
     List<User> findUserProfileBySubstring(String substring, Sort sort);
-
 }
