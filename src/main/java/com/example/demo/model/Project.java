@@ -37,11 +37,14 @@ public class Project {
     @JoinColumn(name = "ownerId", referencedColumnName = "id")
     private User owner;
 
-
-    @OneToMany(cascade = {
+    @ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
     })
+    @JoinTable(name = "project_members",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "members_id")
+    )
     private Set<ProjectMember> members = new HashSet<>();
 
     @ManyToMany(cascade = {

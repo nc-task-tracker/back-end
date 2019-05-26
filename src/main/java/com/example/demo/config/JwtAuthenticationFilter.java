@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.example.demo.config.Constants.HEADER_STRING;
+
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
@@ -36,7 +38,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        String header = request.getHeader(Constants.HEADER_STRING);
+        String header = request.getHeader(HEADER_STRING);
         String login = null;
         String authToken = null;
         if(header != null && header.startsWith(Constants.TOKEN_PREFIX)) {

@@ -6,6 +6,9 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "project_member",schema = "new_schema")
@@ -28,6 +31,9 @@ public class ProjectMember {
     @Enumerated(EnumType.STRING)
     private ProjectRole role;
 
+    @ManyToMany(mappedBy = "members")
+    private Set<Project> project = new HashSet<>();
+
     public ProjectMember(Profile profile, ProjectRole role) {
         this.profile = profile;
         this.role = role;
@@ -49,11 +55,4 @@ public class ProjectMember {
         this.role = role;
     }
 
-    @Override
-    public String toString() {
-        return "ProjectMember{" +
-                "profile=" + profile +
-                ", role=" + role +
-                '}';
-    }
 }
