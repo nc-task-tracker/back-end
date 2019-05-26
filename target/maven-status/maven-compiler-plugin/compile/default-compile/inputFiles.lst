@@ -14,9 +14,9 @@ E:\Study\netcracker\back-end\src\main\java\com\example\demo\config\JwtAuthentica
 E:\Study\netcracker\back-end\target\generated-sources\java\com\example\demo\model\QUser.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\model\Parameter.java
 E:\Study\netcracker\back-end\target\generated-sources\java\com\example\demo\model\QDashboard.java
-E:\Study\netcracker\back-end\target\generated-sources\java\com\example\demo\model\QParameterValue.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\controller\FilterController.java
 E:\Study\netcracker\back-end\target\generated-sources\java\com\example\demo\model\QFilter.java
+E:\Study\netcracker\back-end\src\main\java\com\example\demo\model\ModelForSearch.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\service\impl\DashboardServiceImpl.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\service\impl\FilterServiceImpl.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\repository\RoleRepository.java
@@ -24,7 +24,6 @@ E:\Study\netcracker\back-end\target\generated-sources\java\com\example\demo\mode
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\config\Constants.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\repository\ProjectRepository.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\service\ProfileService.java
-E:\Study\netcracker\back-end\src\main\java\com\example\demo\model\ParameterValue.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\model\Identificator.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\repository\WidgetRepository.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\model\projectFilter\ProjectFilter.java
@@ -42,7 +41,6 @@ E:\Study\netcracker\back-end\src\main\java\com\example\demo\model\Role.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\service\mappers\CommentMapper.java
 E:\Study\netcracker\back-end\target\generated-sources\java\com\example\demo\model\QComment.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\dto\IssueDto.java
-E:\Study\netcracker\back-end\src\main\java\com\example\demo\service\impl\ParameterValueServiceImpl.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\model\usersFilters\ParameterUser.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\model\IssueType.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\service\AuthenticationService.java
@@ -61,6 +59,7 @@ E:\Study\netcracker\back-end\src\main\java\com\example\demo\dto\CommentDto.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\service\ProjectService.java
 E:\Study\netcracker\back-end\target\generated-sources\java\com\example\demo\model\QProfile.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\service\IdentificatorService.java
+E:\Study\netcracker\back-end\src\main\java\com\example\demo\model\ParameterType.java
 E:\Study\netcracker\back-end\target\generated-sources\java\com\example\demo\model\QWidget.java
 E:\Study\netcracker\back-end\target\generated-sources\java\com\example\demo\model\QRole.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\dto\RoleDto.java
@@ -75,7 +74,6 @@ E:\Study\netcracker\back-end\src\main\java\com\example\demo\service\RoleService.
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\dto\DashboardDto.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\model\Dashboard.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\service\FilterService.java
-E:\Study\netcracker\back-end\src\main\java\com\example\demo\dto\ParameterValueDto.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\repository\ProfileRepository.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\config\CORSFilter.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\repository\ParameterRepository.java
@@ -94,7 +92,6 @@ E:\Study\netcracker\back-end\src\main\java\com\example\demo\model\UserProfile.ja
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\model\usersFilters\UserFilter.java
 E:\Study\netcracker\back-end\target\generated-sources\java\com\example\demo\model\QIdentificator.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\dto\TableSortParametersDTO.java
-E:\Study\netcracker\back-end\src\main\java\com\example\demo\repository\ParameterValueRepository.java
 E:\Study\netcracker\back-end\target\generated-sources\java\com\example\demo\model\QIssue.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\dto\UserForm.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\dto\FilterDto.java
@@ -110,4 +107,3 @@ E:\Study\netcracker\back-end\src\main\java\com\example\demo\service\impl\Comment
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\service\impl\RoleServiceImpl.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\service\impl\UserDetailsServiceImpl.java
 E:\Study\netcracker\back-end\src\main\java\com\example\demo\service\mappers\ProjectMapper.java
-E:\Study\netcracker\back-end\src\main\java\com\example\demo\service\ParameterValueService.java

@@ -17,7 +17,7 @@ public interface IssueRepository extends CrudRepository<Issue, String>,
         JpaRepository<Issue, String> {
     Issue findIssueById(String id);
 
-    @Query("select iss from Issue iss where upper(iss.name) like upper(?1)")
+    @Query("select iss from Issue iss where upper(iss.issueName) like upper(?1)")
     List<Issue> findIssueNameBySubstring(String substring, Sort sort);
 //
 //    @Query(" select pr.firstName from Profile as pr join issue as i on i.assigne = pr.id where upper(pr.firstName) like upper(?1)" )

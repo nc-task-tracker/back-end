@@ -1,6 +1,5 @@
 package com.example.demo.dto;
 
-import com.example.demo.model.WidgetDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

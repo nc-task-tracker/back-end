@@ -2,7 +2,9 @@ package com.example.demo.service.impl;
 
 import com.example.demo.model.Identificator;
 import com.example.demo.model.*;
+import com.example.demo.repository.IdentificatorRepository;
 import com.example.demo.repository.IssueRepository;
+import com.example.demo.repository.ProfileRepository;
 import com.example.demo.repository.ProjectRepository;
 import com.example.demo.service.IssueService;
 import com.querydsl.core.BooleanBuilder;
@@ -55,7 +57,7 @@ public class IssueServiceImpl implements IssueService {
         idRepository.save(identificator);
         issue.setStartDate(new java.sql.Date(d.getTime()));
         issue.setIssueCode (issueCode);
-        issue.setIssueStatus(IssueStatus.OPEN);
+//        issue.setIssueStatus(IssueStatus.OPEN);
         return repository.save(issue);
     }
 
@@ -127,7 +129,7 @@ public class IssueServiceImpl implements IssueService {
                 : repository.findIssueNameBySubstring(String.format("%%%s%%", inputValue), sort);
 
         return resultSearch.stream()
-                .map(item -> new Issue(item.getName() == null ? null : item.getName()))
+//                .map(item -> new Issue(item.getIssueName() == null ? null : item.getIssueName()))
                 .collect(Collectors.toCollection(LinkedList::new));
     }
 
@@ -140,7 +142,7 @@ public class IssueServiceImpl implements IssueService {
         filterForSearch.getParameters().forEach(parameter -> {
             switch (parameter.getParameterType()){
                 case ISSUE_NAME:
-                    expression.and(issue.name.stringValue().in(parameter.getParameterValue()));
+                    expression.and(issue.issueName.stringValue().in(parameter.getParameterValue()));
                     break;
                 case ISSUE_TYPE:
                     if(parameter.getParameterValues()!=null) {
@@ -165,7 +167,7 @@ public class IssueServiceImpl implements IssueService {
                     if(parameter.getParameterValues()!=null) {
                         parameter.getParameterValues().forEach(val -> {
 //                            expression.and(issue.assignee.firstName.in(val).or(expression.and(profile.user.login.in(val))));
-                            expression.and(issue.assignee.firstName.in(val));
+                            expression.and(issue.assignee.fullName.in(val));
                         });
                     }
 //                    expression.and(issue.assignee.firstName.in(parameter.getParameterValue()));
@@ -173,7 +175,7 @@ public class IssueServiceImpl implements IssueService {
                 case REPORTER:
                     if(parameter.getParameterValues()!=null) {
                         parameter.getParameterValues().forEach(val -> {
-                            expression.and(issue.reporter.firstName.in(val));
+                            expression.and(issue.reporter.fullName.in(val));
 //                            expression.and(issue.reporter.firstName.in(val).or(expression.and(profile.user.login.in(val))));
                         });
                     }
@@ -194,7 +196,7 @@ public class IssueServiceImpl implements IssueService {
 //                    expression.and(issue.project.projectName.in(parameter.getParameterValue()));
                     break;
                 case ISSUE_DESCRIPTION:
-                    expression.and(issue.description.in(parameter.getParameterValues()));
+                    expression.and(issue.issueDescription.in(parameter.getParameterValues()));
                     break;
             }
         });

@@ -119,6 +119,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Project> getPossibleProjects(String username) {
-        return (List<Project>) userRepository.findByLogin(username).getProfile().getProjects ();
+        return (List<Project>) userRepository.findByLogin(username).getProfile();
     }
 }
