@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import com.example.demo.config.JwtTokenUtil;
 import com.example.demo.dto.ProfileDto;
 import com.example.demo.dto.ProjectMemberDto;
+import com.example.demo.dto.util.PageDto;
+import com.example.demo.dto.util.TableSortParametersDTO;
 import com.example.demo.model.Profile;
 import com.example.demo.model.Project;
 import com.example.demo.model.ProjectMember;
@@ -38,21 +40,11 @@ public class ProjectMemberController {
         return repository.findAll();
     }
 
-    @DeleteMapping(value = "/delete/{projectId}/{memberId}")
+    @DeleteMapping(value = "/{projectId}/{memberId}")
     public ResponseEntity deleteProjectMember(@PathVariable("projectId") String projectId,
                                               @PathVariable("memberId") String memberId,
                                               @RequestHeader(HEADER_STRING) String token){
-
-        if(token != null){
-            String login = jwtTokenUtil.getUsernameFromToken(token.substring(7));
-
-            if(login!=null){
-                //ProjectMember member = repository.findByMemberIdAndProjectIdAndLogin(memberId,projectId,login);
-
-                //service.deleteProjectMember(projectId,memberId);
-            }
-        }
-
+        service.deleteProjectMember(projectId,memberId,token);
         return ResponseEntity.noContent().build();
     }
 
@@ -62,8 +54,16 @@ public class ProjectMemberController {
     }
 
     @PostMapping(value = "/{id}/add")
-    public Project addProjectMember(@RequestBody ProjectMemberDto projectMemberDto,
-                                    @PathVariable("id") String id){
-        return service.addProjectMember(id,modelMapper.map(projectMemberDto,ProjectMember.class));
+    public ProjectMemberDto addProjectMember(@RequestBody ProjectMemberDto projectMemberDto,
+                                    @PathVariable("id") String id,
+                                    @RequestHeader(HEADER_STRING) String token){
+        return modelMapper.map(service.addProjectMember(id,modelMapper.map(projectMemberDto,ProjectMember.class),
+                token),ProjectMemberDto.class);
+    }
+
+    @PostMapping(value = "/project/{id}/sort")
+    public PageDto<ProjectMemberDto> getPageData(@PathVariable("id") String id,
+                                                 @RequestBody TableSortParametersDTO parametersDTO){
+        return service.getTablePageData(id,parametersDTO);
     }
 }

@@ -5,9 +5,15 @@ import com.example.demo.dto.ProjectMemberDto;
 import com.example.demo.dto.util.PageDto;
 import com.example.demo.dto.util.TableSortParametersDTO;
 import com.example.demo.model.*;
+import com.example.demo.model.QProject;
+import com.example.demo.model.projectFilter.ParameterProject;
 import com.example.demo.model.projectFilter.ProjectFilter;
 import com.example.demo.repository.ProfileRepository;
+import com.example.demo.model.Project;
+import com.example.demo.model.ProjectStatus;
+import com.example.demo.repository.ProfileRepository;
 import com.example.demo.repository.ProjectRepository;
+import com.example.demo.service.ProfileService;
 import com.example.demo.service.ProjectService;
 import org.modelmapper.ModelMapper;
 import com.querydsl.core.BooleanBuilder;
@@ -20,6 +26,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,11 +38,13 @@ public class ProjectServiceImpl implements ProjectService {
 
     private ProjectRepository repository;
     private ModelMapper mapper;
+    private ProfileService profileService;
 
     @Autowired
-    public ProjectServiceImpl(ProjectRepository repository,ModelMapper modelMapper){
+    public ProjectServiceImpl(ProjectRepository repository, ModelMapper modelMapper, ProfileService profileService) {
         this.repository = repository;
         this.mapper = modelMapper;
+        this.profileService = profileService;
     }
 
     @Override
@@ -44,7 +53,9 @@ public class ProjectServiceImpl implements ProjectService {
         Project temp1 = repository.findProjectByProjectCode(project.getProjectCode());
         if (temp == null && temp1 == null) {
             project.setProjectStatus(ProjectStatus.OPEN);
-
+            project.setMembers(new HashSet<>());
+            Profile profile = this.profileService.getProfileByUserId(project.getOwner().getId());
+            project.getMembers().add(new ProjectMember(profile, ProjectRole.OWNER));
             return repository.save(project);
         } else return null;
     }
@@ -68,13 +79,13 @@ public class ProjectServiceImpl implements ProjectService {
     public PageDto<ProjectDto> getAllSortedProjects(TableSortParametersDTO parameters) {
         PageDto<ProjectDto> pageDto = new PageDto<>();
 
-        Sort sort = new Sort(parameters.get_direction().equals("asc")? Sort.Direction.ASC: Sort.Direction.DESC,
+        Sort sort = new Sort(parameters.get_direction().equals("asc") ? Sort.Direction.ASC : Sort.Direction.DESC,
                 parameters.get_columnName());
-        Pageable pageable = PageRequest.of(parameters.get_page(),parameters.get_maxElemOnPage(),sort);
+        Pageable pageable = PageRequest.of(parameters.get_page(), parameters.get_maxElemOnPage(), sort);
 
         Page<Project> page = repository.findAll(pageable);
 
-        pageDto.setList(page.get().map(value -> mapper.map(value,ProjectDto.class))
+        pageDto.setList(page.get().map(value -> mapper.map(value, ProjectDto.class))
                 .collect(Collectors.toList()));
         pageDto.setTotalElem(page.getTotalElements());
         pageDto.setTotalPages(page.getTotalPages());
@@ -98,10 +109,10 @@ public class ProjectServiceImpl implements ProjectService {
         return this.repository.findProjectByProjectCode(code);
     }
 
-    /*@Override
+    @Override
     public List<Project> searchProject(ProjectFilter projectFilter) {
         return (List<Project>) repository.findAll(createProjectSearchPredicate(projectFilter));
-    }*/
+    }
 
     private Predicate createProjectSearchPredicate(ProjectFilter projectFilter) {
         BooleanBuilder expression = new BooleanBuilder();
@@ -119,35 +130,4 @@ public class ProjectServiceImpl implements ProjectService {
         });
         return expression;
     }
-
-    @Override
-    public List<ProjectMemberDto> getProjectMembers(String id) {
-
-//        List<Profile> members = profileRepository.findProjectMembersByProjectId(id);
-//
-//        return members.stream().map(value ->{
-//            ProjectMemberDto memberDto = new ProjectMemberDto();
-//            memberDto.setMembers(new ArrayList<>());
-//
-//            memberDto.getMembers().add(value);
-//            memberDto.setProjectRole(projectRoleRepository.findProjectMemberRoleByProjectIdAndProfileId(id,value.getId()));
-//            return memberDto;
-//        }).collect(Collectors.toList());
-        return null;
-    }
-
-    @Override
-    public List<Project> searchProject(ProjectFilter projectFilter) {
-        return (List<Project>) repository.findAll(createProjectSearchPredicate(projectFilter));
-    }
-
-    //    @Override
-//    public void addAssigner(String code,String userId){
-//        repository.addAssigner(code,userId);
-//    }
-//
-//    @Override
-//    public void deleteAssigner(String code,String userId) {
-//        repository.deleteAssigner(code,userId);
-//    }
 }

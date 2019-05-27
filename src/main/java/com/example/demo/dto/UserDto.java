@@ -19,7 +19,7 @@ public class UserDto {
     @Null
     private String id;
 
-    @NonNull
+    @NotNull
     private String login;
 
     @NotNull

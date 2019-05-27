@@ -1,10 +1,12 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.CommentDto;
+import com.example.demo.dto.FilterDto;
 import com.example.demo.dto.IssueDto;
 import com.example.demo.dto.util.PageDto;
 import com.example.demo.dto.util.TableSortParametersDTO;
 import com.example.demo.model.Comment;
+import com.example.demo.model.Filter;
 import com.example.demo.model.Issue;
 import com.example.demo.service.CommentService;
 import com.example.demo.service.IssueService;
@@ -25,8 +27,6 @@ import java.util.stream.Collectors;
 public class IssueController {
     private IssueService issueService;
     private CommentService commentService;
-
-    @Autowired
     private ModelMapper modelMapper;
 
     @Autowired
@@ -36,12 +36,12 @@ public class IssueController {
         this.issueService = issueService;
         this.commentService = commentService;
         this.modelMapper = modelMapper;
-        modelMapper.addMappings (new PropertyMap<CommentDto, Comment> () {
-            @Override
-            protected void configure () {
-                skip ().getProfile ().setId (null);
-            }
-        });
+//        //modelMapper.addMappings (new PropertyMap<CommentDto, Comment> () {
+//            @Override
+//            protected void configure () {
+//                skip ().getProfile ().setId (null);
+//            }
+//        });
     }
 
     @GetMapping(value = "/{id}")
@@ -57,6 +57,18 @@ public class IssueController {
             issuesDto.add(modelMapper.map(item, IssueDto.class));
         }
         return issuesDto;
+    }
+
+    @GetMapping(value = "/searchByName")
+    public List<IssueDto> getAllIssueName(@RequestParam(required = false) String name) {
+        List<IssueDto> issuesDto = new ArrayList<>();
+        List<Issue> issues = issueService.getIssueName(name);
+        for(Issue item : issues) {
+            issuesDto.add(modelMapper.map(item, IssueDto.class));
+        }
+        return issuesDto;
+
+//        return modelMapper.map(issueService.getIssueName(name), IssueDto.class);
     }
 
     @GetMapping(value = "/project/{id}")
@@ -127,4 +139,14 @@ public class IssueController {
 //        commentService.deleteComment(id);
 //        return ResponseEntity.noContent().build();
 //    }
+
+    @PostMapping(value = "/search/")
+    public List<IssueDto> findAllIssuesByPredicates(@RequestBody FilterDto filterDto) {
+        List<IssueDto> issuesDto = new ArrayList<>();
+        List<Issue> issues = issueService.searchIssue(modelMapper.map(filterDto, Filter.class));
+        for(Issue item : issues) {
+            issuesDto.add(modelMapper.map(item, IssueDto.class));
+        }
+        return issuesDto;
+    }
 }

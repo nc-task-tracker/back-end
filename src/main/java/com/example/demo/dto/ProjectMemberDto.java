@@ -16,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class ProjectMemberDto {
 
-    @NotNull
+    @Null
     private String id;
 
     @NotNull

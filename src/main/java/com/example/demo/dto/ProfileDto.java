@@ -3,43 +3,52 @@ package com.example.demo.dto;
 import com.example.demo.model.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.NonNull;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
-import java.util.Date;
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProfileDto {
     @Null
     private String id;
+
     @NotNull
     private String fullName;
+
     @NotNull
     @Email
     private String email;
+
     @NotNull
     private String skype;
+
     @NotNull
     private String telephone;
     @NotNull
     private String additional;
+
     @NotNull
     @DateTimeFormat
     private Date birthday;
+
     @NotNull
     private String description;
 
+    @NotNull
+    private UserDto user;
+
 //    @Null
-//    private Set<Dashboard> dashboards = new HashSet<>();
+//    private Set<DashboardDto> dashboards;
 //    @Null
-//    private Set<Filter> filters = new HashSet<>();
+//    private Set<FilterDto> filtres;
 //    @Null
-//    private Set<Project> projects = new HashSet<>();
+//    private Set<ProjectDto> projects
 }

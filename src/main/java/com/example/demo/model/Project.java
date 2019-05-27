@@ -1,5 +1,9 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,16 +34,14 @@ public class Project {
     @Enumerated(EnumType.STRING)
     private ProjectStatus projectStatus;
 
-    @ManyToOne(cascade = {
-            CascadeType.PERSIST,
+    @ManyToOne(fetch= FetchType.EAGER, cascade = {
             CascadeType.MERGE
     })
-    @JoinColumn(name = "ownerId", referencedColumnName = "id")
+    @JoinColumn(name = "owner_id", referencedColumnName = "id")
     private User owner;
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
+    @ManyToMany(fetch= FetchType.EAGER, cascade = {
+            CascadeType.ALL
     })
     @JoinTable(name = "project_members",
             joinColumns = @JoinColumn(name = "project_id"),
@@ -47,9 +49,8 @@ public class Project {
     )
     private Set<ProjectMember> members = new HashSet<>();
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
+    @ManyToMany(fetch= FetchType.EAGER, cascade = {
+            CascadeType.ALL
     })
     @JoinTable(name = "dashboard_project",
             joinColumns = @JoinColumn(name = "projectid"),
@@ -57,27 +58,28 @@ public class Project {
     )
     private Set<Dashboard> dashboards = new HashSet<>();
 
-    public Project(String projectName, String projectDescription,
-                   ProjectStatus projectStatus, String projectCode) {
+
+    public Project(String projectName, String projectCode, String projectDescription, ProjectStatus projectStatus, User owner, Set<ProjectMember> members) {
         this.projectName = projectName;
+        this.projectCode = projectCode;
         this.projectDescription = projectDescription;
         this.projectStatus = projectStatus;
-        this.projectCode = projectCode;
+        this.owner = owner;
+        this.members = members;
+        this.dashboards = new HashSet<>();
     }
 
     @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-        Project project = (Project) object;
-        return Objects.equals(id, project.id) &&
-                Objects.equals(projectName, project.projectName) &&
-                Objects.equals(projectDescription, project.projectDescription) &&
-                Objects.equals(projectStatus, project.projectStatus);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, projectName, projectDescription, projectStatus);
+    public String toString() {
+        return "Project{" +
+                "id='" + id + '\'' +
+                ", projectName='" + projectName + '\'' +
+                ", projectCode='" + projectCode + '\'' +
+                ", projectDescription='" + projectDescription + '\'' +
+                ", projectStatus=" + projectStatus +
+                ", owner=" + owner +
+                ", members=" + members +
+                ", dashboards=" + dashboards +
+                '}';
     }
 }

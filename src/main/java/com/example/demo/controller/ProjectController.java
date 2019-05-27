@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.ProjectDto;
-import com.example.demo.dto.ProjectMemberDto;
 import com.example.demo.dto.util.PageDto;
 import com.example.demo.dto.util.TableSortParametersDTO;
 import com.example.demo.model.Project;
@@ -10,7 +9,6 @@ import com.example.demo.model.projectFilter.ParameterProjectType;
 import com.example.demo.model.projectFilter.ProjectFilter;
 import com.example.demo.service.ProjectService;
 import com.example.demo.service.UserService;
-import com.example.demo.service.mappers.ProjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,26 +24,20 @@ import java.util.stream.Collectors;
 public class ProjectController {
     private ProjectService service;
     private ModelMapper modelMapper;
-    private ProjectMapper projectMapper;
     private UserService userService;
 
     @Autowired
-    public ProjectController(ProjectService service, UserService userService, ModelMapper modelMapper, ProjectMapper projectMapper) {
+    public ProjectController(ProjectService service, UserService userService, ModelMapper modelMapper) {
         this.service = service;
         this.userService = userService;
         this.modelMapper = modelMapper;
-        this.projectMapper = projectMapper;
     }
 
     @GetMapping(value = "/{id}")
     public ProjectDto getProjectById(@PathVariable(name = "id") String id) {
-        return projectMapper.convertToDto(this.service.getProjectById(id));
+        return modelMapper.map(this.service.getProjectById(id), ProjectDto.class);
     }
 
-//    @GetMapping(value = "/{code}")
-//    public ProjectDto getProjectByCode(@PathVariable(name = "code") String code) {
-//        return projectMapper.convertToDto(this.service.getProjectByCode(code));
-//    }
 
     @GetMapping(value = "/possibleprojects")
     public List<ProjectDto>  getPossibleProjectsByUser(@RequestParam(name = "username") String username){
@@ -70,7 +62,7 @@ public class ProjectController {
             projectFilter.getParameters().add(new ParameterProject(code, ParameterProjectType.PROJECT_CODE));
         }
         this.service.searchProject(projectFilter).forEach(
-                project -> result.add(projectMapper.convertToDto(project)));
+                project -> result.add(modelMapper.map(project, ProjectDto.class)));
         return result;
     }
 
@@ -83,12 +75,14 @@ public class ProjectController {
 
     @PostMapping(value = "/all/sorted")
     public PageDto<ProjectDto> getAllSortedProjects(@RequestBody TableSortParametersDTO parameters){
-        return service.getAllSortedProjects(parameters);
+        PageDto<ProjectDto> result =  service.getAllSortedProjects(parameters);
+        return result;
     }
 
     @PostMapping(value = "/create")
     public ProjectDto createProject(@RequestBody @Valid ProjectDto projectDto) {
-        return projectMapper.convertToDto(service.createProject(projectMapper.convertToEntity(projectDto)));
+        Project project = modelMapper.map(projectDto, Project.class);
+        return modelMapper.map(service.createProject(project), ProjectDto.class);
     }
 
     @PutMapping
@@ -101,24 +95,5 @@ public class ProjectController {
     public ResponseEntity deleteProject(@PathVariable(name = "id") String id) {
         service.deleteProject(id);
         return ResponseEntity.noContent().build();
-    }
-
-//    @PostMapping(value = "/add/assigner/{id}")
-//    public ResponseEntity addAssigner(@RequestBody UserDto userDto,
-//                                      @PathVariable(name = "id") String id){
-//        service.addAssigner(id,userDto.getId());
-//        return ResponseEntity.noContent().build();
-//    }
-//
-//    @DeleteMapping(value = "/{projectId}/delete/assigner/{userId}")
-//    public ResponseEntity deleteAssigner(@PathVariable(name = "projectId") String projectId,
-//                                         @PathVariable(name = "userId") String id){
-//        service.deleteAssigner(projectId,id);
-//        return ResponseEntity.noContent().build();
-//    }
-
-    @GetMapping("/{id}/members")
-    public List<ProjectMemberDto> getProjectMembers(@PathVariable(name = "id") String id){
-        return service.getProjectMembers(id);
     }
 }

@@ -17,11 +17,7 @@ import java.util.List;
 public interface ProfileRepository extends JpaRepository<Profile, String> {
     Project findDashboardById(String id);
     Profile findProfileById(String id);
-
-
-    @Query(value = "select * from new_schema.profile p where p.id in(select ppp.profileid from new_schema.project_member ppp" +
-            " where ppp.projectid=:id)",nativeQuery = true)
-    List<Profile> findProjectMembersByProjectId(@PathVariable(name = "id") String id);
+    Profile findProfileByUserId(String user_id);
 
     @Query(value = "select * from profile p where p.id not in (select pm.profile_id from" +
             " project_member pm where pm.id in(select pmm.members_id from project_members pmm" +

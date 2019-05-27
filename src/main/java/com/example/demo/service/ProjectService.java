@@ -21,7 +21,4 @@ public interface ProjectService {
     Project getProjectByName(String name);
     Project getProjectByCode(String code);
     List<Project> searchProject(ProjectFilter projectFilter);
-    //void addAssigner(String code,String userId);
-    //void deleteAssigner(String code, String userId);
-    List<ProjectMemberDto> getProjectMembers(String id);
 }

@@ -10,5 +10,6 @@ public interface ProfileService {
     Profile updateProfile(Profile profile);
     List<Profile> getAllProfiles();
     void deleteProfile(String id);
+    Profile getProfileByUserId(String id);
 //    List<Project> getAllProjectByUserId(String id);
 }

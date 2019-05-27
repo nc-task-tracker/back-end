@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
             user.setPassword(bcryptEncoder.encode(user.getPassword()));
 
             Set role = new HashSet<Role>(1);
-            role.add(roleService.getRoleById("bb65ce3f-d8b9-4b08-8737-3cf55caf4bdd"));
+            role.add(roleService.getRoleById("1e409fe7-8fd6-4055-87a8-9942a6cd5c7d"));
             user.setRoles(role);
 
             return userRepository.save(user);
@@ -111,7 +111,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Project> getPossibleProjects(String username) {
-        return (List<Project>) userRepository.findByLogin(username).getProfile().getProjects ();
+        return (List<Project>) userRepository.findByLogin(username).getProfile();
     }
 
     @Override

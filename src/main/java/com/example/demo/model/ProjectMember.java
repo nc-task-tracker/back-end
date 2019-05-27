@@ -24,15 +24,13 @@ public class ProjectMember {
             strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     private Profile profile;
 
 
     @Enumerated(EnumType.STRING)
     private ProjectRole role;
 
-    @ManyToMany(mappedBy = "members")
-    private Set<Project> project = new HashSet<>();
 
     public ProjectMember(Profile profile, ProjectRole role) {
         this.profile = profile;

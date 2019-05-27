@@ -39,6 +39,11 @@ public class ProfileServiceImpl implements ProfileService {
         repository.deleteById(id);
     }
 
+    @Override
+    public Profile getProfileByUserId(String id) {
+        return this.repository.findProfileByUserId(id);
+    }
+
     /*@Override
     public List<Project> getAllProjectByUserId(String id) {
         return (List<Project>) repository.findAllByUser_Id(id);

@@ -18,6 +18,8 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 public class User {
+
+
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -30,8 +32,7 @@ public class User {
     private String email;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE,
+            CascadeType.ALL
 
     })
     @JoinTable(name = "user_role",
@@ -44,10 +45,23 @@ public class User {
     @JsonBackReference
     private Profile profile;
 
-    public User(String login, String password, Set<Role> roles, Profile profile) {
+    public User(String login, String password, Set<Role> roles, Profile profile, String email) {
         this.login = login;
         this.password = password;
         this.roles = roles;
+        this.profile = profile;
+        this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles + '\'' +
+                ", email=" + email +
+                '}';
     }
 
     @Override
@@ -55,13 +69,17 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id.equals(user.id) &&
+        return Objects.equals(id, user.id) &&
                 login.equals(user.login) &&
                 password.equals(user.password) &&
-                roles.equals(user.roles);    }
+                email.equals(user.email) &&
+                Objects.equals(roles, user.roles) &&
+                Objects.equals(profile, user.profile);
+    }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, login, password, roles);
+        return Objects.hash(id, login, password, email, roles, profile);
     }
+
 }
