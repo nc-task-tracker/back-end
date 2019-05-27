@@ -10,4 +10,5 @@ import java.util.List;
 public interface DashboardRepository extends CrudRepository<Dashboard, String> {
     Dashboard findDashboardById(String id);
     List<Dashboard> findAllByUser_Id(String id);
+    Boolean existsByName(String name);
 }

@@ -7,10 +7,10 @@ import java.util.List;
 
 @Service
 public interface WidgetService {
-    Widget addWidget(Widget widget);
+    Widget create(Widget widget);
     Widget getWidgetById(String id);
-    Widget updateWidget(Widget widget);
+    Widget update(Widget widget);
     List<Widget> getAllWidgets();
-    void deleteWidget(String id);
+    void delete(String id);
     List<Widget> getAllWidgetsById(String id);
 }

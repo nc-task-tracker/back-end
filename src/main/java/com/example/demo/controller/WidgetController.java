@@ -29,12 +29,12 @@ public class WidgetController {
     }
 
     @GetMapping(value = "/{id}")
-    public WidgetDto getDashboardById(@PathVariable(name = "id") String id) {
+    public WidgetDto getWidgetById(@PathVariable(name = "id") String id) {
         return modelMapper.map(widgetService.getWidgetById(id), WidgetDto.class);
     }
 
     @GetMapping
-    public List<WidgetDto> getAllDashboards() {
+    public List<WidgetDto> getAllWidgets() {
         List<WidgetDto> widgetsDto = new ArrayList<>();
         List<Widget> widgets = widgetService.getAllWidgets();
         for(Widget item : widgets) {
@@ -44,19 +44,19 @@ public class WidgetController {
     }
 
     @PostMapping
-    public Widget addDWidget(@RequestBody WidgetDto widgetDto) {
-        return widgetService.addWidget(modelMapper.map(widgetDto, Widget.class));
+    public WidgetDto createWidget(@RequestBody WidgetDto widgetDto) {
+        return modelMapper.map(widgetService.create(modelMapper.map(widgetDto, Widget.class)), WidgetDto.class);
     }
 
     @PutMapping
     public WidgetDto updateDashboard(@RequestBody WidgetDto widgetDto) {
         Widget widget = modelMapper.map(widgetService.getWidgetById(widgetDto.getId()), Widget.class);
-        return modelMapper.map(widgetService.updateWidget(widget), WidgetDto.class);
+        return modelMapper.map(widgetService.update(widget), WidgetDto.class);
     }
 
     @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity deleteDashboard(@PathVariable(name = "id") String id) {
-        widgetService.deleteWidget(id);
+        widgetService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

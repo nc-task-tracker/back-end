@@ -24,8 +24,8 @@ public class User {
     )
     private String id;
     private String login;
-    private String password;
     private String email;
+    private String password;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {
             CascadeType.PERSIST,

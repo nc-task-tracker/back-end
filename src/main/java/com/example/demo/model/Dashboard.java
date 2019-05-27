@@ -22,7 +22,9 @@ public class Dashboard {
             strategy = "org.hibernate.id.UUIDGenerator"
     )
     private String id;
-    private String dashboardName;
+
+    @Column(name="dashboard_name")
+    private String name;
 
     @OneToMany(cascade = {
             CascadeType.PERSIST,
@@ -38,8 +40,8 @@ public class Dashboard {
     @JoinColumn(name = "userId", referencedColumnName = "id")
     private User user;
 
-    public Dashboard(String dashboardName, Set<Widget> widgets) {
-        this.dashboardName = dashboardName;
+    public Dashboard(String name, Set<Widget> widgets) {
+        this.name = name;
         this.widgets = widgets;
     }
 }

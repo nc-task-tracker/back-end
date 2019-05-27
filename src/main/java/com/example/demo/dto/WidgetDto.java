@@ -21,7 +21,7 @@ public class WidgetDto {
     private String type;
 
     @Null
-    private Filter filter;
+    private FilterDto filter;
 
     @Null
     private String assign;

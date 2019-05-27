@@ -24,7 +24,7 @@ public class WidgetServiceImpl implements WidgetService {
     }
 
     @Override
-    public Widget addWidget(Widget widget) {
+    public Widget create(Widget widget) {
         widget.setFilter(filterService.getFilterById(null));
         return widgetRepository.save(widget);
     }
@@ -35,7 +35,7 @@ public class WidgetServiceImpl implements WidgetService {
     }
 
     @Override
-    public Widget updateWidget(Widget widget) {
+    public Widget update(Widget widget) {
         return widgetRepository.save(widget);
     }
 
@@ -45,7 +45,7 @@ public class WidgetServiceImpl implements WidgetService {
     }
 
     @Override
-    public void deleteWidget(String id) {
+    public void delete(String id) {
         widgetRepository.deleteById(id);
     }
 
