@@ -5,5 +5,6 @@ import com.example.demo.dto.UserDto;
 
 public interface AuthenticationService {
     UserTokenModel login(UserDto userDto);
+
     UserTokenModel register(UserDto userDto);
 }

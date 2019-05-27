@@ -3,17 +3,17 @@ package com.example.demo.dto;
 import com.example.demo.model.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.NonNull;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
-import java.util.Date;
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProfileDto {
@@ -36,10 +36,7 @@ public class ProfileDto {
     @NotNull
     private String description;
 
-//    @Null
-//    private Set<Dashboard> dashboards = new HashSet<>();
-//    @Null
-//    private Set<Filter> filters = new HashSet<>();
-//    @Null
-//    private Set<Project> projects = new HashSet<>();
+    private UserDto user;
+
+    private Set<FilterDto> filters;
 }

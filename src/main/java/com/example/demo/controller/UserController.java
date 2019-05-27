@@ -12,22 +12,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    private final UserProfileService userProfileService;
+
+    private final ModelMapper modelMapper;
 
     @Autowired
-    private UserProfileService userProfileService;
-
-    @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
-    public UserController(UserService service) {
-        this.userService = service;
+    public UserController(UserProfileService userProfileService, ModelMapper modelMapper, UserService userService) {
+        this.userProfileService = userProfileService;
+        this.modelMapper = modelMapper;
+        this.userService = userService;
     }
 
 
@@ -40,21 +40,30 @@ public class UserController {
     public List<UserDto> getAllUsers() {
         List<UserDto> usersDto = new ArrayList<>();
         List<User> users = userService.getAllUsers();
-        for(User item : users) {
+        for (User item : users) {
             usersDto.add(modelMapper.map(item, UserDto.class));
         }
         return usersDto;
     }
 
-    @GetMapping(value="/assignee")
-    public List<UserProfile> getAssignee(@RequestParam(required = false) String name) {
-        return userProfileService.getAssigneeList(name);
+    @GetMapping(value = "/assignee")
+    public List<UserProfileDto> getAssignee(@RequestParam(required = false) String name) {
+        return userProfileService.getAssigneeList(name).stream().map(userProfile -> modelMapper.map(userProfile, UserProfileDto.class)).collect(Collectors.toList());
 
+    }
+
+    @GetMapping(value = "/noassigner/project/{id}")
+    public List<UserDto> getNotAssignersProject(@PathVariable(name = "id") String projectId) {
+        System.out.println("1");
+        return userService.getNotProjectAssigners(projectId).stream()
+                .map(value -> modelMapper.map(value, UserDto.class))
+                .collect(Collectors.toList());
     }
 
     @PostMapping
     public User saveUser(@RequestBody User account) {
         return userService.addUser(account);
+        //return userService.saveUser(account);
     }
 
     @PutMapping

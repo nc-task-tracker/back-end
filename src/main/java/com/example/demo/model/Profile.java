@@ -2,16 +2,27 @@ package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "profile", schema = "new_schema")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Profile {
@@ -30,11 +41,12 @@ public class Profile {
     private Date birthday;
     private String description;
 
-    @OneToOne(cascade = {
+    @OneToOne (cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
     })
     @JoinColumn(name = "userid", referencedColumnName = "id")
+    @JsonManagedReference
     private User user;
 
     @OneToMany(cascade = {
@@ -59,15 +71,7 @@ public class Profile {
     @JsonManagedReference
     private Set<Dashboard> dashboards = new HashSet<>();
 
-    @OneToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinTable(name = "profile_project",
-            joinColumns = @JoinColumn(name = "profileid"),
-            inverseJoinColumns = @JoinColumn(name = "projectid")
-    )
-    @JsonManagedReference
-    private Set<Project> projects = new HashSet<>();
+
+
 
 }

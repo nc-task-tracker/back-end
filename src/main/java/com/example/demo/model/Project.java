@@ -1,5 +1,9 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,11 +28,11 @@ public class Project {
     )
     private String id;
     private String projectName;
-    private String projectCode;
     private String projectDescription;
 
     @Enumerated(EnumType.STRING)
     private ProjectStatus projectStatus;
+    private String projectCode;
 
     @ManyToOne(cascade = {
             CascadeType.PERSIST,
@@ -36,6 +40,13 @@ public class Project {
     })
     @JoinColumn(name = "ownerId", referencedColumnName = "id")
     private User owner;
+
+
+    @OneToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    private Set<ProjectMember> members = new HashSet<>();
 
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
@@ -68,6 +79,7 @@ public class Project {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, projectName, projectDescription, projectStatus);
+        return Objects.hash(id, projectName, projectDescription,projectStatus);
     }
+
 }
