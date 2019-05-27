@@ -6,7 +6,6 @@ import com.example.demo.service.FilterService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -25,9 +24,14 @@ public class FilterController {
         this.service = service;
     }
 
+//    @GetMapping(value = "/{id}")
+//    public FilterDto getFilterById(@PathVariable(name = "id") String id) {
+//        return modelMapper.map(service.getFilterById(id), FilterDto.class);
+//    }
+
     @GetMapping(value = "/{id}")
-    public FilterDto getFilterById(@PathVariable(name = "id") String id) {
-        return modelMapper.map(service.getFilterById(id), FilterDto.class);
+    public Filter getFilterById(@PathVariable(name = "id") String id) {
+        return service.getFilterById(id);
     }
 
     @GetMapping(value = "/all")
@@ -41,7 +45,7 @@ public class FilterController {
     }
 
     @PostMapping
-    public Filter saveFilter(@RequestBody Filter filter) {
+    public Filter createFilter(@RequestBody Filter filter) {
         return service.saveFilter(filter);
     }
 

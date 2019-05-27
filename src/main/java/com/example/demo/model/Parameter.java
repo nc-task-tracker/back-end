@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "parameter", schema = "new_schema")
@@ -20,9 +21,15 @@ public class Parameter {
             strategy = "org.hibernate.id.UUIDGenerator"
     )
     private String id;
-    private String parameterName;
+    @Enumerated(EnumType.STRING)
+    private ParameterType parameterType;
+    private String parameterValue;
+    @ElementCollection
+    private List<String> parameterValues;
 
-    public Parameter(String parameterName) {
-        this.parameterName = parameterName;
+    public Parameter(ParameterType parameterType, String parameterValue, List<String> parameterValues) {
+        this.parameterType = parameterType;
+        this.parameterValue = parameterValue;
+        this.parameterValues = parameterValues;
     }
 }

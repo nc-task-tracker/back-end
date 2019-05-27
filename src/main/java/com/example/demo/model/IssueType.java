@@ -1,10 +1,11 @@
 package com.example.demo.model;
 
 public enum IssueType {
-    TASK,
     BUG,
     EPIC,
     IMPROVEMENT,
+    NEW_FEATURE,
     STORY,
-    NEW_FEATIRE
+    SUB_TASK,
+    TASK;
 }

@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import com.example.demo.model.Parameter;
+import com.example.demo.model.ParameterType;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
 package com.example.demo.dto;
 
-import com.example.demo.model.ParameterValue;
+import com.example.demo.model.Parameter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,9 +19,9 @@ public class FilterDto {
     @Null
     private String id;
 
-    @NotNull
+    @Null
     private String filterName;
 
     @NotNull
-    private Set<ParameterValue> parametervalues = new HashSet<>();
+    private Set<Parameter> parametervalues = new HashSet<>();
 }

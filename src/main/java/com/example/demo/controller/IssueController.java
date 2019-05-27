@@ -1,12 +1,12 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.IssueDto;
+import com.example.demo.model.Filter;
 import com.example.demo.model.Issue;
 import com.example.demo.service.IssueService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -25,9 +25,14 @@ public class IssueController {
         this.service = service;
     }
 
+//    @GetMapping(value = "/{id}")
+//    public IssueDto getIssueById(@PathVariable(name = "id") String id) {
+//        return modelMapper.map(service.getIssueById(id), IssueDto.class);
+//    }
+
     @GetMapping(value = "/{id}")
-    public IssueDto getIssueById(@PathVariable(name = "id") String id) {
-        return modelMapper.map(service.getIssueById(id), IssueDto.class);
+    public Issue getIssueById(@PathVariable(name = "id") String id) {
+        return service.getIssueById(id);
     }
 
     @GetMapping(value = "/all")
@@ -55,5 +60,11 @@ public class IssueController {
     public ResponseEntity deleteIssue(@PathVariable(name = "id") String id) {
         service.deleteIssue(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/search/")
+    public List<Issue> findAllIssuesByPredicates(@RequestBody Filter filter) {
+//    public List<Issue> findAllIssuesByPredicates(@RequestBody Issue issue) {
+        return service.searchIssue(filter);
     }
 }

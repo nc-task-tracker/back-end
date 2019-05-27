@@ -24,18 +24,20 @@ public class Filter {
     private String id;
     private String filterName;
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinTable(name = "selectedvalue",
-            joinColumns = @JoinColumn(name = "filterNameId"),
-            inverseJoinColumns = @JoinColumn(name = "paramValueId")
-    )
-    private Set<ParameterValue> parametervalues = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private Set<Parameter> parameters = new HashSet<>();
 
-    public Filter(String filterName, Set<ParameterValue> parametervalues) {
+    public Filter(String filterName, Set<Parameter> parameter) {
         this.filterName = filterName;
-        this.parametervalues = parametervalues;
+        this.parameters = parameter;
+    }
+
+    @Override
+    public String toString() {
+        return "Filter{" +
+                "id='" + id + '\'' +
+                ", filterName='" + filterName + '\'' +
+                ", parameters=" + parameters +
+                '}';
     }
 }
