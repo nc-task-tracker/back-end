@@ -24,11 +24,6 @@ public class FilterController {
         this.service = service;
     }
 
-//    @GetMapping(value = "/{id}")
-//    public FilterDto getFilterById(@PathVariable(name = "id") String id) {
-//        return modelMapper.map(service.getFilterById(id), FilterDto.class);
-//    }
-
     @GetMapping(value = "/{id}")
     public Filter getFilterById(@PathVariable(name = "id") String id) {
         return service.getFilterById(id);
@@ -45,8 +40,9 @@ public class FilterController {
     }
 
     @PostMapping
-    public Filter createFilter(@RequestBody Filter filter) {
-        return service.saveFilter(filter);
+    public FilterDto createFilter(@RequestBody FilterDto filter) {
+        System.out.println("filter search");
+        return modelMapper.map(service.saveFilter(modelMapper.map(filter, Filter.class)), FilterDto.class);
     }
 
     @PutMapping

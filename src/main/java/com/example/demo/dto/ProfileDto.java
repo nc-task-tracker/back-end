@@ -38,8 +38,8 @@ public class ProfileDto {
     private Date birthday;
 
     @Null
-    private User user;
+    private UserDto user;
 
     @Null
-    private Set<Filter> filters = new HashSet<>();
+    private Set<FilterDto> filters = new HashSet<>();
 }

@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.lang.NonNull;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
+import javax.validation.constraints.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,21 +16,25 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProjectDto {
-    @Null
+
     private String id;
 
-    @NotNull
+    @NotBlank(message = "Project name shouldn't be blank")
     private String projectName;
 
-    @NotNull
+    @NotBlank(message = "Project code shouldn't be blank")
+    @Size(min = 3, max = 5, message = "Code size should be between 3 & 5")
+    @Pattern(regexp = "[A-Z]+")
+    private String projectCode;
+
+
     private String projectDescription;
 
-    @NotNull
+    @NotBlank(message = "Project owner id shouldn't be blank")
     private String ownerId;
 
-    @Null
-    private ProjectStatus projectstatus;
 
-    @Null
-    private Set<Dashboard> dashboards = new HashSet<>();
+    private ProjectStatus projectStatus;
+
+    private Set<DashboardDto> dashboards = new HashSet<>();
 }

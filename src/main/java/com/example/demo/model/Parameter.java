@@ -21,9 +21,12 @@ public class Parameter {
             strategy = "org.hibernate.id.UUIDGenerator"
     )
     private String id;
+
     @Enumerated(EnumType.STRING)
     private ParameterType parameterType;
+
     private String parameterValue;
+
     @ElementCollection
     private List<String> parameterValues;
 

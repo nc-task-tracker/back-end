@@ -1,10 +1,12 @@
 package com.example.demo.dto;
 
 import com.example.demo.model.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.codehaus.jackson.annotate.JsonBackReference;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
@@ -18,39 +20,36 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class IssueDto {
-    @Null
     private String id;
 
-    @NotNull
     private String issueName;
 
-    @NotNull
     private String issueDescription;
 
-    @NotNull
     @DateTimeFormat
     private Date startDate;
 
-    @NotNull
     @DateTimeFormat
     private Date dueDate;
 
-    @NotNull
-    private Project project;
+    private String parentId;
 
-    @NotNull
+//    @JsonBackReference
+    private ProfileDto reporter;
+//    @JsonBackReference
+    private ProfileDto assignee;
+
+    private ProjectDto project;
+
     private IssueType issuetype;
 
-    @NotNull
     private IssuePriority issuepriority;
 
-    @NotNull
     private IssueStatus issuestatus;
 
     @NotNull
     private Set<Issue> childIssue = new HashSet<>();
 
-    @NotNull
-    private Set<Issue> issueRoles = new HashSet<>();
+
 
 }
