@@ -34,8 +34,8 @@ public class DashboardController {
         this.widgetService = widgetService;
     }
 
-    @GetMapping(value = "/{id}")
-    public DashboardDto getDashboardById(@PathVariable(name = "id") String id) {
+    @GetMapping(value = "/{idDashboard}")
+    public DashboardDto getDashboardById(@PathVariable(name = "idDashboard") String id) {
         return modelMapper.map(dashboardService.getDashboardById(id), DashboardDto.class);
     }
 

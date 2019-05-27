@@ -68,9 +68,6 @@ public class IssueServiceImpl implements IssueService {
                 case ISSUE_PRIORITY:
                     expression.and(issue.issuepriority.stringValue().in(parameter.getParameterValues()));
                     break;
-                case ASSIGNER:
-                    expression.and(issue.assignee.firstName.in(parameter.getParameterValue()));
-                    break;
                 case DUE_DATE:
                     expression.and(issue.dueDate.stringValue().in(parameter.getParameterValue()));
                     break;
