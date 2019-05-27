@@ -31,7 +31,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException,
             IOException {
-        if (request.getRequestURI().endsWith("/login") || request.getRequestURI().endsWith("/register")) {
+        if (request.getRequestURI().contains("/token/") || request.getRequestURI().endsWith("/login") || request.getRequestURI().contains("/register")) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -39,25 +39,25 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String header = request.getHeader(Constants.HEADER_STRING);
         String login = null;
         String authToken = null;
-        if(header != null && header.startsWith(Constants.TOKEN_PREFIX)) {
+        if (header != null && header.startsWith(Constants.TOKEN_PREFIX)) {
             authToken = header.replace(Constants.TOKEN_PREFIX, "");
             try {
                 login = jwtTokenUtil.getUsernameFromToken(authToken);
-            }catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException e) {
                 logger.error("an error occured during getting login from token", e);
-            }catch (ExpiredJwtException e) {
+            } catch (ExpiredJwtException e) {
                 logger.error("the token is expired and not valid anymore", e);
-            }catch (SignatureException e){
+            } catch (SignatureException e) {
                 logger.error("Authentication Failed. Login or Password not valid");
             }
-        }else {
+        } else {
             logger.warn("couldn't find bearer string, will ignore the header");
         }
-        if(login != null && SecurityContextHolder.getContext().getAuthentication()
+        if (login != null && SecurityContextHolder.getContext().getAuthentication()
                 == null) {
 
             UserDetails userDetails = userService.loadUserByUsername(login);
-            if(jwtTokenUtil.validateToken(authToken, userDetails)) {
+            if (jwtTokenUtil.validateToken(authToken, userDetails)) {
                 UsernamePasswordAuthenticationToken authenticationToken = new
                         UsernamePasswordAuthenticationToken(userDetails, null,
                         userDetails.getAuthorities());

@@ -1,6 +1,6 @@
 package com.example.demo.dto;
 
-import com.example.demo.model.ParameterValue;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,12 +16,10 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FilterDto {
-    @Null
     private String id;
 
-    @NotNull
+    @JsonProperty("name")
     private String filterName;
 
-    @NotNull
-    private Set<ParameterValue> parametervalues = new HashSet<>();
+    private Set<ParameterDto> parameters;
 }

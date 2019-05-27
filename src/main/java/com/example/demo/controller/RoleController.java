@@ -31,7 +31,7 @@ public class RoleController {
     }
 
     @GetMapping(value = "/all")
-    //@PreAuthorize("hasAuthority('ROLE_USER')")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public List<RoleDto> getAllRoles() {
         List<RoleDto> rolesDto = new ArrayList<>();
         List<Role> roles = service.getAllRoles();

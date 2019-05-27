@@ -15,7 +15,6 @@ import javax.validation.constraints.Null;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
-
     @Null
     private String id;
 

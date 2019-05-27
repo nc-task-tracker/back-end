@@ -1,20 +1,20 @@
 package com.example.demo.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Set;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class UserProfile {
     private String id;
     private String login;
-    private String FIO;
+    private String fio;
 
-    public UserProfile(String id, String FIO, String login) {
+    public UserProfile(String id, String fio, String login) {
         this.id = id;
         this.login = login;
-        this.FIO = FIO;
+        this.fio = fio;
     }
 }

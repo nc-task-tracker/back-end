@@ -12,10 +12,10 @@ import javax.validation.constraints.Null;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ParameterValueDto {
+public class ProjectTypeDto {
     @Null
     private String id;
 
     @NotNull
-    private String parameterValueName;
+    private String projectTypeDto;
 }
