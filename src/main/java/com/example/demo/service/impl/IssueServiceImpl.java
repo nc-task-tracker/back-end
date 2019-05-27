@@ -9,6 +9,7 @@ import com.example.demo.repository.ProjectRepository;
 import com.example.demo.service.IssueService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.querydsl.jpa.JPAExpressions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -56,8 +57,8 @@ public class IssueServiceImpl implements IssueService {
         identificator.setCurFreedom(identificator.getCurFreedom()+1);
         idRepository.save(identificator);
         issue.setStartDate(new java.sql.Date(d.getTime()));
-        issue.setIssueCode (issueCode);
-//        issue.setIssueStatus(IssueStatus.OPEN);
+        issue.setCode(issueCode);
+        issue.setIssuestatus(IssueStatus.OPEN);
         return repository.save(issue);
     }
 
@@ -89,32 +90,6 @@ public class IssueServiceImpl implements IssueService {
         repository.deleteById (id);
     }
 
-//    @Override
-//    public List<ModelForSearch> searchAssignee(String inputValue) {
-//        Sort sort = new Sort(Sort.Direction.ASC, "first_name");
-//        Pageable pageable = PageRequest.of(1, 10, sort);
-//        List<Profile> resultSearch = StringUtils.isEmpty(inputValue) ?
-//                profileRepository.findAll(sort)
-//                : profileRepository.searchAssignee(String.format("%%%s%%", inputValue));
-//
-//        return resultSearch.stream()
-//                .map(item -> new ModelForSearch(item.getId(), item.getFirstName() == null ? null : item.getFirstName()))
-//                .collect(Collectors.toCollection(LinkedList::new));
-//    }
-
-//    @Override
-//    public List<ModelForSearch> searchReporter(String inputValue) {
-//        Sort sort = new Sort(Sort.Direction.ASC, "first_name");
-//        Pageable pageable = PageRequest.of(1, 10, sort);
-//        List<Profile> resultSearch = StringUtils.isEmpty(inputValue) ?
-//                profileRepository.findAll(sort)
-//                : profileRepository.searchReporter(String.format("%%%s%%", inputValue));
-//
-//        return resultSearch.stream()
-//                .map(item -> new ModelForSearch(item.getId(), item.getFirstName() == null ? null : item.getFirstName()))
-//                .collect(Collectors.toCollection(LinkedList::new));
-//    }
-
     @Override
     public List<Issue> searchIssue(Filter filter) {
         return (List<Issue>) repository.findAll(createIssueSearchPredicate(filter));
@@ -122,14 +97,14 @@ public class IssueServiceImpl implements IssueService {
 
     @Override
     public List<Issue> getIssueName(String inputValue) {
-        Sort sort = new Sort(Sort.Direction.ASC, "name");
+        Sort sort = new Sort(Sort.Direction.ASC, "issueName");
         Pageable pageable = PageRequest.of(1, 10, sort);
         List<Issue> resultSearch = StringUtils.isEmpty(inputValue) ?
                 repository.findAll(sort)
                 : repository.findIssueNameBySubstring(String.format("%%%s%%", inputValue), sort);
 
         return resultSearch.stream()
-//                .map(item -> new Issue(item.getIssueName() == null ? null : item.getIssueName()))
+                .map(item -> new Issue(item.getIssueName() == null ? null : item.getIssueName()))
                 .collect(Collectors.toCollection(LinkedList::new));
     }
 
@@ -138,69 +113,58 @@ public class IssueServiceImpl implements IssueService {
         BooleanBuilder expression = new BooleanBuilder();
         QIssue issue = QIssue.issue;
         QProfile profile = QProfile.profile;
+        QUser user = QUser.user;
 
         filterForSearch.getParameters().forEach(parameter -> {
             switch (parameter.getParameterType()){
                 case ISSUE_NAME:
-                    expression.and(issue.issueName.stringValue().in(parameter.getParameterValue()));
-                    break;
+                    if(parameter.getParameterValues() != null) {
+                        expression.and(issue.issueName.in(parameter.getParameterValues()));
+                    }break;
                 case ISSUE_TYPE:
-                    if(parameter.getParameterValues()!=null) {
-                            expression.and(issue.issuetype.stringValue().in(parameter.getParameterValues()));
+                    if(parameter.getParameterValues() != null) {
+                        expression.and(issue.issuetype.stringValue().in(parameter.getParameterValues()));
                     }
                     break;
                 case ISSUE_STATUS:
-                    if(parameter.getParameterValues()!=null) {
-                        parameter.getParameterValues().forEach(val -> {
-                            expression.and(issue.issuestatus.stringValue().in(val));
-                        });
+                    if(parameter.getParameterValues() != null) {
+                        expression.and(issue.issuestatus.stringValue().in(parameter.getParameterValues()));
                     }
                     break;
                 case ISSUE_PRIORITY:
-                    if(parameter.getParameterValues()!=null) {
-                        parameter.getParameterValues().forEach(val -> {
-                            expression.and(issue.issuepriority.stringValue().in(val));
-                        });
+                    if(parameter.getParameterValues() != null) {
+                        expression.and(issue.issuepriority.stringValue().in(parameter.getParameterValues()));
                     }
                     break;
                 case ASSIGNEE:
-                    if(parameter.getParameterValues()!=null) {
+                    if(parameter.getParameterValues() != null) {
                         parameter.getParameterValues().forEach(val -> {
-//                            expression.and(issue.assignee.firstName.in(val).or(expression.and(profile.user.login.in(val))));
+                            JPAExpressions.selectFrom(issue)
+                                    .join(issue.assignee.user, user)
+                                    .where(issue.assignee.fullName.eq(val),
+                                            user.login.eq(val));
                             expression.and(issue.assignee.fullName.in(val));
+                            expression.and(profile.user.login.in(val));
+//                            expression.and(issue.assignee.fullName.like(val)).or(expression.and(profile.user.login.like(val)));
+//                            expression.and(issue.assignee.fullName.in(val).or());
                         });
                     }
-//                    expression.and(issue.assignee.firstName.in(parameter.getParameterValue()));
                     break;
                 case REPORTER:
-                    if(parameter.getParameterValues()!=null) {
+                    if(parameter.getParameterValues() != null) {
                         parameter.getParameterValues().forEach(val -> {
                             expression.and(issue.reporter.fullName.in(val));
 //                            expression.and(issue.reporter.firstName.in(val).or(expression.and(profile.user.login.in(val))));
                         });
                     }
-//                    expression.and(issue.reporter.firstName.in(parameter.getParameterValue()));
-                    break;
-                case DUE_DATE:
-                    expression.and(issue.dueDate.stringValue().in(parameter.getParameterValue()));
-                    break;
-                case START_DATE:
-                    expression.and(issue.startDate.stringValue().in(parameter.getParameterValue()));
                     break;
                 case PROJECT_NAME:
-                    if(parameter.getParameterValues()!=null) {
-                        parameter.getParameterValues().forEach(val -> {
-                            expression.and(issue.project.projectName.stringValue().in(val));
-                        });
+                    if(parameter.getParameterValues()!= null) {
+                        expression.and(issue.project.projectName.stringValue().in(parameter.getParameterValues()));
                     }
-//                    expression.and(issue.project.projectName.in(parameter.getParameterValue()));
-                    break;
-                case ISSUE_DESCRIPTION:
-                    expression.and(issue.issueDescription.in(parameter.getParameterValues()));
                     break;
             }
         });
         return expression;
     }
-
 }

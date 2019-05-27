@@ -28,7 +28,7 @@ public class Issue {
     private String issueDescription;
     private Date startDate;
     private Date dueDate;
-    private String issueCode;
+    private String code;
     private String parentId;
 
     @OneToOne(cascade = {
@@ -74,4 +74,7 @@ public class Issue {
         this.issuestatus = issuestatus;
     }
 
+    public Issue(String issueName) {
+        this.issueName = issueName;
+    }
 }

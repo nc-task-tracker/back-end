@@ -65,8 +65,6 @@ public class IssueController {
             issuesDto.add(modelMapper.map(item, IssueDto.class));
         }
         return issuesDto;
-
-//        return modelMapper.map(issueService.getIssueName(name), IssueDto.class);
     }
 
     @PostMapping(value = "/project/{projectId}")

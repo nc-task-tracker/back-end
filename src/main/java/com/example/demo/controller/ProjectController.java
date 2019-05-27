@@ -21,7 +21,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping(value = "/api/project")
 public class ProjectController {
     private ProjectService service;
@@ -102,5 +102,15 @@ public class ProjectController {
     public ResponseEntity deleteProject(@PathVariable(name = "id") String id) {
         service.deleteProject(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/name")
+    public List<ProjectDto> getProjectsBySubstring(@RequestParam(name = "substring") String name) {
+        List<ProjectDto> projectsDto = new ArrayList<>();
+        List<Project> projects = service.getProjectsBySubstring(name);
+        for(Project project : projects) {
+            projectsDto.add(modelMapper.map(project, ProjectDto.class));
+        }
+        return projectsDto;
     }
 }

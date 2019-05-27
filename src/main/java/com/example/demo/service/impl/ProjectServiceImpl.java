@@ -1,17 +1,23 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.dto.ProjectDto;
+//import com.example.demo.dto.ProjectMemberDto;
+//import com.example.demo.dto.util.PageDto;
+//import com.example.demo.dto.util.TableSortParametersDTO;
 import com.example.demo.model.*;
-import com.example.demo.model.QProject;
-import com.example.demo.model.projectFilter.ParameterProject;
 import com.example.demo.model.projectFilter.ProjectFilter;
-import com.example.demo.model.Project;
-import com.example.demo.model.ProjectStatus;
 import com.example.demo.repository.ProfileRepository;
 import com.example.demo.repository.ProjectRepository;
 import com.example.demo.service.ProjectService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import org.apache.commons.lang3.StringUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -69,7 +75,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<Project> searchProject(ProjectFilter projectFilter) {
-        return (List<Project>) repository.findAll(createProjectSearchPredicate(projectFilter));
+        return null;
     }
 
     private Predicate createProjectSearchPredicate(ProjectFilter projectFilter) {
@@ -87,5 +93,16 @@ public class ProjectServiceImpl implements ProjectService {
             }
         });
         return expression;
+    }
+
+    @Override
+    public List<Project> getProjectsBySubstring(String name) {
+        Sort sort = new Sort(Sort.Direction.ASC, "projectName");
+        Pageable pageable = PageRequest.of(1, 10, sort);
+        List<Project> resultSearch = StringUtils.isEmpty(name) ?
+                (List<Project>) repository.findAll(sort)
+                : repository.findProjectBySubstring(String.format("%%%s%%", name), sort);
+
+        return resultSearch;
     }
 }

@@ -16,4 +16,5 @@ public interface ProjectService {
     Project getProjectByName(String name);
     Project getProjectByCode(String code);
     List<Project> searchProject(ProjectFilter projectFilter);
+    List<Project> getProjectsBySubstring(String name);
 }
