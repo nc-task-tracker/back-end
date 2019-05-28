@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, String>, JpaRepository<User, String> {
-    //Boolean existsByEmail(String email);
+    Boolean existsByEmail(String email);
     Boolean existsByLogin(String login);
     User findByLogin(String login);
     User findUserById(String id);

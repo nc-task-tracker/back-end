@@ -9,12 +9,12 @@ D:\NetCracker\back-end\src\main\java\com\example\demo\controller\UserController.
 D:\NetCracker\back-end\target\generated-sources\java\com\example\demo\model\QDashboard.java
 D:\NetCracker\back-end\src\main\java\com\example\demo\dto\IssueDto.java
 D:\NetCracker\back-end\src\main\java\com\example\demo\controller\ParameterController.java
-D:\NetCracker\back-end\src\main\java\com\example\demo\dto\ParameterValueDto.java
 D:\NetCracker\back-end\src\main\java\com\example\demo\dto\ProjectDto.java
 D:\NetCracker\back-end\src\main\java\com\example\demo\controller\DashboardController.java
 D:\NetCracker\back-end\src\main\java\com\example\demo\service\impl\RoleServiceImpl.java
 D:\NetCracker\back-end\src\main\java\com\example\demo\service\AuthenticationService.java
 D:\NetCracker\back-end\src\main\java\com\example\demo\service\impl\UserServiceImpl.java
+D:\NetCracker\back-end\src\main\java\com\example\demo\model\ModelForSearch.java
 D:\NetCracker\back-end\src\main\java\com\example\demo\controller\CommentController.java
 D:\NetCracker\back-end\src\main\java\com\example\demo\controller\AuthenticationController.java
 D:\NetCracker\back-end\src\main\java\com\example\demo\service\ProjectService.java

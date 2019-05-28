@@ -3,7 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.ProjectDto;
 import com.example.demo.model.Project;
 import com.example.demo.service.ProjectService;
-import com.example.demo.service.mappers.ProjectMapper;
+//import com.example.demo.service.mappers.ProjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,28 +22,31 @@ public class ProjectController {
 
     private final ModelMapper modelMapper;
 
-    private final ProjectMapper projectMapper;
+   // private final ProjectMapper projectMapper;
 
     @Autowired
-    public ProjectController(ProjectService service, ModelMapper modelMapper, ProjectMapper projectMapper) {
+    public ProjectController(ProjectService service, ModelMapper modelMapper/*, ProjectMapper projectMapper*/) {
         this.service = service;
         this.modelMapper = modelMapper;
-        this.projectMapper = projectMapper;
+        //this.projectMapper = projectMapper;
     }
 
     @GetMapping(value = "/{id}")
     public ProjectDto getProjectById(@PathVariable(name = "id") String id) {
-        return projectMapper.convertToDto(this.service.getProjectById(id));
+        //return projectMapper.convertToDto(this.service.getProjectById(id));
+        return null;
     }
 
     @GetMapping(value= "/{code}")
     public ProjectDto getProjectByCode(@PathVariable (name = "code") String code){
-        return projectMapper.convertToDto(this.service.getProjectByCode(code));
+        //return projectMapper.convertToDto(this.service.getProjectByCode(code));
+        return null;
     }
 
     @GetMapping
     public ProjectDto getProjectByName(@RequestParam(name = "name") String name){
-        return projectMapper.convertToDto(this.service.getProjectByName(name));
+        //return projectMapper.convertToDto(this.service.getProjectByName(name));
+        return null;
     }
 
     @GetMapping(value = "/all")
@@ -58,7 +61,8 @@ public class ProjectController {
 
     @PostMapping
     public ProjectDto createProject(@RequestBody @Valid ProjectDto projectDto) {
-        return projectMapper.convertToDto(service.createProject(projectMapper.convertToEntity(projectDto)));
+        return null;
+        //return projectMapper.convertToDto(service.createProject(projectMapper.convertToEntity(projectDto)));
     }
 
     @PutMapping

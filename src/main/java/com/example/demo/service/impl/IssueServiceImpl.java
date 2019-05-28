@@ -15,7 +15,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.LinkedList;
 
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +25,8 @@ public class IssueServiceImpl implements IssueService {
     private ProfileRepository profileRepository;
 
     @Autowired
-    public IssueServiceImpl(IssueRepository repository) {
+    public IssueServiceImpl(IssueRepository repository,
+                            ProfileRepository profileRepository) {
         this.repository = repository;
         this.profileRepository = profileRepository;
     }
@@ -38,7 +38,8 @@ public class IssueServiceImpl implements IssueService {
 
     @Override
     public Issue getIssueById(String id) {
-        return repository.findIssueById(id);
+        return null;
+        //return repository.findIssueById(id);
     }
 
     @Override
@@ -63,15 +64,16 @@ public class IssueServiceImpl implements IssueService {
 
     @Override
     public List<Issue> getIssueName(String inputValue) {
-        Sort sort = new Sort(Sort.Direction.ASC, "name");
+        return null;
+/*        Sort sort = new Sort(Sort.Direction.ASC, "name");
         Pageable pageable = PageRequest.of(1, 10, sort);
         List<Issue> resultSearch = StringUtils.isEmpty(inputValue) ?
                 repository.findAll(sort)
                 : repository.findIssueNameBySubstring(String.format("%%%s%%", inputValue), sort);
 
         return resultSearch.stream()
-                .map(item -> new Issue(item.getName() == null ? null : item.getName()))
-                .collect(Collectors.toCollection(LinkedList::new));
+                .map(item -> new Issue())
+                .collect(Collectors.toCollection(LinkedList::new));*/
     }
 
     //todo: fix add parameters
@@ -83,7 +85,7 @@ public class IssueServiceImpl implements IssueService {
         filterForSearch.getParameters().forEach(parameter -> {
             switch (parameter.getParameterType()){
                 case ISSUE_NAME:
-                    expression.and(issue.name.stringValue().in(parameter.getParameterValue()));
+                    expression.and(issue.issueName.stringValue().in(parameter.getParameterValue()));
                     break;
                 case ISSUE_TYPE:
                     if(parameter.getParameterValues()!=null) {
@@ -108,7 +110,7 @@ public class IssueServiceImpl implements IssueService {
                     if(parameter.getParameterValues()!=null) {
                         parameter.getParameterValues().forEach(val -> {
 //                            expression.and(issue.assignee.firstName.in(val).or(expression.and(profile.user.login.in(val))));
-                            expression.and(issue.assignee.firstName.in(val));
+                            expression.and(issue.assigner.firstName.in(val));
                         });
                     }
 //                    expression.and(issue.assignee.firstName.in(parameter.getParameterValue()));
@@ -137,7 +139,7 @@ public class IssueServiceImpl implements IssueService {
 //                    expression.and(issue.project.projectName.in(parameter.getParameterValue()));
                     break;
                 case ISSUE_DESCRIPTION:
-                    expression.and(issue.description.in(parameter.getParameterValues()));
+                    expression.and(issue.issueDescription.in(parameter.getParameterValues()));
                     break;
             }
         });

@@ -1,9 +1,7 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.dto.ProjectDto;
 import com.example.demo.model.Project;
 import com.example.demo.model.ProjectStatus;
-import com.example.demo.repository.ProfileRepository;
 import com.example.demo.repository.ProjectRepository;
 import com.example.demo.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +20,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project createProject(Project project) {
+    public Project saveProject(Project project) {
         Project temp = repository.findProjectByProjectName(project.getProjectName());
         Project temp1 = repository.findProjectByProjectCode(project.getProjectCode());
         if (temp == null && temp1 == null) {

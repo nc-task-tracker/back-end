@@ -41,6 +41,7 @@ com\example\demo\service\impl\UserDetailsServiceImpl.class
 com\example\demo\controller\ProjectController.class
 com\example\demo\model\Issue.class
 com\example\demo\controller\AuthenticationController.class
+com\example\demo\model\ModelForSearch.class
 com\example\demo\config\Constants.class
 com\example\demo\service\UserProfileService.class
 com\example\demo\service\WidgetService.class
