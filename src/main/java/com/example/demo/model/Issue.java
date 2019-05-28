@@ -58,8 +58,13 @@ public class Issue {
 
     @Enumerated(EnumType.STRING)
     private IssuePriority issuePriority;
+
     @OneToMany(mappedBy = "issue")
     private Set<Comment> comments = new HashSet<>();
+
+    @OneToMany
+    @JoinColumn(name = "parentId", referencedColumnName = "id")
+    private Set<Issue> subtasks = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
     private IssueStatus issueStatus;

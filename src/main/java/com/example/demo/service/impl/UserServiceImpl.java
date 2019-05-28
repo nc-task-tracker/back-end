@@ -120,6 +120,7 @@ public class UserServiceImpl implements UserService {
                 case EMAIL:
                     expression.and(user.email.stringValue().in(parameterUser.getParameterValue()));
                     break;
+                    //email проблема
             }
         });
         return expression;

@@ -57,7 +57,11 @@ public class IssueDto {
     @NotNull
     private UserProfileDto assignee;
 
+    private String assigneeId;
+
     private String reporter;
+
+    private String reporterId;
 
     private Set<IssueDto> subtasks;
 

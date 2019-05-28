@@ -93,8 +93,21 @@ public class IssueController {
     @PutMapping(value = "/{id}")
     public IssueDto updateIssue(@PathVariable(name = "id") String id,
                                 @RequestBody IssueDto issueDto) {
+
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+//        modelMapper.getConfiguration().setFieldMatchingEnabled(true);
+
+//        modelMapper.addMappings(new PropertyMap<IssueDto, Issue>() {
+//            protected void configure() {
+//                skip().getReporter ().setId (null);
+//            }
+//        });
         issueDto.setId(id);
-        return modelMapper.map(issueService.updateIssue(modelMapper.map(issueDto, Issue.class)), IssueDto.class);
+        String projectId = issueDto.getProject ().getId ();
+        Issue is = modelMapper.map(issueDto, Issue.class);
+        String assigneeId = issueDto.getAssigneeId ();
+        String reporterId = issueDto.getReporterId ();
+        return modelMapper.map(issueService.updateIssue(projectId, assigneeId, reporterId, is), IssueDto.class);
     }
 
     @DeleteMapping(value = "/delete/{id}")

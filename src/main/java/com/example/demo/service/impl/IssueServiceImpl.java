@@ -80,19 +80,25 @@ public class IssueServiceImpl implements IssueService {
         return issueRepository.save(issue);
     }
 
+    @Transactional
+    @Override
+    public Issue updateIssue(String projectId, String assigneeId, String reporterId, Issue issue) {
+        Project project = projectRepository.findProjectById(projectId);
+        issue.setProject(project);
+        issue.setAssignee(userRepository.findUserById(assigneeId).getProfile());
+        issue.setReporter(userRepository.findUserById(reporterId).getProfile());
+        return issueRepository.save(issue);
+    }
+
     @Override
     public Issue getIssueById(String id) {
+
         return issueRepository.findIssueById(id);
     }
 
     @Override
     public List<Issue> getIssuesByProjectId(String id) {
         return issueRepository.findIssuesByProjectId(id);
-    }
-
-    @Override
-    public Issue updateIssue(Issue issue) {
-        return issueRepository.save(issue);
     }
 
     @Override
@@ -180,20 +186,20 @@ public class IssueServiceImpl implements IssueService {
                     break;
                 case ISSUE_TYPE:
                     if (parameter.getParameterValues() != null) {
-                        expression.and(issue.issuetype.stringValue().in(parameter.getParameterValues()));
+                        expression.and(issue.issueType.stringValue().in(parameter.getParameterValues()));
                     }
                     break;
                 case ISSUE_STATUS:
                     if (parameter.getParameterValues() != null) {
                         parameter.getParameterValues().forEach(val -> {
-                            expression.and(issue.issuestatus.stringValue().in(val));
+                            expression.and(issue.issueStatus.stringValue().in(val));
                         });
                     }
                     break;
                 case ISSUE_PRIORITY:
                     if (parameter.getParameterValues() != null) {
                         parameter.getParameterValues().forEach(val -> {
-                            expression.and(issue.issuepriority.stringValue().in(val));
+                            expression.and(issue.issuePriority.stringValue().in(val));
                         });
                     }
                     break;

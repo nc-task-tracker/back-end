@@ -70,8 +70,4 @@ public class Profile {
     )
     @JsonManagedReference
     private Set<Dashboard> dashboards = new HashSet<>();
-
-
-
-
 }
