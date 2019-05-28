@@ -18,7 +18,7 @@ import java.util.Set;
 public class FilterDto {
     private String id;
 
-    @Size(min = 3, max = 20, message = "Name may not be longer!")
+    @Size(min = 3, max = 15, message = "Name may not be longer!")
     @JsonProperty("name")
     private String filterName;
 

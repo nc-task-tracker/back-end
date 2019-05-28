@@ -56,7 +56,7 @@ public class IssueDto {
     @Null
     private UserProfileDto assignee;
 
-    private String reporter;
+    private UserProfileDto reporter;
 
     private Set<Comment> comments = new HashSet<>();
 }

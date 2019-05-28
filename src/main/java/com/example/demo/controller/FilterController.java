@@ -5,7 +5,6 @@ import com.example.demo.model.Filter;
 import com.example.demo.service.FilterService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -39,21 +38,11 @@ public class FilterController {
         return filtersDto;
     }
 
+
     @PostMapping
     public FilterDto createFilter(@RequestBody FilterDto filter) {
         System.out.println("filter search");
         return modelMapper.map(service.saveFilter(modelMapper.map(filter, Filter.class)), FilterDto.class);
     }
 
-    @PutMapping
-    public FilterDto updateFilter(@RequestBody FilterDto filterForUpdate) {
-        Filter filter = modelMapper.map(service.getFilterById(filterForUpdate.getId()), Filter.class);
-        return modelMapper.map(service.updateFilter(filter), FilterDto.class);
-    }
-
-    @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity deleteFilter(@PathVariable(name = "id") String id) {
-        service.deleteFilter(id);
-        return ResponseEntity.noContent().build();
-    }
 }

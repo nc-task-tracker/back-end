@@ -3,7 +3,9 @@
 //import com.example.demo.model.Identificator;
 //import com.example.demo.repository.IdentificatorRepository;
 //import com.example.demo.service.IdentificatorService;
+//import org.springframework.stereotype.Service;
 //
+//@Service
 //public class IdentificatorServiceImpl implements IdentificatorService {
 //
 //    private IdentificatorRepository identificatorRepository;

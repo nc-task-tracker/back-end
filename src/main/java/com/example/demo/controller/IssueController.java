@@ -105,23 +105,6 @@ public class IssueController {
         return commentsDto;
     }
 
-//    @GetMapping(value = "/{id}")
-//    public CommentDto getCommentById(@PathVariable(name = "id") String id) {
-//        return modelMapper.map(commentService.getCommentById(id), CommentDto.class);
-//    }
-//
-//    @PutMapping
-//    public CommentDto updateComment(@RequestBody CommentDto commentForUpdate) {
-//        Comment comment = modelMapper.map(commentService.getCommentById(commentForUpdate.getId()), Comment.class);
-//        return modelMapper.map(commentService.updateComment(comment), CommentDto.class);
-//    }
-//
-//    @DeleteMapping(value = "/delete/{id}")
-//    public ResponseEntity deleteComment(@PathVariable(name = "id") String id) {
-//        commentService.deleteComment(id);
-//        return ResponseEntity.noContent().build();
-//    }
-
     @PostMapping(value = "/search/")
     public List<IssueDto> findAllIssuesByPredicates(@RequestBody FilterDto filterDto) {
         List<IssueDto> issuesDto = new ArrayList<>();

@@ -9,6 +9,7 @@ import com.example.demo.repository.ProjectRepository;
 import com.example.demo.service.IssueService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -139,14 +140,7 @@ public class IssueServiceImpl implements IssueService {
                 case ASSIGNEE:
                     if(parameter.getParameterValues() != null) {
                         parameter.getParameterValues().forEach(val -> {
-                            JPAExpressions.selectFrom(issue)
-                                    .join(issue.assignee.user, user)
-                                    .where(issue.assignee.fullName.eq(val),
-                                            user.login.eq(val));
-                            expression.and(issue.assignee.fullName.in(val));
-                            expression.and(profile.user.login.in(val));
-//                            expression.and(issue.assignee.fullName.like(val)).or(expression.and(profile.user.login.like(val)));
-//                            expression.and(issue.assignee.fullName.in(val).or());
+                            expression.and(issue.assignee.fullName.like("%" + val + "%").or(issue.assignee.user.login.like("%" + val + "%")));
                         });
                     }
                     break;
@@ -160,7 +154,7 @@ public class IssueServiceImpl implements IssueService {
                     break;
                 case PROJECT_NAME:
                     if(parameter.getParameterValues()!= null) {
-                        expression.and(issue.project.projectName.stringValue().in(parameter.getParameterValues()));
+                        expression.and(issue.project.projectName.stringValue().like("%" + parameter.getParameterValues() + "%"));
                     }
                     break;
             }
